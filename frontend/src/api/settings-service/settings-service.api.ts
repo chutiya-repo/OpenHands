@@ -1,4 +1,4 @@
-import { openHands } from "../open-hands-axios";
+import { wsaiCode } from "../wsai-code-axios";
 import { Settings } from "#/types/settings";
 
 /**
@@ -9,7 +9,7 @@ class SettingsService {
    * Get the settings from the server or use the default settings if not found
    */
   static async getSettings(): Promise<Settings> {
-    const { data } = await openHands.get<Settings>("/api/settings");
+    const { data } = await wsaiCode.get<Settings>("/api/settings");
     return data;
   }
 
@@ -18,7 +18,7 @@ class SettingsService {
    * @param settings - the settings to save
    */
   static async saveSettings(settings: Partial<Settings>): Promise<boolean> {
-    const data = await openHands.post("/api/settings", settings);
+    const data = await wsaiCode.post("/api/settings", settings);
     return data.status === 200;
   }
 }

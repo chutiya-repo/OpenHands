@@ -1,5 +1,5 @@
-import { openHands } from "#/api/open-hands-axios";
-import { Conversation, ResultSet } from "#/api/open-hands.types";
+import { wsaiCode } from "#/api/wsai-code-axios";
+import { Conversation, ResultSet } from "#/api/wsai-code.types";
 
 class MicroagentManagementService {
   /**
@@ -23,7 +23,7 @@ class MicroagentManagementService {
       params.page_id = pageId;
     }
 
-    const { data } = await openHands.get<ResultSet<Conversation>>(
+    const { data } = await wsaiCode.get<ResultSet<Conversation>>(
       "/api/microagent-management/conversations",
       { params },
     );

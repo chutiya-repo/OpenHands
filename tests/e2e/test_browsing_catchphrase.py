@@ -41,7 +41,7 @@ def _wait_for_home_and_repo_selection(page: Page) -> None:
     # Try to search and pick the official repo
     try:
         page.keyboard.press('Control+a')
-        page.keyboard.type('openhands-agent/OpenHands')
+        page.keyboard.type('wsai_code-agent/WSAI CODE')
     except Exception:
         pass
 
@@ -49,12 +49,12 @@ def _wait_for_home_and_repo_selection(page: Page) -> None:
 
     # Try multiple selectors for the option
     option_selectors = [
-        '[data-testid="repo-dropdown"] [role="option"]:has-text("openhands-agent/OpenHands")',
-        '[data-testid="repo-dropdown"] [role="option"]:has-text("OpenHands")',
-        '[role="option"]:has-text("openhands-agent/OpenHands")',
-        '[role="option"]:has-text("OpenHands")',
-        'div:has-text("openhands-agent/OpenHands"):not([id="aria-results"])',
-        'div:has-text("OpenHands"):not([id="aria-results"])',
+        '[data-testid="repo-dropdown"] [role="option"]:has-text("wsai_code-agent/WSAI CODE")',
+        '[data-testid="repo-dropdown"] [role="option"]:has-text("WSAI CODE")',
+        '[role="option"]:has-text("wsai_code-agent/WSAI CODE")',
+        '[role="option"]:has-text("WSAI CODE")',
+        'div:has-text("wsai_code-agent/WSAI CODE"):not([id="aria-results"])',
+        'div:has-text("WSAI CODE"):not([id="aria-results"])',
     ]
 
     for selector in option_selectors:

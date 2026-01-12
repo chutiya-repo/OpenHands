@@ -9,17 +9,17 @@ from storage.linear_integration_store import LinearIntegrationStore
 from storage.linear_user import LinearUser
 from storage.linear_workspace import LinearWorkspace
 
-from openhands.core.logger import openhands_logger as logger
-from openhands.core.schema.agent import AgentState
-from openhands.events.action import MessageAction
-from openhands.events.serialization.event import event_to_dict
-from openhands.server.services.conversation_service import (
+from wsai_code.core.logger import wsai_code_logger as logger
+from wsai_code.core.schema.agent import AgentState
+from wsai_code.events.action import MessageAction
+from wsai_code.events.serialization.event import event_to_dict
+from wsai_code.server.services.conversation_service import (
     create_new_conversation,
     setup_init_conversation_settings,
 )
-from openhands.server.shared import ConversationStoreImpl, config, conversation_manager
-from openhands.server.user_auth.user_auth import UserAuth
-from openhands.storage.data_models.conversation_metadata import ConversationTrigger
+from wsai_code.server.shared import ConversationStoreImpl, config, conversation_manager
+from wsai_code.server.user_auth.user_auth import UserAuth
+from wsai_code.storage.data_models.conversation_metadata import ConversationTrigger
 
 integration_store = LinearIntegrationStore.get_instance()
 

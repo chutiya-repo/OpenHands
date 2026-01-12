@@ -3,8 +3,8 @@ import argparse
 import json
 from collections import Counter
 
-from openhands.events.serialization import event_from_dict
-from openhands.events.utils import get_pairs_from_events
+from wsai_code.events.serialization import event_from_dict
+from wsai_code.events.utils import get_pairs_from_events
 
 ERROR_KEYWORDS = [
     'Agent encountered an error while processing the last action',

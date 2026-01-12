@@ -9,7 +9,7 @@ from storage.maintenance_task import MaintenanceTask, MaintenanceTaskProcessor
 from storage.saas_settings_store import SaasSettingsStore
 from storage.user_settings import UserSettings
 
-from openhands.core.config import load_openhands_config
+from wsai_code.core.config import load_wsai_code_config
 
 
 class UserVersionUpgradeProcessor(MaintenanceTaskProcessor):
@@ -46,7 +46,7 @@ class UserVersionUpgradeProcessor(MaintenanceTaskProcessor):
                 f'Too many user IDs: {len(self.user_ids)}. Maximum is 100.'
             )
 
-        config = load_openhands_config()
+        config = load_wsai_code_config()
 
         # Track results
         successful_upgrades = []

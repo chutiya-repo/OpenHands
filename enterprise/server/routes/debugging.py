@@ -8,8 +8,8 @@ from sqlalchemy import func, select
 from storage.database import a_session_maker, engine, session_maker
 from storage.user_settings import UserSettings
 
-from openhands.core.logger import openhands_logger as logger
-from openhands.utils.async_utils import wait_all
+from wsai_code.core.logger import wsai_code_logger as logger
+from wsai_code.utils.async_utils import wait_all
 
 # Safety flag to prevent chaos routes from being added in production environments
 # Only enables these routes in non-production environments

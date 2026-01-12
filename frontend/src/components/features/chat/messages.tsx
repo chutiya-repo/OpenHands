@@ -1,12 +1,12 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { createPortal } from "react-dom";
-import { OpenHandsAction } from "#/types/core/actions";
-import { OpenHandsObservation } from "#/types/core/observations";
+import { WSAI CODEAction } from "#/types/core/actions";
+import { WSAI CODEObservation } from "#/types/core/observations";
 import {
-  isOpenHandsAction,
-  isOpenHandsObservation,
-  isOpenHandsEvent,
+  isWSAI CODEAction,
+  isWSAI CODEObservation,
+  isWSAI CODEEvent,
   isAgentStateChangeObservation,
   isFinishAction,
 } from "#/types/core/guards";
@@ -33,12 +33,12 @@ const isErrorEvent = (evt: unknown): evt is { error: true; message: string } =>
   evt.error === true;
 
 const isAgentStatusError = (evt: unknown): boolean =>
-  isOpenHandsEvent(evt) &&
+  isWSAI CODEEvent(evt) &&
   isAgentStateChangeObservation(evt) &&
   evt.extras.agent_state === AgentState.ERROR;
 
 interface MessagesProps {
-  messages: (OpenHandsAction | OpenHandsObservation)[];
+  messages: (WSAI CODEAction | WSAI CODEObservation)[];
   isAwaitingUserConfirmation: boolean;
 }
 
@@ -72,10 +72,10 @@ export const Messages: React.FC<MessagesProps> = React.memo(
     const { t } = useTranslation();
 
     const actionHasObservationPair = React.useCallback(
-      (event: OpenHandsAction | OpenHandsObservation): boolean => {
-        if (isOpenHandsAction(event)) {
+      (event: WSAI CODEAction | WSAI CODEObservation): boolean => {
+        if (isWSAI CODEAction(event)) {
           return !!messages.some(
-            (msg) => isOpenHandsObservation(msg) && msg.cause === event.id,
+            (msg) => isWSAI CODEObservation(msg) && msg.cause === event.id,
           );
         }
 
@@ -125,7 +125,7 @@ export const Messages: React.FC<MessagesProps> = React.memo(
             ),
           );
         } else if (
-          isOpenHandsEvent(socketEvent) &&
+          isWSAI CODEEvent(socketEvent) &&
           isAgentStateChangeObservation(socketEvent)
         ) {
           // Handle completion states
@@ -144,7 +144,7 @@ export const Messages: React.FC<MessagesProps> = React.memo(
             unsubscribeFromConversation(microagentConversationId);
           }
         } else if (
-          isOpenHandsEvent(socketEvent) &&
+          isWSAI CODEEvent(socketEvent) &&
           isFinishAction(socketEvent)
         ) {
           // Check if the finish action contains a PR URL

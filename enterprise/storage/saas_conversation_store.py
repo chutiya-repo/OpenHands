@@ -9,18 +9,18 @@ from sqlalchemy.orm import sessionmaker
 from storage.database import session_maker
 from storage.stored_conversation_metadata import StoredConversationMetadata
 
-from openhands.core.config.openhands_config import OpenHandsConfig
-from openhands.integrations.provider import ProviderType
-from openhands.storage.conversation.conversation_store import ConversationStore
-from openhands.storage.data_models.conversation_metadata import (
+from wsai_code.core.config.wsai_code_config import WSAI CODEConfig
+from wsai_code.integrations.provider import ProviderType
+from wsai_code.storage.conversation.conversation_store import ConversationStore
+from wsai_code.storage.data_models.conversation_metadata import (
     ConversationMetadata,
     ConversationTrigger,
 )
-from openhands.storage.data_models.conversation_metadata_result_set import (
+from wsai_code.storage.data_models.conversation_metadata_result_set import (
     ConversationMetadataResultSet,
 )
-from openhands.utils.async_utils import call_sync_from_async
-from openhands.utils.search_utils import offset_to_page_id, page_id_to_offset
+from wsai_code.utils.async_utils import call_sync_from_async
+from wsai_code.utils.search_utils import offset_to_page_id, page_id_to_offset
 
 logger = logging.getLogger(__name__)
 
@@ -144,7 +144,7 @@ class SaasConversationStore(ConversationStore):
 
     @classmethod
     async def get_instance(
-        cls, config: OpenHandsConfig, user_id: str | None
+        cls, config: WSAI CODEConfig, user_id: str | None
     ) -> ConversationStore:
         # user_id should not be None in SaaS, should we raise?
         return SaasConversationStore(str(user_id), session_maker)

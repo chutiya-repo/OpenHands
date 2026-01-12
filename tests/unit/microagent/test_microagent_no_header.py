@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from openhands.microagent.microagent import BaseMicroagent, RepoMicroagent
-from openhands.microagent.types import MicroagentType
+from wsai_code.microagent.microagent import BaseMicroagent, RepoMicroagent
+from wsai_code.microagent.types import MicroagentType
 
 
 def test_load_markdown_without_frontmatter():

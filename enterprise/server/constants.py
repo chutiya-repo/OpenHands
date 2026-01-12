@@ -45,7 +45,7 @@ SUBSCRIPTION_PRICE_DATA = {
         'unit_amount': 2000,
         'currency': 'usd',
         'product_data': {
-            'name': 'OpenHands Monthly',
+            'name': 'WSAI CODE Monthly',
             'tax_code': 'txcd_10000000',
         },
         'tax_behavior': 'exclusive',

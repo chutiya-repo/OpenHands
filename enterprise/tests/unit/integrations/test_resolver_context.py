@@ -12,11 +12,11 @@ from pydantic import SecretStr
 from enterprise.integrations.resolver_context import ResolverUserContext
 
 # Import the real classes we want to test
-from openhands.integrations.provider import CustomSecret
+from wsai_code.integrations.provider import CustomSecret
 
 # Import the SDK types we need for testing
-from openhands.sdk.secret import SecretSource, StaticSecret
-from openhands.storage.data_models.secrets import Secrets
+from wsai_code.sdk.secret import SecretSource, StaticSecret
+from wsai_code.storage.data_models.secrets import Secrets
 
 
 @pytest.fixture

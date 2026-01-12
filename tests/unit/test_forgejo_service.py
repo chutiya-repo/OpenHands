@@ -4,14 +4,14 @@ import httpx
 import pytest
 from pydantic import SecretStr
 
-from openhands.integrations.forgejo.forgejo_service import ForgejoService
-from openhands.integrations.service_types import (
+from wsai_code.integrations.forgejo.forgejo_service import ForgejoService
+from wsai_code.integrations.service_types import (
     ProviderType,
     Repository,
     RequestMethod,
     User,
 )
-from openhands.server.types import AppMode
+from wsai_code.server.types import AppMode
 
 
 @pytest.fixture
@@ -75,7 +75,7 @@ async def test_search_repositories(forgejo_service):
 
     # Call the method
     repos = await forgejo_service.search_repositories(
-        'test', 10, 'updated', 'desc', public=False, app_mode=AppMode.OPENHANDS
+        'test', 10, 'updated', 'desc', public=False, app_mode=AppMode.WSAI_CODE
     )
 
     # Verify the result
@@ -139,7 +139,7 @@ async def test_get_all_repositories(forgejo_service):
     ]
 
     # Call the method
-    repos = await forgejo_service.get_all_repositories('updated', AppMode.OPENHANDS)
+    repos = await forgejo_service.get_all_repositories('updated', AppMode.WSAI_CODE)
 
     # Verify the result
     assert len(repos) == 3

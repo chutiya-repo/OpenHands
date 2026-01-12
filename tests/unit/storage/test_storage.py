@@ -12,11 +12,11 @@ from unittest.mock import patch
 import botocore.exceptions
 from google.api_core.exceptions import NotFound
 
-from openhands.storage.files import FileStore
-from openhands.storage.google_cloud import GoogleCloudFileStore
-from openhands.storage.local import LocalFileStore
-from openhands.storage.memory import InMemoryFileStore
-from openhands.storage.s3 import S3FileStore
+from wsai_code.storage.files import FileStore
+from wsai_code.storage.google_cloud import GoogleCloudFileStore
+from wsai_code.storage.local import LocalFileStore
+from wsai_code.storage.memory import InMemoryFileStore
+from wsai_code.storage.s3 import S3FileStore
 
 
 class _StorageTest(ABC):
@@ -110,7 +110,7 @@ class _StorageTest(ABC):
 class TestLocalFileStore(TestCase, _StorageTest):
     def setUp(self):
         # Create a unique temporary directory for each test instance
-        self.temp_dir = tempfile.mkdtemp(prefix='openhands_test_')
+        self.temp_dir = tempfile.mkdtemp(prefix='wsai_code_test_')
         self.store = LocalFileStore(self.temp_dir)
 
     def tearDown(self):

@@ -13,19 +13,19 @@ import pytest
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.pool import StaticPool
 
-from openhands.app_server.app_conversation.app_conversation_models import (
+from wsai_code.app_server.app_conversation.app_conversation_models import (
     AppConversationInfo,
     AppConversationSortOrder,
 )
-from openhands.app_server.app_conversation.sql_app_conversation_info_service import (
+from wsai_code.app_server.app_conversation.sql_app_conversation_info_service import (
     SQLAppConversationInfoService,
 )
-from openhands.app_server.user.specifiy_user_context import SpecifyUserContext
-from openhands.app_server.utils.sql_utils import Base
-from openhands.integrations.service_types import ProviderType
-from openhands.sdk.llm import MetricsSnapshot
-from openhands.sdk.llm.utils.metrics import TokenUsage
-from openhands.storage.data_models.conversation_metadata import ConversationTrigger
+from wsai_code.app_server.user.specifiy_user_context import SpecifyUserContext
+from wsai_code.app_server.utils.sql_utils import Base
+from wsai_code.integrations.service_types import ProviderType
+from wsai_code.sdk.llm import MetricsSnapshot
+from wsai_code.sdk.llm.utils.metrics import TokenUsage
+from wsai_code.storage.data_models.conversation_metadata import ConversationTrigger
 
 # Note: MetricsSnapshot from SDK is not available in test environment
 # We'll use None for metrics field in tests since it's optional

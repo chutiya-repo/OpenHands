@@ -2,16 +2,16 @@ from datetime import datetime
 from enum import Enum
 
 # Simplified imports to avoid dependency chain issues
-# from openhands.integrations.service_types import ProviderType
-# from openhands.sdk.llm import MetricsSnapshot
-# from openhands.storage.data_models.conversation_metadata import ConversationTrigger
+# from wsai_code.integrations.service_types import ProviderType
+# from wsai_code.sdk.llm import MetricsSnapshot
+# from wsai_code.storage.data_models.conversation_metadata import ConversationTrigger
 # For now, use Any to avoid import issues
 from typing import Any
 from uuid import uuid4
 
 from pydantic import BaseModel, Field
 
-from openhands.agent_server.utils import OpenHandsUUID, utc_now
+from wsai_code.agent_server.utils import WSAI CODEUUID, utc_now
 
 ProviderType = Any
 MetricsSnapshot = Any
@@ -21,7 +21,7 @@ ConversationTrigger = Any
 class SharedConversation(BaseModel):
     """Shared conversation info model with all fields from AppConversationInfo."""
 
-    id: OpenHandsUUID = Field(default_factory=uuid4)
+    id: WSAI CODEUUID = Field(default_factory=uuid4)
 
     created_by_user_id: str | None
     sandbox_id: str
@@ -35,8 +35,8 @@ class SharedConversation(BaseModel):
 
     metrics: MetricsSnapshot | None = None
 
-    parent_conversation_id: OpenHandsUUID | None = None
-    sub_conversation_ids: list[OpenHandsUUID] = Field(default_factory=list)
+    parent_conversation_id: WSAI CODEUUID | None = None
+    sub_conversation_ids: list[WSAI CODEUUID] = Field(default_factory=list)
 
     created_at: datetime = Field(default_factory=utc_now)
     updated_at: datetime = Field(default_factory=utc_now)

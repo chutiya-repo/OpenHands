@@ -27,8 +27,8 @@ from server.auth.token_manager import TokenManager
 from server.constants import WEB_HOST
 from storage.redis import create_redis_client
 
-from openhands.core.logger import openhands_logger as logger
-from openhands.server.user_auth.user_auth import get_user_auth
+from wsai_code.core.logger import wsai_code_logger as logger
+from wsai_code.server.user_auth.user_auth import get_user_auth
 
 # Environment variable to disable Jira DC webhooks
 JIRA_DC_WEBHOOKS_ENABLED = os.environ.get('JIRA_DC_WEBHOOKS_ENABLED', '0') in (

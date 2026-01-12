@@ -23,31 +23,31 @@ from evaluation.utils.shared import (
     compatibility_for_eval_history_pairs,
     get_default_sandbox_config_for_eval,
     get_metrics,
-    get_openhands_config_for_eval,
+    get_wsai_code_config_for_eval,
     make_metadata,
     prepare_dataset,
     reset_logger_for_multiprocessing,
     run_evaluation,
     update_llm_config_for_completions_logging,
 )
-from openhands.controller.state.state import State
-from openhands.core.config import (
-    OpenHandsConfig,
+from wsai_code.controller.state.state import State
+from wsai_code.core.config import (
+    WSAI CODEConfig,
     get_evaluation_parser,
     get_llm_config_arg,
     load_from_toml,
 )
-from openhands.core.config.utils import (
+from wsai_code.core.config.utils import (
     get_agent_config_arg,
     get_llms_for_routing_config,
     get_model_routing_config_arg,
 )
-from openhands.core.logger import openhands_logger as logger
-from openhands.core.main import create_runtime, run_controller
-from openhands.events.action import AgentFinishAction, CmdRunAction, MessageAction
-from openhands.events.observation import CmdOutputObservation
-from openhands.runtime.base import Runtime
-from openhands.utils.async_utils import call_async_from_sync
+from wsai_code.core.logger import wsai_code_logger as logger
+from wsai_code.core.main import create_runtime, run_controller
+from wsai_code.events.action import AgentFinishAction, CmdRunAction, MessageAction
+from wsai_code.events.observation import CmdOutputObservation
+from wsai_code.runtime.base import Runtime
+from wsai_code.utils.async_utils import call_async_from_sync
 
 DATASET_CACHE_DIR = os.path.join(os.path.dirname(__file__), 'data')
 
@@ -64,10 +64,10 @@ AGENT_CLS_TO_INST_SUFFIX = {
 def get_config(
     instance: pd.Series,
     metadata: EvalMetadata,
-) -> OpenHandsConfig:
+) -> WSAI CODEConfig:
     sandbox_config = get_default_sandbox_config_for_eval()
     sandbox_config.base_container_image = 'nikolaik/python-nodejs:python3.12-nodejs22'
-    config = get_openhands_config_for_eval(
+    config = get_wsai_code_config_for_eval(
         metadata=metadata,
         sandbox_config=sandbox_config,
         runtime='docker',
@@ -333,7 +333,7 @@ if __name__ == '__main__':
     if llm_config is None:
         raise ValueError(f'Could not find LLM config: --llm_config {args.llm_config}')
 
-    toml_config = OpenHandsConfig()
+    toml_config = WSAI CODEConfig()
     load_from_toml(toml_config)
     metadata = make_metadata(
         llm_config=llm_config,

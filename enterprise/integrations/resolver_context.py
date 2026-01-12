@@ -1,9 +1,9 @@
-from openhands.app_server.user.user_context import UserContext
-from openhands.app_server.user.user_models import UserInfo
-from openhands.integrations.provider import PROVIDER_TOKEN_TYPE
-from openhands.integrations.service_types import ProviderType
-from openhands.sdk.secret import SecretSource, StaticSecret
-from openhands.server.user_auth.user_auth import UserAuth
+from wsai_code.app_server.user.user_context import UserContext
+from wsai_code.app_server.user.user_models import UserInfo
+from wsai_code.integrations.provider import PROVIDER_TOKEN_TYPE
+from wsai_code.integrations.service_types import ProviderType
+from wsai_code.sdk.secret import SecretSource, StaticSecret
+from wsai_code.server.user_auth.user_auth import UserAuth
 
 
 class ResolverUserContext(UserContext):

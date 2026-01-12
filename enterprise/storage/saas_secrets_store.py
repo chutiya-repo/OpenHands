@@ -9,17 +9,17 @@ from sqlalchemy.orm import sessionmaker
 from storage.database import session_maker
 from storage.stored_custom_secrets import StoredCustomSecrets
 
-from openhands.core.config.openhands_config import OpenHandsConfig
-from openhands.core.logger import openhands_logger as logger
-from openhands.storage.data_models.secrets import Secrets
-from openhands.storage.secrets.secrets_store import SecretsStore
+from wsai_code.core.config.wsai_code_config import WSAI CODEConfig
+from wsai_code.core.logger import wsai_code_logger as logger
+from wsai_code.storage.data_models.secrets import Secrets
+from wsai_code.storage.secrets.secrets_store import SecretsStore
 
 
 @dataclass
 class SaasSecretsStore(SecretsStore):
     user_id: str
     session_maker: sessionmaker
-    config: OpenHandsConfig
+    config: WSAI CODEConfig
 
     async def load(self) -> Secrets | None:
         if not self.user_id:
@@ -120,7 +120,7 @@ class SaasSecretsStore(SecretsStore):
     @classmethod
     async def get_instance(
         cls,
-        config: OpenHandsConfig,
+        config: WSAI CODEConfig,
         user_id: str | None,
     ) -> SaasSecretsStore:
         if not user_id:

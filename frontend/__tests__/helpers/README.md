@@ -1,6 +1,6 @@
 # Test Helpers
 
-This directory contains reusable test utilities and components for the OpenHands frontend test suite.
+This directory contains reusable test utilities and components for the WSAI CODE frontend test suite.
 
 ## Files
 

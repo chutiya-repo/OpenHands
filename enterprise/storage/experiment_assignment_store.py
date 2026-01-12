@@ -8,7 +8,7 @@ from sqlalchemy.dialects.postgresql import insert
 from storage.database import session_maker
 from storage.experiment_assignment import ExperimentAssignment
 
-from openhands.core.logger import openhands_logger as logger
+from wsai_code.core.logger import wsai_code_logger as logger
 
 
 class ExperimentAssignmentStore:

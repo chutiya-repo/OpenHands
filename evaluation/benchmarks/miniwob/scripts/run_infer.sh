@@ -25,13 +25,13 @@ if [ -z "$AGENT" ]; then
   AGENT="BrowsingAgent"
 fi
 
-get_openhands_version
+get_wsai_code_version
 
 echo "AGENT: $AGENT"
-echo "OPENHANDS_VERSION: $OPENHANDS_VERSION"
+echo "WSAI_CODE_VERSION: $WSAI_CODE_VERSION"
 echo "MODEL_CONFIG: $MODEL_CONFIG"
 
-EVAL_NOTE="${OPENHANDS_VERSION}_${NOTE}"
+EVAL_NOTE="${WSAI_CODE_VERSION}_${NOTE}"
 
 COMMAND="export PYTHONPATH=evaluation/benchmarks/miniwob:\$PYTHONPATH && poetry run python evaluation/benchmarks/miniwob/run_infer.py \
   --agent-cls $AGENT \

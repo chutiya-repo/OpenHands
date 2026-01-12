@@ -21,7 +21,7 @@ if [ -z "$AGENT" ]; then
   AGENT="CodeActAgent"
 fi
 
-get_openhands_version
+get_wsai_code_version
 
 if [ -z "$DATASET" ]; then
   echo "Dataset not specified, use default 'things'"
@@ -36,7 +36,7 @@ fi
 
 
 echo "AGENT: $AGENT"
-echo "OPENHANDS_VERSION: $OPENHANDS_VERSION"
+echo "WSAI_CODE_VERSION: $WSAI_CODE_VERSION"
 echo "MODEL_CONFIG: $MODEL_CONFIG"
 echo "DATASET: $DATASET"
 
@@ -48,7 +48,7 @@ COMMAND="poetry run python evaluation/benchmarks/EDA/run_infer.py \
   --max-iterations 20 \
   --OPENAI_API_KEY $OPENAI_API_KEY \
   --eval-num-workers $NUM_WORKERS \
-  --eval-note ${OPENHANDS_VERSION}_${DATASET}"
+  --eval-note ${WSAI_CODE_VERSION}_${DATASET}"
 
 if [ -n "$EVAL_LIMIT" ]; then
   echo "EVAL_LIMIT: $EVAL_LIMIT"

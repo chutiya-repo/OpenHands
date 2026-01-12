@@ -4,8 +4,8 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from openhands.core.config import LLMConfig
-from openhands.utils.conversation_summary import generate_conversation_title
+from wsai_code.core.config import LLMConfig
+from wsai_code.utils.conversation_summary import generate_conversation_title
 
 
 @pytest.mark.asyncio

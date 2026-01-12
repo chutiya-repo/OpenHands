@@ -11,8 +11,8 @@ from experiments.experiment_versions._004_condenser_max_step_experiment import (
 )
 from pydantic import SecretStr
 
-from openhands.sdk import LLM, Agent
-from openhands.sdk.context.condenser import LLMSummarizingCondenser
+from wsai_code.sdk import LLM, Agent
+from wsai_code.sdk.context.condenser import LLMSummarizingCondenser
 
 
 def make_agent() -> Agent:

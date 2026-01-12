@@ -8,7 +8,7 @@ from storage.jira_conversation import JiraConversation
 from storage.jira_user import JiraUser
 from storage.jira_workspace import JiraWorkspace
 
-from openhands.core.logger import openhands_logger as logger
+from wsai_code.core.logger import wsai_code_logger as logger
 
 
 @dataclass

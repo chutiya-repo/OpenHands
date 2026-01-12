@@ -20,9 +20,9 @@ from pydantic import SecretStr
 from enterprise.server.saas_nested_conversation_manager import (
     SaasNestedConversationManager,
 )
-from openhands.integrations.provider import ProviderToken, ProviderType
-from openhands.server.session.conversation_init_data import ConversationInitData
-from openhands.storage.data_models.settings import Settings
+from wsai_code.integrations.provider import ProviderToken, ProviderType
+from wsai_code.server.session.conversation_init_data import ConversationInitData
+from wsai_code.storage.data_models.settings import Settings
 
 
 class TestRefreshProviderTokensAfterRuntimeInit:

@@ -1,4 +1,4 @@
-import { Conversation } from "#/api/open-hands.types";
+import { Conversation } from "#/api/wsai-code.types";
 
 export type TabType = "personal" | "repositories" | "organizations";
 

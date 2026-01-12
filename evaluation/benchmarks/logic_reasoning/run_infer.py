@@ -11,29 +11,29 @@ from evaluation.utils.shared import (
     compatibility_for_eval_history_pairs,
     get_default_sandbox_config_for_eval,
     get_metrics,
-    get_openhands_config_for_eval,
+    get_wsai_code_config_for_eval,
     make_metadata,
     prepare_dataset,
     reset_logger_for_multiprocessing,
     run_evaluation,
 )
-from openhands.controller.state.state import State
-from openhands.core.config import (
-    OpenHandsConfig,
+from wsai_code.controller.state.state import State
+from wsai_code.core.config import (
+    WSAI CODEConfig,
     get_evaluation_parser,
     get_llm_config_arg,
 )
-from openhands.core.logger import openhands_logger as logger
-from openhands.core.main import create_runtime, run_controller
-from openhands.events.action import (
+from wsai_code.core.logger import wsai_code_logger as logger
+from wsai_code.core.main import create_runtime, run_controller
+from wsai_code.events.action import (
     AgentFinishAction,
     CmdRunAction,
     IPythonRunCellAction,
     MessageAction,
 )
-from openhands.events.observation import CmdOutputObservation
-from openhands.runtime.base import Runtime
-from openhands.utils.async_utils import call_async_from_sync
+from wsai_code.events.observation import CmdOutputObservation
+from wsai_code.runtime.base import Runtime
+from wsai_code.utils.async_utils import call_async_from_sync
 
 AGENT_CLS_TO_FAKE_USER_RESPONSE_FN = {
     'CodeActAgent': codeact_user_response,
@@ -46,14 +46,14 @@ AGENT_CLS_TO_INST_SUFFIX = {
 
 def get_config(
     metadata: EvalMetadata,
-) -> OpenHandsConfig:
+) -> WSAI CODEConfig:
     sandbox_config = get_default_sandbox_config_for_eval()
     sandbox_config.base_container_image = 'xingyaoww/od-eval-logic-reasoning:v1.0'
     sandbox_config.runtime_extra_deps = (
         '$OH_INTERPRETER_PATH -m pip install scitools-pyke'
     )
 
-    config = get_openhands_config_for_eval(
+    config = get_wsai_code_config_for_eval(
         metadata=metadata,
         runtime='docker',
         sandbox_config=sandbox_config,

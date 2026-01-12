@@ -4,10 +4,10 @@ from integrations.utils import store_repositories_in_db
 from pydantic import SecretStr
 from server.auth.token_manager import TokenManager
 
-from openhands.core.logger import openhands_logger as logger
-from openhands.integrations.github.github_service import GitHubService
-from openhands.integrations.service_types import ProviderType, Repository
-from openhands.server.types import AppMode
+from wsai_code.core.logger import wsai_code_logger as logger
+from wsai_code.integrations.github.github_service import GitHubService
+from wsai_code.integrations.service_types import ProviderType, Repository
+from wsai_code.server.types import AppMode
 
 
 class SaaSGitHubService(GitHubService):

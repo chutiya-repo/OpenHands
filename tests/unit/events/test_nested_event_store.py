@@ -9,10 +9,10 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from openhands.events.action import MessageAction
-from openhands.events.event import EventSource
-from openhands.events.event_filter import EventFilter
-from openhands.events.nested_event_store import NestedEventStore
+from wsai_code.events.action import MessageAction
+from wsai_code.events.event import EventSource
+from wsai_code.events.event_filter import EventFilter
+from wsai_code.events.nested_event_store import NestedEventStore
 
 
 def create_mock_event(
@@ -179,7 +179,7 @@ class TestNestedEventStore:
         )
 
     @patch('httpx.get')
-    @patch('openhands.events.event_filter.EventFilter.exclude')
+    @patch('wsai_code.events.event_filter.EventFilter.exclude')
     def test_search_events_with_filter(self, mock_exclude, mock_get, event_store):
         """Test event retrieval with an EventFilter."""
         # Setup mock response with mixed events
@@ -384,11 +384,11 @@ class TestNestedEventStore:
         """
         from urllib.parse import parse_qs, urlparse
 
-        from openhands.events.event import EventSource
-        from openhands.events.observation import NullObservation
-        from openhands.events.serialization.event import event_to_dict
-        from openhands.events.stream import EventStream
-        from openhands.storage.memory import InMemoryFileStore
+        from wsai_code.events.event import EventSource
+        from wsai_code.events.observation import NullObservation
+        from wsai_code.events.serialization.event import event_to_dict
+        from wsai_code.events.stream import EventStream
+        from wsai_code.storage.memory import InMemoryFileStore
 
         # Build a fake server-side store with many events so that server pagination kicks in
         fs = InMemoryFileStore()

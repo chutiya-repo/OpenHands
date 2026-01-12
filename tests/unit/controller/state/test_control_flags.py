@@ -1,6 +1,6 @@
 import pytest
 
-from openhands.controller.state.control_flags import (
+from wsai_code.controller.state.control_flags import (
     BudgetControlFlag,
     IterationControlFlag,
 )

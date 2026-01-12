@@ -18,25 +18,25 @@ from evaluation.utils.shared import (
     compatibility_for_eval_history_pairs,
     get_default_sandbox_config_for_eval,
     get_metrics,
-    get_openhands_config_for_eval,
+    get_wsai_code_config_for_eval,
     make_metadata,
     prepare_dataset,
     reset_logger_for_multiprocessing,
     run_evaluation,
 )
-from openhands.controller.state.state import State
-from openhands.core.config import (
-    OpenHandsConfig,
+from wsai_code.controller.state.state import State
+from wsai_code.core.config import (
+    WSAI CODEConfig,
     get_llm_config_arg,
     load_from_toml,
     parse_arguments,
 )
-from openhands.core.logger import openhands_logger as logger
-from openhands.core.main import create_runtime, run_controller
-from openhands.events.action import CmdRunAction, MessageAction
-from openhands.events.observation import CmdOutputObservation
-from openhands.runtime.base import Runtime
-from openhands.utils.async_utils import call_async_from_sync
+from wsai_code.core.logger import wsai_code_logger as logger
+from wsai_code.core.main import create_runtime, run_controller
+from wsai_code.events.action import CmdRunAction, MessageAction
+from wsai_code.events.observation import CmdOutputObservation
+from wsai_code.runtime.base import Runtime
+from wsai_code.utils.async_utils import call_async_from_sync
 
 # Configure visibility of unit tests to the Agent.
 USE_UNIT_TESTS = os.environ.get('USE_UNIT_TESTS', 'false').lower() == 'true'
@@ -48,10 +48,10 @@ SKIP_NUM = (
 
 def get_config(
     metadata: EvalMetadata,
-) -> OpenHandsConfig:
+) -> WSAI CODEConfig:
     sandbox_config = get_default_sandbox_config_for_eval()
     sandbox_config.base_container_image = 'python:3.11-bookworm'
-    config = get_openhands_config_for_eval(
+    config = get_wsai_code_config_for_eval(
         metadata=metadata,
         sandbox_config=sandbox_config,
         runtime=os.environ.get('RUNTIME', 'docker'),

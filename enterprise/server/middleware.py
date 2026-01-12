@@ -18,9 +18,9 @@ from server.routes.auth import (
     set_response_cookie,
 )
 
-from openhands.core.logger import openhands_logger as logger
-from openhands.server.user_auth.user_auth import AuthType, get_user_auth
-from openhands.server.utils import config
+from wsai_code.core.logger import wsai_code_logger as logger
+from wsai_code.server.user_auth.user_auth import AuthType, get_user_auth
+from wsai_code.server.utils import config
 
 
 class SetAuthCookieMiddleware:
