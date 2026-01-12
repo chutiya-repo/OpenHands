@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 
-import { openHands } from "#/api/open-hands-axios";
+import { wsaiCode } from "#/api/wsai-code-axios";
 import { I18nKey } from "#/i18n/declaration";
 import {
   displayErrorToast,
@@ -22,7 +22,7 @@ export function useUnlinkIntegration(
 
   return useMutation({
     mutationFn: () =>
-      openHands.post(`/integration/${platform}/workspaces/unlink`),
+      wsaiCode.post(`/integration/${platform}/workspaces/unlink`),
     onSuccess: () => {
       displaySuccessToast(t(I18nKey.SETTINGS$SAVED));
       queryClient.invalidateQueries({

@@ -6,7 +6,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from starlette.middleware.cors import CORSMiddleware
 
-from openhands.server.middleware import LocalhostCORSMiddleware
+from wsai_code.server.middleware import LocalhostCORSMiddleware
 
 
 @pytest.fixture

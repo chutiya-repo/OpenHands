@@ -4,26 +4,26 @@ from unittest.mock import Mock, patch
 import pytest
 from pytest import TempPathFactory
 
-from openhands.controller.agent_controller import AgentController
-from openhands.controller.state.state import State
-from openhands.controller.stuck import StuckDetector
-from openhands.events.action import (
+from wsai_code.controller.agent_controller import AgentController
+from wsai_code.controller.state.state import State
+from wsai_code.controller.stuck import StuckDetector
+from wsai_code.events.action import (
     CmdRunAction,
     FileReadAction,
     MessageAction,
 )
-from openhands.events.action.commands import IPythonRunCellAction
-from openhands.events.event import Event
-from openhands.events.observation import (
+from wsai_code.events.action.commands import IPythonRunCellAction
+from wsai_code.events.event import Event
+from wsai_code.events.observation import (
     CmdOutputObservation,
     FileReadObservation,
 )
-from openhands.events.observation.agent import AgentCondensationObservation
-from openhands.events.observation.commands import IPythonRunCellObservation
-from openhands.events.observation.empty import NullObservation
-from openhands.events.observation.error import ErrorObservation
-from openhands.events.stream import EventSource, EventStream
-from openhands.storage import get_file_store
+from wsai_code.events.observation.agent import AgentCondensationObservation
+from wsai_code.events.observation.commands import IPythonRunCellObservation
+from wsai_code.events.observation.empty import NullObservation
+from wsai_code.events.observation.error import ErrorObservation
+from wsai_code.events.stream import EventSource, EventStream
+from wsai_code.storage import get_file_store
 
 # Reusable action/observation mocks for stuck-pattern tests
 cmd_ls_action = CmdRunAction(command='ls')

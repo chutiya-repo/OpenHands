@@ -1,4 +1,4 @@
-export type OpenHandsEventType =
+export type WSAI CODEEventType =
   | "message"
   | "system"
   | "agent_state_changed"
@@ -21,25 +21,25 @@ export type OpenHandsEventType =
   | "task_tracking"
   | "user_rejected";
 
-export type OpenHandsSourceType = "agent" | "user" | "environment";
+export type WSAI CODESourceType = "agent" | "user" | "environment";
 
-interface OpenHandsBaseEvent {
+interface WSAI CODEBaseEvent {
   id: number;
-  source: OpenHandsSourceType;
+  source: WSAI CODESourceType;
   message: string;
   timestamp: string; // ISO 8601
 }
 
-export interface OpenHandsActionEvent<
-  T extends OpenHandsEventType,
-> extends OpenHandsBaseEvent {
+export interface WSAI CODEActionEvent<
+  T extends WSAI CODEEventType,
+> extends WSAI CODEBaseEvent {
   action: T;
   args: Record<string, unknown>;
 }
 
-export interface OpenHandsObservationEvent<
-  T extends OpenHandsEventType,
-> extends OpenHandsBaseEvent {
+export interface WSAI CODEObservationEvent<
+  T extends WSAI CODEEventType,
+> extends WSAI CODEBaseEvent {
   cause: number;
   observation: T;
   content: string;

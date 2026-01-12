@@ -4,8 +4,8 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from openhands.controller.state.state import State
-from openhands.core.config.condenser_config import (
+from wsai_code.controller.state.state import State
+from wsai_code.core.config.condenser_config import (
     AmortizedForgettingCondenserConfig,
     BrowserOutputCondenserConfig,
     CondenserPipelineConfig,
@@ -16,19 +16,19 @@ from openhands.core.config.condenser_config import (
     RecentEventsCondenserConfig,
     StructuredSummaryCondenserConfig,
 )
-from openhands.core.config.llm_config import LLMConfig
-from openhands.core.config.openhands_config import OpenHandsConfig
-from openhands.core.message import Message, TextContent
-from openhands.core.schema.action import ActionType
-from openhands.events.event import Event, EventSource
-from openhands.events.observation import BrowserOutputObservation
-from openhands.events.observation.agent import AgentCondensationObservation
-from openhands.events.observation.observation import Observation
-from openhands.llm import LLM
-from openhands.llm.llm_registry import LLMRegistry
-from openhands.memory.condenser import Condenser
-from openhands.memory.condenser.condenser import Condensation, RollingCondenser, View
-from openhands.memory.condenser.impl import (
+from wsai_code.core.config.llm_config import LLMConfig
+from wsai_code.core.config.wsai_code_config import WSAI CODEConfig
+from wsai_code.core.message import Message, TextContent
+from wsai_code.core.schema.action import ActionType
+from wsai_code.events.event import Event, EventSource
+from wsai_code.events.observation import BrowserOutputObservation
+from wsai_code.events.observation.agent import AgentCondensationObservation
+from wsai_code.events.observation.observation import Observation
+from wsai_code.llm import LLM
+from wsai_code.llm.llm_registry import LLMRegistry
+from wsai_code.memory.condenser import Condenser
+from wsai_code.memory.condenser.condenser import Condensation, RollingCondenser, View
+from wsai_code.memory.condenser.impl import (
     AmortizedForgettingCondenser,
     BrowserOutputCondenser,
     ImportantEventSelection,
@@ -39,8 +39,8 @@ from openhands.memory.condenser.impl import (
     RecentEventsCondenser,
     StructuredSummaryCondenser,
 )
-from openhands.memory.condenser.impl.pipeline import CondenserPipeline
-from openhands.server.services.conversation_stats import ConversationStats
+from wsai_code.memory.condenser.impl.pipeline import CondenserPipeline
+from wsai_code.server.services.conversation_stats import ConversationStats
 
 
 def create_test_event(
@@ -111,8 +111,8 @@ def mock_conversation_stats() -> ConversationStats:
 @pytest.fixture
 def mock_llm_registry(mock_llm, mock_conversation_stats) -> LLMRegistry:
     """Creates an actual LLMRegistry that returns real LLMs."""
-    # Create an actual LLMRegistry with a basic OpenHandsConfig
-    config = OpenHandsConfig()
+    # Create an actual LLMRegistry with a basic WSAI CODEConfig
+    config = WSAI CODEConfig()
     registry = LLMRegistry(config=config, agent_cls=None, retry_listener=None)
 
     return registry

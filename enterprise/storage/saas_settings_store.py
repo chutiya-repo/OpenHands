@@ -27,19 +27,19 @@ from sqlalchemy.orm import sessionmaker
 from storage.database import session_maker
 from storage.user_settings import UserSettings
 
-from openhands.core.config.openhands_config import OpenHandsConfig
-from openhands.server.settings import Settings
-from openhands.storage import get_file_store
-from openhands.storage.settings.settings_store import SettingsStore
-from openhands.utils.async_utils import call_sync_from_async
-from openhands.utils.http_session import httpx_verify_option
+from wsai_code.core.config.wsai_code_config import WSAI CODEConfig
+from wsai_code.server.settings import Settings
+from wsai_code.storage import get_file_store
+from wsai_code.storage.settings.settings_store import SettingsStore
+from wsai_code.utils.async_utils import call_sync_from_async
+from wsai_code.utils.http_session import httpx_verify_option
 
 
 @dataclass
 class SaasSettingsStore(SettingsStore):
     user_id: str
     session_maker: sessionmaker
-    config: OpenHandsConfig
+    config: WSAI CODEConfig
 
     def get_user_settings_by_keycloak_id(
         self, keycloak_user_id: str, session=None
@@ -99,9 +99,9 @@ class SaasSettingsStore(SettingsStore):
             return settings
 
     async def store(self, item: Settings):
-        # Check if provider is OpenHands and generate API key if needed
-        if item and self._is_openhands_provider(item):
-            await self._ensure_openhands_api_key(item)
+        # Check if provider is WSAI CODE and generate API key if needed
+        if item and self._is_wsai_code_provider(item):
+            await self._ensure_wsai_code_api_key(item)
 
         with self.session_maker() as session:
             existing = None
@@ -393,7 +393,7 @@ class SaasSettingsStore(SettingsStore):
     @classmethod
     async def get_instance(
         cls,
-        config: OpenHandsConfig,
+        config: WSAI CODEConfig,
         user_id: str,  # type: ignore[override]
     ) -> SaasSettingsStore:
         logger.debug(f'saas_settings_store.get_instance::{user_id}')
@@ -445,27 +445,27 @@ class SaasSettingsStore(SettingsStore):
     def _should_encrypt(self, key: str) -> bool:
         return key in ('llm_api_key', 'llm_api_key_for_byor', 'search_api_key')
 
-    def _is_openhands_provider(self, item: Settings) -> bool:
-        """Check if the settings use the OpenHands provider."""
-        return bool(item.llm_model and item.llm_model.startswith('openhands/'))
+    def _is_wsai_code_provider(self, item: Settings) -> bool:
+        """Check if the settings use the WSAI CODE provider."""
+        return bool(item.llm_model and item.llm_model.startswith('wsai_code/'))
 
-    async def _ensure_openhands_api_key(self, item: Settings) -> None:
-        """Generate and set the OpenHands API key for the given settings.
+    async def _ensure_wsai_code_api_key(self, item: Settings) -> None:
+        """Generate and set the WSAI CODE API key for the given settings.
 
-        First checks if an existing key with the OpenHands alias exists,
+        First checks if an existing key with the WSAI CODE alias exists,
         and reuses it if found. Otherwise, generates a new key.
         """
         # Generate new key if none exists
-        generated_key = await self._generate_openhands_key()
+        generated_key = await self._generate_wsai_code_key()
         if generated_key:
             item.llm_api_key = SecretStr(generated_key)
             logger.info(
-                'saas_settings_store:store:generated_openhands_key',
+                'saas_settings_store:store:generated_wsai_code_key',
                 extra={'user_id': self.user_id},
             )
         else:
             logger.warning(
-                'saas_settings_store:store:failed_to_generate_openhands_key',
+                'saas_settings_store:store:failed_to_generate_wsai_code_key',
                 extra={'user_id': self.user_id},
             )
 
@@ -492,16 +492,16 @@ class SaasSettingsStore(SettingsStore):
                     'version': CURRENT_USER_SETTINGS_VERSION,
                     'model': llm_model,
                 },
-                'key_alias': f'OpenHands Cloud - user {self.user_id}',
+                'key_alias': f'WSAI CODE Cloud - user {self.user_id}',
             },
         )
         return response
 
-    async def _generate_openhands_key(self) -> str | None:
-        """Generate a new OpenHands provider key for a user."""
+    async def _generate_wsai_code_key(self) -> str | None:
+        """Generate a new WSAI CODE provider key for a user."""
         if not (LITE_LLM_API_KEY and LITE_LLM_API_URL):
             logger.warning(
-                'saas_settings_store:_generate_openhands_key:litellm_config_not_found',
+                'saas_settings_store:_generate_wsai_code_key:litellm_config_not_found',
                 extra={'user_id': self.user_id},
             )
             return None
@@ -517,7 +517,7 @@ class SaasSettingsStore(SettingsStore):
                     f'{LITE_LLM_API_URL}/key/generate',
                     json={
                         'user_id': self.user_id,
-                        'metadata': {'type': 'openhands'},
+                        'metadata': {'type': 'wsai_code'},
                     },
                 )
                 response.raise_for_status()
@@ -526,7 +526,7 @@ class SaasSettingsStore(SettingsStore):
 
                 if key:
                     logger.info(
-                        'saas_settings_store:_generate_openhands_key:success',
+                        'saas_settings_store:_generate_wsai_code_key:success',
                         extra={
                             'user_id': self.user_id,
                             'key_length': len(key) if key else 0,
@@ -538,13 +538,13 @@ class SaasSettingsStore(SettingsStore):
                     return key
                 else:
                     logger.error(
-                        'saas_settings_store:_generate_openhands_key:no_key_in_response',
+                        'saas_settings_store:_generate_wsai_code_key:no_key_in_response',
                         extra={'user_id': self.user_id, 'response_json': response_json},
                     )
                     return None
         except Exception as e:
             logger.exception(
-                'saas_settings_store:_generate_openhands_key:error',
+                'saas_settings_store:_generate_wsai_code_key:error',
                 extra={'user_id': self.user_id, 'error': str(e)},
             )
             return None

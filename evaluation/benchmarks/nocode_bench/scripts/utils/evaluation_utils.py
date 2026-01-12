@@ -13,7 +13,7 @@ from evaluation.utils.shared import (
     _process_instance_wrapper,
     _process_instance_wrapper_mp,
 )
-from openhands.core.logger import openhands_logger as logger
+from wsai_code.core.logger import wsai_code_logger as logger
 
 
 def update_progress_nc(

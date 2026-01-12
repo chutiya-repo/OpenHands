@@ -6,31 +6,31 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
-from openhands.controller.agent import Agent
-from openhands.controller.agent_controller import AgentController
-from openhands.core.config import OpenHandsConfig
-from openhands.core.main import run_controller
-from openhands.core.schema.agent import AgentState
-from openhands.events.action.agent import RecallAction
-from openhands.events.action.message import MessageAction, SystemMessageAction
-from openhands.events.event import EventSource
-from openhands.events.observation.agent import (
+from wsai_code.controller.agent import Agent
+from wsai_code.controller.agent_controller import AgentController
+from wsai_code.core.config import WSAI CODEConfig
+from wsai_code.core.main import run_controller
+from wsai_code.core.schema.agent import AgentState
+from wsai_code.events.action.agent import RecallAction
+from wsai_code.events.action.message import MessageAction, SystemMessageAction
+from wsai_code.events.event import EventSource
+from wsai_code.events.observation.agent import (
     RecallObservation,
     RecallType,
 )
-from openhands.events.serialization.observation import observation_from_dict
-from openhands.events.stream import EventStream
-from openhands.llm import LLM
-from openhands.llm.llm_registry import LLMRegistry
-from openhands.llm.metrics import Metrics
-from openhands.memory.memory import Memory
-from openhands.runtime.impl.action_execution.action_execution_client import (
+from wsai_code.events.serialization.observation import observation_from_dict
+from wsai_code.events.stream import EventStream
+from wsai_code.llm import LLM
+from wsai_code.llm.llm_registry import LLMRegistry
+from wsai_code.llm.metrics import Metrics
+from wsai_code.memory.memory import Memory
+from wsai_code.runtime.impl.action_execution.action_execution_client import (
     ActionExecutionClient,
 )
-from openhands.server.services.conversation_stats import ConversationStats
-from openhands.server.session.agent_session import AgentSession
-from openhands.storage.memory import InMemoryFileStore
-from openhands.utils.prompt import (
+from wsai_code.server.services.conversation_stats import ConversationStats
+from wsai_code.server.session.agent_session import AgentSession
+from wsai_code.storage.memory import InMemoryFileStore
+from wsai_code.utils.prompt import (
     ConversationInstructions,
     PromptManager,
     RepositoryInfo,
@@ -68,9 +68,9 @@ def memory(event_stream):
 
 @pytest.fixture
 def prompt_dir(tmp_path):
-    # Copy contents from "openhands/agenthub/codeact_agent" to the temp directory
+    # Copy contents from "wsai_code/agenthub/codeact_agent" to the temp directory
     shutil.copytree(
-        'openhands/agenthub/codeact_agent/prompts', tmp_path, dirs_exist_ok=True
+        'wsai_code/agenthub/codeact_agent/prompts', tmp_path, dirs_exist_ok=True
     )
 
     # Return the temporary directory path
@@ -83,7 +83,7 @@ def mock_agent():
     agent = MagicMock(spec=Agent)
     agent.llm = MagicMock(spec=LLM)
     agent.llm.metrics = Metrics()
-    agent.llm.config = OpenHandsConfig().get_llm_config()
+    agent.llm.config = WSAI CODEConfig().get_llm_config()
 
     # Add a proper system message mock
     system_message = SystemMessageAction(content='Test system message')
@@ -109,10 +109,10 @@ async def test_memory_on_event_exception_handling(memory, event_stream, mock_age
         patch.object(
             memory, '_on_workspace_context_recall', side_effect=Exception('Test error')
         ),
-        patch('openhands.core.main.create_agent', return_value=mock_agent),
+        patch('wsai_code.core.main.create_agent', return_value=mock_agent),
     ):
         state = await run_controller(
-            config=OpenHandsConfig(),
+            config=WSAI CODEConfig(),
             initial_user_action=MessageAction(content='Test message'),
             runtime=runtime,
             sid='test',
@@ -142,10 +142,10 @@ async def test_memory_on_workspace_context_recall_exception_handling(
             '_find_microagent_knowledge',
             side_effect=Exception('Test error from _find_microagent_knowledge'),
         ),
-        patch('openhands.core.main.create_agent', return_value=mock_agent),
+        patch('wsai_code.core.main.create_agent', return_value=mock_agent),
     ):
         state = await run_controller(
-            config=OpenHandsConfig(),
+            config=WSAI CODEConfig(),
             initial_user_action=MessageAction(content='Test message'),
             runtime=runtime,
             sid='test',
@@ -259,7 +259,7 @@ REPOSITORY INSTRUCTIONS: This is a test repository.
 
     # Patch the global microagents directory to use our test directory
     test_microagents_dir = os.path.join(prompt_dir, 'micro')
-    with patch('openhands.memory.memory.GLOBAL_MICROAGENTS_DIR', test_microagents_dir):
+    with patch('wsai_code.memory.memory.GLOBAL_MICROAGENTS_DIR', test_microagents_dir):
         # Initialize Memory
         memory = Memory(
             event_stream=event_stream,
@@ -554,7 +554,7 @@ REPOSITORY INSTRUCTIONS: This is the second test repository.
 
     # Patch the global microagents directory to use our test directory
     test_microagents_dir = os.path.join(prompt_dir, 'micro')
-    with patch('openhands.memory.memory.GLOBAL_MICROAGENTS_DIR', test_microagents_dir):
+    with patch('wsai_code.memory.memory.GLOBAL_MICROAGENTS_DIR', test_microagents_dir):
         # Initialize Memory
         memory = Memory(
             event_stream=event_stream,
@@ -638,12 +638,12 @@ async def test_conversation_instructions_plumbed_to_memory(
     # Patch AgentController
     with (
         patch(
-            'openhands.server.session.agent_session.AgentController', SpyAgentController
+            'wsai_code.server.session.agent_session.AgentController', SpyAgentController
         ),
     ):
         await session.start(
             runtime_name='test-runtime',
-            config=OpenHandsConfig(),
+            config=WSAI CODEConfig(),
             agent=mock_agent,
             max_iterations=10,
             conversation_instructions='instructions for conversation',

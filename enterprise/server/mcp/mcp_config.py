@@ -3,14 +3,14 @@ from typing import TYPE_CHECKING
 from storage.api_key_store import ApiKeyStore
 
 if TYPE_CHECKING:
-    from openhands.core.config.openhands_config import OpenHandsConfig
+    from wsai_code.core.config.wsai_code_config import WSAI CODEConfig
 
-from openhands.core.config.mcp_config import (
+from wsai_code.core.config.mcp_config import (
     MCPSHTTPServerConfig,
     MCPStdioServerConfig,
-    OpenHandsMCPConfig,
+    WSAI CODEMCPConfig,
 )
-from openhands.core.logger import openhands_logger as logger
+from wsai_code.core.logger import wsai_code_logger as logger
 
 
 # We opt for Streamable HTTP over SSE connection to the main app server's MCP
@@ -22,17 +22,17 @@ from openhands.core.logger import openhands_logger as logger
 # require bespoke implementation to make sure all subsequent requests hit the same replica. It is
 # also not resistant to replica pod restarts (it will kill the connection and there's no recovering from it)
 # NOTE: these details are specific to the MCP protocol
-class SaaSOpenHandsMCPConfig(OpenHandsMCPConfig):
+class SaaSWSAI CODEMCPConfig(WSAI CODEMCPConfig):
     @staticmethod
     def create_default_mcp_server_config(
-        host: str, config: 'OpenHandsConfig', user_id: str | None = None
+        host: str, config: 'WSAI CODEConfig', user_id: str | None = None
     ) -> tuple[MCPSHTTPServerConfig | None, list[MCPStdioServerConfig]]:
         """
         Create a default MCP server configuration.
 
         Args:
             host: Host string
-            config: OpenHandsConfig
+            config: WSAI CODEConfig
         Returns:
             A tuple containing the default SSE server configuration and a list of MCP stdio server configurations
         """

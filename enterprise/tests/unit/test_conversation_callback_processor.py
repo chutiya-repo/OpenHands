@@ -12,7 +12,7 @@ from storage.conversation_callback import (
 )
 from storage.stored_conversation_metadata import StoredConversationMetadata
 
-from openhands.events.observation.agent import AgentStateChangedObservation
+from wsai_code.events.observation.agent import AgentStateChangedObservation
 
 
 class MockConversationCallbackProcessor(ConversationCallbackProcessor):

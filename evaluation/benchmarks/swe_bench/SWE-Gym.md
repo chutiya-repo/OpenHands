@@ -29,13 +29,13 @@ We use it to train strong LM agents that achieve state-of-the-art open results o
 </p>
 
 ---
-# Run SWE-Gym with OpenHands
+# Run SWE-Gym with WSAI CODE
 
 The process of running SWE-Gym is very similar to how you'd run SWE-Bench evaluation.
 
 
-1. First, clone OpenHands repo `git clone https://github.com/OpenHands/OpenHands.git`
-2. Then setup the repo following [Development.md](https://github.com/OpenHands/OpenHands/blob/main/Development.md)
+1. First, clone WSAI CODE repo `git clone https://github.com/WSAI CODE/WSAI CODE.git`
+2. Then setup the repo following [Development.md](https://github.com/WSAI CODE/WSAI CODE/blob/main/Development.md)
 3. Then you can simply serve your own model as an OpenAI compatible endpoint, put those info in config.toml. You can do this by following instruction [here](../../README.md#setup).
 4. And then simply do the following to sample for 16x parallelism:
 
@@ -69,9 +69,9 @@ We create SWE-Gym, the first environment for training SWE agents, with **2.4K re
 
 ## SWE-Gym trains LMs as agents
 
-When fine-tuned on less than 500 agent-environment interaction trajectories sampled from it from GPT-4o and Claude 3.5 Sonnet, we achieve **+14%** absolute gains on SWE-Bench Verified with an 32B LM-powered OpenHands agent.
+When fine-tuned on less than 500 agent-environment interaction trajectories sampled from it from GPT-4o and Claude 3.5 Sonnet, we achieve **+14%** absolute gains on SWE-Bench Verified with an 32B LM-powered WSAI CODE agent.
 
-![OpenHands Performance diff before and after training](https://github.com/SWE-Gym/SWE-Gym/blob/main/assets/images/oh-agent.jpg?raw=true)
+![WSAI CODE Performance diff before and after training](https://github.com/SWE-Gym/SWE-Gym/blob/main/assets/images/oh-agent.jpg?raw=true)
 
 
 ## SWE-Gym enables self-improvement
@@ -93,8 +93,8 @@ These verifiers identify most promising solutions via best-of-n selection, toget
 ![Inference Time Scaling for Moatless Agent](https://github.com/SWE-Gym/SWE-Gym/blob/main/assets/images/inference-ml.jpg?raw=true)
 *Inference Time Scaling for Moatless Agent*
 
-![Inference Time Scaling for OpenHands Agent](https://github.com/SWE-Gym/SWE-Gym/blob/main/assets/images/inference-oh.jpg?raw=true)
-*Inference Time Scaling for OpenHands Agent*
+![Inference Time Scaling for WSAI CODE Agent](https://github.com/SWE-Gym/SWE-Gym/blob/main/assets/images/inference-oh.jpg?raw=true)
+*Inference Time Scaling for WSAI CODE Agent*
 
 
 ## Our baselines on SWE-Gym shows strong scaling trends

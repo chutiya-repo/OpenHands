@@ -24,45 +24,45 @@ from storage.api_key_store import ApiKeyStore
 from storage.database import session_maker
 from storage.stored_conversation_metadata import StoredConversationMetadata
 
-from openhands.controller.agent import Agent
-from openhands.core.config import LLMConfig, OpenHandsConfig
-from openhands.core.config.mcp_config import MCPConfig, MCPSHTTPServerConfig
-from openhands.core.logger import openhands_logger as logger
-from openhands.events.action import MessageAction
-from openhands.events.event_store import EventStore
-from openhands.events.serialization.event import event_to_dict
-from openhands.integrations.provider import (
+from wsai_code.controller.agent import Agent
+from wsai_code.core.config import LLMConfig, WSAI CODEConfig
+from wsai_code.core.config.mcp_config import MCPConfig, MCPSHTTPServerConfig
+from wsai_code.core.logger import wsai_code_logger as logger
+from wsai_code.events.action import MessageAction
+from wsai_code.events.event_store import EventStore
+from wsai_code.events.serialization.event import event_to_dict
+from wsai_code.integrations.provider import (
     PROVIDER_TOKEN_TYPE,
     ProviderHandler,
     ProviderToken,
 )
-from openhands.runtime.impl.remote.remote_runtime import RemoteRuntime
-from openhands.runtime.plugins.vscode import VSCodeRequirement
-from openhands.runtime.runtime_status import RuntimeStatus
-from openhands.server.config.server_config import ServerConfig
-from openhands.server.constants import ROOM_KEY
-from openhands.server.conversation_manager.conversation_manager import (
+from wsai_code.runtime.impl.remote.remote_runtime import RemoteRuntime
+from wsai_code.runtime.plugins.vscode import VSCodeRequirement
+from wsai_code.runtime.runtime_status import RuntimeStatus
+from wsai_code.server.config.server_config import ServerConfig
+from wsai_code.server.constants import ROOM_KEY
+from wsai_code.server.conversation_manager.conversation_manager import (
     ConversationManager,
 )
-from openhands.server.data_models.agent_loop_info import AgentLoopInfo
-from openhands.server.monitoring import MonitoringListener
-from openhands.server.session import Session
-from openhands.server.session.conversation import ServerConversation
-from openhands.server.session.conversation_init_data import ConversationInitData
-from openhands.storage.conversation.conversation_store import ConversationStore
-from openhands.storage.data_models.conversation_metadata import ConversationMetadata
-from openhands.storage.data_models.conversation_status import ConversationStatus
-from openhands.storage.data_models.settings import Settings
-from openhands.storage.files import FileStore
-from openhands.storage.locations import (
+from wsai_code.server.data_models.agent_loop_info import AgentLoopInfo
+from wsai_code.server.monitoring import MonitoringListener
+from wsai_code.server.session import Session
+from wsai_code.server.session.conversation import ServerConversation
+from wsai_code.server.session.conversation_init_data import ConversationInitData
+from wsai_code.storage.conversation.conversation_store import ConversationStore
+from wsai_code.storage.data_models.conversation_metadata import ConversationMetadata
+from wsai_code.storage.data_models.conversation_status import ConversationStatus
+from wsai_code.storage.data_models.settings import Settings
+from wsai_code.storage.files import FileStore
+from wsai_code.storage.locations import (
     get_conversation_event_filename,
     get_conversation_events_dir,
 )
-from openhands.utils.async_utils import call_sync_from_async
-from openhands.utils.http_session import httpx_verify_option
-from openhands.utils.import_utils import get_impl
-from openhands.utils.shutdown_listener import should_continue
-from openhands.utils.utils import create_registry_and_conversation_stats
+from wsai_code.utils.async_utils import call_sync_from_async
+from wsai_code.utils.http_session import httpx_verify_option
+from wsai_code.utils.import_utils import get_impl
+from wsai_code.utils.shutdown_listener import should_continue
+from wsai_code.utils.utils import create_registry_and_conversation_stats
 
 # Pattern for accessing runtime pods externally
 RUNTIME_URL_PATTERN = os.getenv(
@@ -108,7 +108,7 @@ class SaasNestedConversationManager(ConversationManager):
     """Conversation manager where the agent loops exist inside the remote containers."""
 
     sio: socketio.AsyncServer
-    config: OpenHandsConfig
+    config: WSAI CODEConfig
     server_config: ServerConfig
     file_store: FileStore
     event_retrieval: EventRetrieval
@@ -401,12 +401,12 @@ class SaasNestedConversationManager(ConversationManager):
         self, client: httpx.AsyncClient, api_url: str, sid: str, user_id: str
     ):
         # Prevent circular import
-        from openhands.experiments.experiment_manager import (
+        from wsai_code.experiments.experiment_manager import (
             ExperimentConfig,
             ExperimentManagerImpl,
         )
 
-        config: OpenHandsConfig = ExperimentManagerImpl.run_config_variant_test(
+        config: WSAI CODEConfig = ExperimentManagerImpl.run_config_variant_test(
             user_id, sid, self.config
         )
 
@@ -784,7 +784,7 @@ class SaasNestedConversationManager(ConversationManager):
     def get_instance(
         cls,
         sio: socketio.AsyncServer,
-        config: OpenHandsConfig,
+        config: WSAI CODEConfig,
         file_store: FileStore,
         server_config: ServerConfig,
         monitoring_listener: MonitoringListener,
@@ -887,7 +887,7 @@ class SaasNestedConversationManager(ConversationManager):
         config = self.config.model_copy(deep=True)
         env_vars = config.sandbox.runtime_startup_env_vars
         env_vars['CONVERSATION_MANAGER_CLASS'] = (
-            'openhands.server.conversation_manager.standalone_conversation_manager.StandaloneConversationManager'
+            'wsai_code.server.conversation_manager.standalone_conversation_manager.StandaloneConversationManager'
         )
         env_vars['LOG_JSON'] = '1'
         env_vars['SERVE_FRONTEND'] = '0'
@@ -896,7 +896,7 @@ class SaasNestedConversationManager(ConversationManager):
         env_vars['USER'] = (
             RUNTIME_USERNAME
             if RUNTIME_USERNAME
-            else ('openhands' if config.run_as_openhands else 'root')
+            else ('wsai_code' if config.run_as_wsai_code else 'root')
         )
         env_vars['PERMITTED_CORS_ORIGINS'] = ','.join(PERMITTED_CORS_ORIGINS)
         env_vars['port'] = '60000'
@@ -906,7 +906,7 @@ class SaasNestedConversationManager(ConversationManager):
         env_vars['WORK_PORT_2'] = '12001'
         # We need to be able to specify the nested conversation id within the nested runtime
         env_vars['ALLOW_SET_CONVERSATION_ID'] = '1'
-        env_vars['FILE_STORE_PATH'] = '/workspace/.openhands/file_store'
+        env_vars['FILE_STORE_PATH'] = '/workspace/.wsai_code/file_store'
         env_vars['WORKSPACE_BASE'] = '/workspace/project'
         env_vars['WORKSPACE_MOUNT_PATH_IN_SANDBOX'] = '/workspace/project'
         env_vars['SANDBOX_CLOSE_DELAY'] = '0'
@@ -951,7 +951,7 @@ class SaasNestedConversationManager(ConversationManager):
             headless_mode=False,
             user_id=user_id,
             # git_provider_tokens: PROVIDER_TOKEN_TYPE | None = None,
-            main_module='openhands.server',
+            main_module='wsai_code.server',
             llm_registry=llm_registry,
         )
 

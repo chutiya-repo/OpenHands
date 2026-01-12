@@ -1,8 +1,8 @@
-from openhands.events.action.agent import CondensationAction, CondensationRequestAction
-from openhands.events.action.message import MessageAction
-from openhands.events.event import Event
-from openhands.events.observation.agent import AgentCondensationObservation
-from openhands.memory.view import View
+from wsai_code.events.action.agent import CondensationAction, CondensationRequestAction
+from wsai_code.events.action.message import MessageAction
+from wsai_code.events.event import Event
+from wsai_code.events.observation.agent import AgentCondensationObservation
+from wsai_code.memory.view import View
 
 
 def test_view_preserves_uncondensed_lists() -> None:

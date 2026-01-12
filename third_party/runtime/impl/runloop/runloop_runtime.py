@@ -7,19 +7,19 @@ from runloop_api_client import Runloop
 from runloop_api_client.types import DevboxView
 from runloop_api_client.types.shared_params import LaunchParameters
 
-from openhands.core.config import OpenHandsConfig
-from openhands.core.logger import openhands_logger as logger
-from openhands.events import EventStream
-from openhands.integrations.provider import PROVIDER_TOKEN_TYPE
-from openhands.runtime.impl.action_execution.action_execution_client import (
+from wsai_code.core.config import WSAI CODEConfig
+from wsai_code.core.logger import wsai_code_logger as logger
+from wsai_code.events import EventStream
+from wsai_code.integrations.provider import PROVIDER_TOKEN_TYPE
+from wsai_code.runtime.impl.action_execution.action_execution_client import (
     ActionExecutionClient,
 )
-from openhands.runtime.plugins import PluginRequirement
-from openhands.runtime.runtime_status import RuntimeStatus
-from openhands.runtime.utils.command import get_action_execution_server_startup_command
-from openhands.utils.tenacity_stop import stop_if_should_exit
+from wsai_code.runtime.plugins import PluginRequirement
+from wsai_code.runtime.runtime_status import RuntimeStatus
+from wsai_code.runtime.utils.command import get_action_execution_server_startup_command
+from wsai_code.utils.tenacity_stop import stop_if_should_exit
 
-CONTAINER_NAME_PREFIX = "openhands-runtime-"
+CONTAINER_NAME_PREFIX = "wsai_code-runtime-"
 
 
 class RunloopRuntime(ActionExecutionClient):
@@ -30,7 +30,7 @@ class RunloopRuntime(ActionExecutionClient):
 
     def __init__(
         self,
-        config: OpenHandsConfig,
+        config: WSAI CODEConfig,
         event_stream: EventStream,
         sid: str = "default",
         plugins: list[PluginRequirement] | None = None,
@@ -103,9 +103,9 @@ class RunloopRuntime(ActionExecutionClient):
         # (ie browser) to be installed as root
         # Convert start_command list to a single command string with additional setup
         start_command_str = (
-            "export MAMBA_ROOT_PREFIX=/openhands/micromamba && "
-            "cd /openhands/code && "
-            "/openhands/micromamba/bin/micromamba run -n openhands poetry config virtualenvs.path /openhands/poetry && "
+            "export MAMBA_ROOT_PREFIX=/wsai_code/micromamba && "
+            "cd /wsai_code/code && "
+            "/wsai_code/micromamba/bin/micromamba run -n wsai_code poetry config virtualenvs.path /wsai_code/poetry && "
             + " ".join(start_command)
         )
         entrypoint = f"sudo bash -c '{start_command_str}'"
@@ -114,7 +114,7 @@ class RunloopRuntime(ActionExecutionClient):
             entrypoint=entrypoint,
             name=self.sid,
             environment_variables={"DEBUG": "true"} if self.config.debug else {},
-            prebuilt="openhands",
+            prebuilt="wsai_code",
             launch_parameters=LaunchParameters(
                 available_ports=[self._sandbox_port, self._vscode_port],
                 resource_size_request="LARGE",

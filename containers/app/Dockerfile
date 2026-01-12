@@ -1,4 +1,4 @@
-ARG OPENHANDS_BUILD_VERSION=dev
+ARG WSAI_CODE_BUILD_VERSION=dev
 FROM node:25.2-trixie-slim AS frontend-builder
 
 WORKDIR /app
@@ -28,23 +28,23 @@ COPY pyproject.toml poetry.lock ./
 RUN touch README.md
 RUN export POETRY_CACHE_DIR && poetry install --no-root && rm -rf $POETRY_CACHE_DIR
 
-FROM base AS openhands-app
+FROM base AS wsai_code-app
 
 WORKDIR /app
 
 # re-declare for this section
-ARG OPENHANDS_BUILD_VERSION
+ARG WSAI_CODE_BUILD_VERSION
 
-ENV RUN_AS_OPENHANDS=true
+ENV RUN_AS_WSAI_CODE=true
 # A random number--we need this to be different from the user's UID on the host machine
-ENV OPENHANDS_USER_ID=42420
+ENV WSAI_CODE_USER_ID=42420
 ENV SANDBOX_LOCAL_RUNTIME_URL=http://host.docker.internal
 ENV USE_HOST_NETWORK=false
 ENV WORKSPACE_BASE=/opt/workspace_base
-ENV OPENHANDS_BUILD_VERSION=$OPENHANDS_BUILD_VERSION
+ENV WSAI_CODE_BUILD_VERSION=$WSAI_CODE_BUILD_VERSION
 ENV SANDBOX_USER_ID=0
 ENV FILE_STORE=local
-ENV FILE_STORE_PATH=/.openhands
+ENV FILE_STORE_PATH=/.wsai_code
 ENV INIT_GIT_IN_EMPTY_WORKSPACE=1
 RUN mkdir -p $FILE_STORE_PATH
 RUN mkdir -p $WORKSPACE_BASE
@@ -58,38 +58,38 @@ RUN sed -i 's/^UID_MIN.*/UID_MIN 499/' /etc/login.defs
 # Default is 60000, but we've seen up to 200000
 RUN sed -i 's/^UID_MAX.*/UID_MAX 1000000/' /etc/login.defs
 
-RUN groupadd --gid $OPENHANDS_USER_ID openhands
-RUN useradd -l -m -u $OPENHANDS_USER_ID --gid $OPENHANDS_USER_ID -s /bin/bash openhands && \
-    usermod -aG openhands openhands && \
-    usermod -aG sudo openhands && \
+RUN groupadd --gid $WSAI_CODE_USER_ID wsai_code
+RUN useradd -l -m -u $WSAI_CODE_USER_ID --gid $WSAI_CODE_USER_ID -s /bin/bash wsai_code && \
+    usermod -aG wsai_code wsai_code && \
+    usermod -aG sudo wsai_code && \
     echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-RUN chown -R openhands:openhands /app && chmod -R 770 /app
-RUN sudo chown -R openhands:openhands $WORKSPACE_BASE && sudo chmod -R 770 $WORKSPACE_BASE
-USER openhands
+RUN chown -R wsai_code:wsai_code /app && chmod -R 770 /app
+RUN sudo chown -R wsai_code:wsai_code $WORKSPACE_BASE && sudo chmod -R 770 $WORKSPACE_BASE
+USER wsai_code
 
 ENV VIRTUAL_ENV=/app/.venv \
     PATH="/app/.venv/bin:$PATH" \
     PYTHONPATH='/app'
 
-COPY --chown=openhands:openhands --chmod=770 --from=backend-builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
+COPY --chown=wsai_code:wsai_code --chmod=770 --from=backend-builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
 
-COPY --chown=openhands:openhands --chmod=770 ./skills ./skills
-COPY --chown=openhands:openhands --chmod=770 ./openhands ./openhands
-COPY --chown=openhands:openhands --chmod=777 ./openhands/runtime/plugins ./openhands/runtime/plugins
-COPY --chown=openhands:openhands pyproject.toml poetry.lock README.md MANIFEST.in LICENSE ./
+COPY --chown=wsai_code:wsai_code --chmod=770 ./skills ./skills
+COPY --chown=wsai_code:wsai_code --chmod=770 ./wsai_code ./wsai_code
+COPY --chown=wsai_code:wsai_code --chmod=777 ./wsai_code/runtime/plugins ./wsai_code/runtime/plugins
+COPY --chown=wsai_code:wsai_code pyproject.toml poetry.lock README.md MANIFEST.in LICENSE ./
 
-# This is run as "openhands" user, and will create __pycache__ with openhands:openhands ownership
-RUN python openhands/core/download.py # No-op to download assets
+# This is run as "wsai_code" user, and will create __pycache__ with wsai_code:wsai_code ownership
+RUN python wsai_code/core/download.py # No-op to download assets
 # Add this line to set group ownership of all files/directories not already in "app" group
-# openhands:openhands -> openhands:openhands
-RUN find /app \! -group openhands -exec chgrp openhands {} +
+# wsai_code:wsai_code -> wsai_code:wsai_code
+RUN find /app \! -group wsai_code -exec chgrp wsai_code {} +
 
-COPY --chown=openhands:openhands --chmod=770 --from=frontend-builder /app/build ./frontend/build
-COPY --chown=openhands:openhands --chmod=770 ./containers/app/entrypoint.sh /app/entrypoint.sh
+COPY --chown=wsai_code:wsai_code --chmod=770 --from=frontend-builder /app/build ./frontend/build
+COPY --chown=wsai_code:wsai_code --chmod=770 ./containers/app/entrypoint.sh /app/entrypoint.sh
 
 USER root
 
 WORKDIR /app
 
 ENTRYPOINT ["/app/entrypoint.sh"]
-CMD ["uvicorn", "openhands.server.listen:app", "--host", "0.0.0.0", "--port", "3000"]
+CMD ["uvicorn", "wsai_code.server.listen:app", "--host", "0.0.0.0", "--port", "3000"]

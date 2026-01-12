@@ -6,8 +6,8 @@ from glob import glob
 from e2b_code_interpreter import Sandbox
 from e2b.exceptions import TimeoutException
 
-from openhands.core.config import SandboxConfig
-from openhands.core.logger import openhands_logger as logger
+from wsai_code.core.config import SandboxConfig
+from wsai_code.core.logger import wsai_code_logger as logger
 
 
 class E2BBox:

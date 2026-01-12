@@ -4,7 +4,7 @@ import {
   IPythonObservation,
   EditObservation,
   BrowseObservation,
-  OpenHandsObservation,
+  WSAI CODEObservation,
   RecallObservation,
   TaskTrackingObservation,
 } from "#/types/core/observations";
@@ -147,7 +147,7 @@ const getTaskTrackingObservationContent = (
   return content;
 };
 
-export const getObservationContent = (event: OpenHandsObservation): string => {
+export const getObservationContent = (event: WSAI CODEObservation): string => {
   switch (event.observation) {
     case "read":
       return getReadObservationContent(event);

@@ -29,29 +29,29 @@ from storage.proactive_conversation_store import ProactiveConversationStore
 from storage.saas_secrets_store import SaasSecretsStore
 from storage.saas_settings_store import SaasSettingsStore
 
-from openhands.agent_server.models import SendMessageRequest
-from openhands.app_server.app_conversation.app_conversation_models import (
+from wsai_code.agent_server.models import SendMessageRequest
+from wsai_code.app_server.app_conversation.app_conversation_models import (
     AppConversationStartRequest,
     AppConversationStartTaskStatus,
 )
-from openhands.app_server.config import get_app_conversation_service
-from openhands.app_server.services.injector import InjectorState
-from openhands.app_server.user.specifiy_user_context import USER_CONTEXT_ATTR
-from openhands.core.logger import openhands_logger as logger
-from openhands.integrations.github.github_service import GithubServiceImpl
-from openhands.integrations.provider import PROVIDER_TOKEN_TYPE, ProviderType
-from openhands.integrations.service_types import Comment
-from openhands.sdk import TextContent
-from openhands.server.services.conversation_service import (
+from wsai_code.app_server.config import get_app_conversation_service
+from wsai_code.app_server.services.injector import InjectorState
+from wsai_code.app_server.user.specifiy_user_context import USER_CONTEXT_ATTR
+from wsai_code.core.logger import wsai_code_logger as logger
+from wsai_code.integrations.github.github_service import GithubServiceImpl
+from wsai_code.integrations.provider import PROVIDER_TOKEN_TYPE, ProviderType
+from wsai_code.integrations.service_types import Comment
+from wsai_code.sdk import TextContent
+from wsai_code.server.services.conversation_service import (
     initialize_conversation,
     start_conversation,
 )
-from openhands.server.user_auth.user_auth import UserAuth
-from openhands.storage.data_models.conversation_metadata import (
+from wsai_code.server.user_auth.user_auth import UserAuth
+from wsai_code.storage.data_models.conversation_metadata import (
     ConversationMetadata,
     ConversationTrigger,
 )
-from openhands.utils.async_utils import call_sync_from_async
+from wsai_code.utils.async_utils import call_sync_from_async
 
 OH_LABEL, INLINE_OH_LABEL = get_oh_labels(HOST)
 
@@ -504,11 +504,11 @@ class GithubFailingAction:
 
         if any(failed_jobs['merge conflict']):
             suggestions.append(
-                f'@OpenHands please fix the merge conflicts on PR #{pr_number}{branch_info}'
+                f'@WSAI CODE please fix the merge conflicts on PR #{pr_number}{branch_info}'
             )
         if any(failed_jobs['actions']):
             suggestions.append(
-                f'@OpenHands please fix the failing actions on PR #{pr_number}{branch_info}'
+                f'@WSAI CODE please fix the failing actions on PR #{pr_number}{branch_info}'
             )
 
         # Take at most 2 suggestions

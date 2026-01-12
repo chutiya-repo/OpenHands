@@ -8,29 +8,29 @@ import psutil
 import pytest
 from pytest import TempPathFactory
 
-from openhands.core.schema import ActionType, ObservationType
-from openhands.events import EventSource, EventStream, EventStreamSubscriber
-from openhands.events.action import (
+from wsai_code.core.schema import ActionType, ObservationType
+from wsai_code.events import EventSource, EventStream, EventStreamSubscriber
+from wsai_code.events.action import (
     CmdRunAction,
     NullAction,
 )
-from openhands.events.action.files import (
+from wsai_code.events.action.files import (
     FileEditAction,
     FileReadAction,
     FileWriteAction,
 )
-from openhands.events.action.message import MessageAction
-from openhands.events.event import FileEditSource, FileReadSource
-from openhands.events.event_filter import EventFilter
-from openhands.events.observation import NullObservation
-from openhands.events.observation.files import (
+from wsai_code.events.action.message import MessageAction
+from wsai_code.events.event import FileEditSource, FileReadSource
+from wsai_code.events.event_filter import EventFilter
+from wsai_code.events.observation import NullObservation
+from wsai_code.events.observation.files import (
     FileEditObservation,
     FileReadObservation,
     FileWriteObservation,
 )
-from openhands.events.serialization.event import event_to_dict
-from openhands.storage import get_file_store
-from openhands.storage.locations import (
+from wsai_code.events.serialization.event import event_to_dict
+from wsai_code.storage import get_file_store
+from wsai_code.storage.locations import (
     get_conversation_event_filename,
 )
 

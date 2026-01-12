@@ -15,7 +15,7 @@ from integrations.solvability.models.featurizer import (
 )
 from sklearn.ensemble import RandomForestClassifier
 
-from openhands.core.config import LLMConfig
+from wsai_code.core.config import LLMConfig
 
 
 @pytest.fixture

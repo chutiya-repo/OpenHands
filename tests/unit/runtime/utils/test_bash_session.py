@@ -2,10 +2,10 @@ import os
 import tempfile
 import time
 
-from openhands.core.logger import openhands_logger as logger
-from openhands.events.action import CmdRunAction
-from openhands.runtime.utils.bash import BashCommandStatus, BashSession
-from openhands.runtime.utils.bash_constants import TIMEOUT_MESSAGE_TEMPLATE
+from wsai_code.core.logger import wsai_code_logger as logger
+from wsai_code.events.action import CmdRunAction
+from wsai_code.runtime.utils.bash import BashCommandStatus, BashSession
+from wsai_code.runtime.utils.bash_constants import TIMEOUT_MESSAGE_TEMPLATE
 
 
 def get_no_change_timeout_suffix(timeout_seconds):
@@ -30,7 +30,7 @@ def test_session_initialization():
     # Test with custom username
     session = BashSession(work_dir=os.getcwd(), username='nobody')
     session.initialize()
-    assert 'openhands-nobody' in session.session.name
+    assert 'wsai_code-nobody' in session.session.name
     session.close()
 
 

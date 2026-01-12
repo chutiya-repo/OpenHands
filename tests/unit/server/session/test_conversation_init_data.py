@@ -9,9 +9,9 @@ from types import MappingProxyType
 import pytest
 from pydantic import SecretStr
 
-from openhands.integrations.provider import CustomSecret, ProviderToken, ProviderType
-from openhands.server.session.conversation_init_data import ConversationInitData
-from openhands.storage.data_models.settings import Settings
+from wsai_code.integrations.provider import CustomSecret, ProviderToken, ProviderType
+from wsai_code.server.session.conversation_init_data import ConversationInitData
+from wsai_code.storage.data_models.settings import Settings
 
 
 @pytest.fixture
