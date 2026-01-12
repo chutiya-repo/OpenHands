@@ -12,11 +12,11 @@ from integrations.utils import GITLAB_WEBHOOK_URL
 from storage.gitlab_webhook import GitlabWebhook, WebhookStatus
 from storage.gitlab_webhook_store import GitlabWebhookStore
 
-from openhands.core.logger import openhands_logger as logger
-from openhands.integrations.service_types import GitService
+from wsai_code.core.logger import wsai_code_logger as logger
+from wsai_code.integrations.service_types import GitService
 
 # Webhook configuration constants
-WEBHOOK_NAME = 'OpenHands Resolver'
+WEBHOOK_NAME = 'WSAI CODE Resolver'
 SCOPES: list[str] = [
     'note_events',
     'merge_requests_events',

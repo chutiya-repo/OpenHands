@@ -3,9 +3,9 @@ from __future__ import annotations
 import unittest
 from unittest.mock import MagicMock, patch
 
-from openhands.core.config.llm_config import LLMConfig
-from openhands.core.config.openhands_config import OpenHandsConfig
-from openhands.llm.llm_registry import LLMRegistry, RegistryEvent
+from wsai_code.core.config.llm_config import LLMConfig
+from wsai_code.core.config.wsai_code_config import WSAI CODEConfig
+from wsai_code.llm.llm_registry import LLMRegistry, RegistryEvent
 
 
 class TestLLMRegistry(unittest.TestCase):
@@ -14,8 +14,8 @@ class TestLLMRegistry(unittest.TestCase):
         # Create a basic LLM config for testing
         self.llm_config = LLMConfig(model='test-model')
 
-        # Create a basic OpenHands config for testing
-        self.config = OpenHandsConfig(
+        # Create a basic WSAI CODE config for testing
+        self.config = WSAI CODEConfig(
             llms={'llm': self.llm_config}, default_agent='CodeActAgent'
         )
 

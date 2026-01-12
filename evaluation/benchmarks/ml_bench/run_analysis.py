@@ -4,15 +4,15 @@ import pprint
 
 import tqdm
 
-from openhands.core.config import (
+from wsai_code.core.config import (
     get_evaluation_parser,
     get_llm_config_arg,
-    load_openhands_config,
+    load_wsai_code_config,
 )
-from openhands.core.logger import openhands_logger as logger
-from openhands.llm.llm import LLM
+from wsai_code.core.logger import wsai_code_logger as logger
+from wsai_code.llm.llm import LLM
 
-config = load_openhands_config()
+config = load_wsai_code_config()
 
 
 def extract_test_results(res_file_path: str) -> tuple[list[str], list[str]]:
@@ -124,7 +124,7 @@ if __name__ == '__main__':
     )
     args, _ = parser.parse_known_args()
 
-    # Check https://github.com/OpenHands/OpenHands/blob/main/evaluation/swe_bench/README.md#configure-openhands-and-your-llm
+    # Check https://github.com/WSAI CODE/WSAI CODE/blob/main/evaluation/swe_bench/README.md#configure-wsai_code-and-your-llm
     # for details of how to set `llm_config`
     if args.llm_config:
         specified_llm_config = get_llm_config_arg(args.llm_config)

@@ -10,8 +10,8 @@ from storage.api_key_store import ApiKeyStore
 from storage.database import session_maker
 from storage.device_code_store import DeviceCodeStore
 
-from openhands.core.logger import openhands_logger as logger
-from openhands.server.user_auth import get_user_id
+from wsai_code.core.logger import wsai_code_logger as logger
+from wsai_code.server.user_auth import get_user_id
 
 # ---------------------------------------------------------------------------
 # Constants

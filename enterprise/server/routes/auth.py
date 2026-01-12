@@ -29,13 +29,13 @@ from storage.database import session_maker
 from storage.saas_settings_store import SaasSettingsStore
 from storage.user_settings import UserSettings
 
-from openhands.core.logger import openhands_logger as logger
-from openhands.integrations.provider import ProviderHandler
-from openhands.integrations.service_types import ProviderType, TokenResponse
-from openhands.server.services.conversation_service import create_provider_tokens_object
-from openhands.server.shared import config
-from openhands.server.user_auth import get_access_token
-from openhands.server.user_auth.user_auth import get_user_auth
+from wsai_code.core.logger import wsai_code_logger as logger
+from wsai_code.integrations.provider import ProviderHandler
+from wsai_code.integrations.service_types import ProviderType, TokenResponse
+from wsai_code.server.services.conversation_service import create_provider_tokens_object
+from wsai_code.server.shared import config
+from wsai_code.server.user_auth import get_access_token
+from wsai_code.server.user_auth.user_auth import get_user_auth
 
 with warnings.catch_warnings():
     warnings.simplefilter('ignore')

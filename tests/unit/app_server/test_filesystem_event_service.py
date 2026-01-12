@@ -10,9 +10,9 @@ from uuid import uuid4
 
 import pytest
 
-from openhands.agent_server.models import EventPage, EventSortOrder
-from openhands.app_server.event.filesystem_event_service import FilesystemEventService
-from openhands.sdk.event import PauseEvent, TokenEvent
+from wsai_code.agent_server.models import EventPage, EventSortOrder
+from wsai_code.app_server.event.filesystem_event_service import FilesystemEventService
+from wsai_code.sdk.event import PauseEvent, TokenEvent
 
 
 @pytest.fixture

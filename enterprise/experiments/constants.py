@@ -2,7 +2,7 @@ import os
 
 import posthog
 
-from openhands.core.logger import openhands_logger as logger
+from wsai_code.core.logger import wsai_code_logger as logger
 
 # Initialize PostHog
 posthog.api_key = os.environ.get('POSTHOG_CLIENT_KEY', 'phc_placeholder')

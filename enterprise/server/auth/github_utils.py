@@ -4,8 +4,8 @@ from integrations.github.github_service import SaaSGitHubService
 from pydantic import SecretStr
 from server.auth.sheets_client import GoogleSheetsClient
 
-from openhands.core.logger import openhands_logger as logger
-from openhands.integrations.github.github_types import GitHubUser
+from wsai_code.core.logger import wsai_code_logger as logger
+from wsai_code.integrations.github.github_types import GitHubUser
 
 
 class UserVerifier:

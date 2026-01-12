@@ -4,12 +4,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Messages } from "#/components/features/chat/messages";
 import {
   AssistantMessageAction,
-  OpenHandsAction,
+  WSAI CODEAction,
   UserMessageAction,
 } from "#/types/core/actions";
-import { OpenHandsObservation } from "#/types/core/observations";
+import { WSAI CODEObservation } from "#/types/core/observations";
 import ConversationService from "#/api/conversation-service/conversation-service.api";
-import { Conversation } from "#/api/open-hands.types";
+import { Conversation } from "#/api/wsai-code.types";
 
 vi.mock("react-router", () => ({
   useParams: () => ({ conversationId: "123" }),
@@ -20,7 +20,7 @@ let queryClient: QueryClient;
 const renderMessages = ({
   messages,
 }: {
-  messages: (OpenHandsAction | OpenHandsObservation)[];
+  messages: (WSAI CODEAction | WSAI CODEObservation)[];
 }) => {
   const { rerender, ...rest } = render(
     <Messages messages={messages} isAwaitingUserConfirmation={false} />,
@@ -34,7 +34,7 @@ const renderMessages = ({
   );
 
   const rerenderMessages = (
-    newMessages: (OpenHandsAction | OpenHandsObservation)[],
+    newMessages: (WSAI CODEAction | WSAI CODEObservation)[],
   ) => {
     rerender(
       <Messages messages={newMessages} isAwaitingUserConfirmation={false} />,

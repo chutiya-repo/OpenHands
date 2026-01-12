@@ -1,17 +1,17 @@
 import pytest
 from server.saas_monitoring_listener import SaaSMonitoringListener
 
-from openhands.core.config.openhands_config import OpenHandsConfig
-from openhands.core.schema.agent import AgentState
-from openhands.events.event import Event
-from openhands.events.observation import (
+from wsai_code.core.config.wsai_code_config import WSAI CODEConfig
+from wsai_code.core.schema.agent import AgentState
+from wsai_code.events.event import Event
+from wsai_code.events.observation import (
     AgentStateChangedObservation,
 )
 
 
 @pytest.fixture
 def listener():
-    return SaaSMonitoringListener.get_instance(OpenHandsConfig())
+    return SaaSMonitoringListener.get_instance(WSAI CODEConfig())
 
 
 def test_on_session_event_with_agent_state_changed_non_error(listener):

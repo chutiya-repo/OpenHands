@@ -2,10 +2,10 @@
 
 from unittest.mock import MagicMock, patch
 
-from openhands.events.action import CmdRunAction, FileReadAction
-from openhands.events.event import EventSource
-from openhands.events.observation import ErrorObservation, FileReadObservation
-from openhands.runtime.base import Runtime
+from wsai_code.events.action import CmdRunAction, FileReadAction
+from wsai_code.events.event import EventSource
+from wsai_code.events.observation import ErrorObservation, FileReadObservation
+from wsai_code.runtime.base import Runtime
 
 
 def test_maybe_run_setup_script_executes_action():
@@ -13,7 +13,7 @@ def test_maybe_run_setup_script_executes_action():
     # Create mock runtime
     runtime = MagicMock(spec=Runtime)
     runtime.read.return_value = FileReadObservation(
-        content="#!/bin/bash\necho 'test'", path='.openhands/setup.sh'
+        content="#!/bin/bash\necho 'test'", path='.wsai_code/setup.sh'
     )
 
     # Mock the event stream
@@ -29,7 +29,7 @@ def test_maybe_run_setup_script_executes_action():
         Runtime.maybe_run_setup_script(runtime)
 
     # Verify that read was called with the correct action
-    runtime.read.assert_called_once_with(FileReadAction(path='.openhands/setup.sh'))
+    runtime.read.assert_called_once_with(FileReadAction(path='.wsai_code/setup.sh'))
 
     # Verify that add_event was called with the correct action and source
     runtime.event_stream.add_event.assert_called_once()
@@ -44,7 +44,7 @@ def test_maybe_run_setup_script_executes_action():
     action = args[0]
     assert isinstance(action, CmdRunAction)
     assert (
-        action.command == 'chmod +x .openhands/setup.sh && source .openhands/setup.sh'
+        action.command == 'chmod +x .wsai_code/setup.sh && source .wsai_code/setup.sh'
     )
 
 
@@ -64,7 +64,7 @@ def test_maybe_run_setup_script_skips_when_file_not_found():
         Runtime.maybe_run_setup_script(runtime)
 
     # Verify that read was called with the correct action
-    runtime.read.assert_called_once_with(FileReadAction(path='.openhands/setup.sh'))
+    runtime.read.assert_called_once_with(FileReadAction(path='.wsai_code/setup.sh'))
 
     # Verify that add_event was not called
     runtime.event_stream.add_event.assert_not_called()

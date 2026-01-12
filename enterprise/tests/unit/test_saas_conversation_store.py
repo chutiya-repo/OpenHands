@@ -4,7 +4,7 @@ from unittest.mock import patch
 import pytest
 from storage.saas_conversation_store import SaasConversationStore
 
-from openhands.storage.data_models.conversation_metadata import ConversationMetadata
+from wsai_code.storage.data_models.conversation_metadata import ConversationMetadata
 
 
 @pytest.fixture(autouse=True)

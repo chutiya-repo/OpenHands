@@ -34,7 +34,7 @@ def setup():
     # Clone the repository to LCA_CI_PATH
     print('Switching branches')
     result = subprocess.run(
-        ['git', 'switch', 'open-hands-integration'],
+        ['git', 'switch', 'wsai-code-integration'],
         cwd=lca_ci_path,
         capture_output=True,
         text=True,

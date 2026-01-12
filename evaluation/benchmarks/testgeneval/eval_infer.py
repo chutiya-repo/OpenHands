@@ -37,23 +37,23 @@ from evaluation.benchmarks.testgeneval.utils import load_testgeneval_dataset
 from evaluation.utils.shared import (
     EvalMetadata,
     EvalOutput,
-    get_openhands_config_for_eval,
+    get_wsai_code_config_for_eval,
     prepare_dataset,
     reset_logger_for_multiprocessing,
     run_evaluation,
 )
-from openhands.core.config import OpenHandsConfig, SandboxConfig, get_evaluation_parser
-from openhands.core.logger import openhands_logger as logger
-from openhands.core.main import create_runtime
-from openhands.events.action import CmdRunAction
-from openhands.events.observation import CmdOutputObservation
-from openhands.utils.async_utils import call_async_from_sync
+from wsai_code.core.config import WSAI CODEConfig, SandboxConfig, get_evaluation_parser
+from wsai_code.core.logger import wsai_code_logger as logger
+from wsai_code.core.main import create_runtime
+from wsai_code.events.action import CmdRunAction
+from wsai_code.events.observation import CmdOutputObservation
+from wsai_code.utils.async_utils import call_async_from_sync
 
 DOCKER_IMAGE_PREFIX = os.environ.get('EVAL_DOCKER_IMAGE_PREFIX', 'docker.io/kdjain/')
 logger.info(f'Using docker image prefix: {DOCKER_IMAGE_PREFIX}')
 
 
-def get_config(instance: pd.Series) -> OpenHandsConfig:
+def get_config(instance: pd.Series) -> WSAI CODEConfig:
     base_container_image = get_instance_docker_image(instance['instance_id_swebench'])
     assert base_container_image, (
         f'Invalid container image for instance {instance["instance_id_swebench"]}.'
@@ -71,7 +71,7 @@ def get_config(instance: pd.Series) -> OpenHandsConfig:
         ),
     )
 
-    return get_openhands_config_for_eval(
+    return get_wsai_code_config_for_eval(
         sandbox_config=sandbox_config,
         runtime=os.environ.get('RUNTIME', 'docker'),  # Different default runtime
     )

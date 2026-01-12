@@ -2,8 +2,8 @@ import asyncio
 
 from pydantic import SecretStr
 
-from openhands.core.logger import openhands_logger as logger
-from openhands.server.types import AppMode
+from wsai_code.core.logger import wsai_code_logger as logger
+from wsai_code.server.types import AppMode
 
 
 def schedule_gitlab_repo_sync(
@@ -20,7 +20,7 @@ def schedule_gitlab_repo_sync(
         try:
             # Lazy import to avoid circular dependency:
             # middleware -> gitlab_sync -> integrations.gitlab.gitlab_service
-            # -> openhands.integrations.gitlab.gitlab_service -> get_impl
+            # -> wsai_code.integrations.gitlab.gitlab_service -> get_impl
             # -> integrations.gitlab.gitlab_service (circular)
             from integrations.gitlab.gitlab_service import SaaSGitLabService
 

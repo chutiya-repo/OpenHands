@@ -2,13 +2,13 @@
 
 from unittest.mock import MagicMock, patch
 
-from openhands.integrations.service_types import ProviderType as ServiceProviderType
-from openhands.resolver.interfaces.issue import Issue
-from openhands.resolver.send_pull_request import PR_SIGNATURE, send_pull_request
+from wsai_code.integrations.service_types import ProviderType as ServiceProviderType
+from wsai_code.resolver.interfaces.issue import Issue
+from wsai_code.resolver.send_pull_request import PR_SIGNATURE, send_pull_request
 
 
-@patch('openhands.resolver.send_pull_request.ServiceContextIssue')
-@patch('openhands.resolver.send_pull_request.ForgejoIssueHandler')
+@patch('wsai_code.resolver.send_pull_request.ServiceContextIssue')
+@patch('wsai_code.resolver.send_pull_request.ForgejoIssueHandler')
 @patch('subprocess.run')
 def test_send_pull_request_forgejo(
     mock_run, mock_forgejo_handler, mock_service_context
@@ -20,7 +20,7 @@ def test_send_pull_request_forgejo(
     mock_forgejo_handler.return_value = handler_instance
 
     service_context_instance = MagicMock()
-    service_context_instance.get_branch_name.return_value = 'openhands-fix-issue-7'
+    service_context_instance.get_branch_name.return_value = 'wsai_code-fix-issue-7'
     service_context_instance.branch_exists.return_value = True
     service_context_instance.get_default_branch_name.return_value = 'main'
     service_context_instance.get_clone_url.return_value = (
@@ -67,7 +67,7 @@ def test_send_pull_request_forgejo(
     expected_payload = {
         'title': 'Fix the Forgejo PR flow',
         'body': f'This pull request fixes #7.\n\n{PR_SIGNATURE}',
-        'head': 'openhands-fix-issue-7',
+        'head': 'wsai_code-fix-issue-7',
         'base': 'main',
         'draft': False,
     }

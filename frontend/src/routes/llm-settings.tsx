@@ -27,28 +27,28 @@ import { LlmSettingsInputsSkeleton } from "#/components/features/settings/llm-se
 import { KeyStatusIcon } from "#/components/features/settings/key-status-icon";
 import { DEFAULT_SETTINGS } from "#/services/settings";
 import { getProviderId } from "#/utils/map-provider";
-import { DEFAULT_OPENHANDS_MODEL } from "#/utils/verified-models";
+import { DEFAULT_WSAI_CODE_MODEL } from "#/utils/verified-models";
 
-interface OpenHandsApiKeyHelpProps {
+interface WSAI CODEApiKeyHelpProps {
   testId: string;
 }
 
-function OpenHandsApiKeyHelp({ testId }: OpenHandsApiKeyHelpProps) {
+function WSAI CODEApiKeyHelp({ testId }: WSAI CODEApiKeyHelpProps) {
   const { t } = useTranslation();
 
   return (
     <>
       <HelpLink
         testId={testId}
-        text={t(I18nKey.SETTINGS$OPENHANDS_API_KEY_HELP_TEXT)}
+        text={t(I18nKey.SETTINGS$WSAI_CODE_API_KEY_HELP_TEXT)}
         linkText={t(I18nKey.SETTINGS$NAV_API_KEYS)}
         href="https://app.all-hands.dev/settings/api-keys"
-        suffix={` ${t(I18nKey.SETTINGS$OPENHANDS_API_KEY_HELP_SUFFIX)}`}
+        suffix={` ${t(I18nKey.SETTINGS$WSAI_CODE_API_KEY_HELP_SUFFIX)}`}
       />
       <p className="text-xs">
         {t(I18nKey.SETTINGS$LLM_BILLING_INFO)}{" "}
         <a
-          href="https://docs.all-hands.dev/usage/llms/openhands-llms"
+          href="https://docs.all-hands.dev/usage/llms/wsai_code-llms"
           rel="noreferrer noopener"
           target="_blank"
           className="underline underline-offset-2"
@@ -110,27 +110,27 @@ function LlmSettingsScreen() {
     resources?.models || [],
   );
 
-  // Determine if we should hide the API key input and use OpenHands-managed key (when using OpenHands provider in SaaS mode)
+  // Determine if we should hide the API key input and use WSAI CODE-managed key (when using WSAI CODE provider in SaaS mode)
   const currentModel = currentSelectedModel || settings?.llm_model;
 
   const isSaasMode = config?.APP_MODE === "saas";
 
-  const isOpenHandsProvider = () => {
+  const isWSAI CODEProvider = () => {
     if (view === "basic") {
-      return selectedProvider === "openhands";
+      return selectedProvider === "wsai_code";
     }
 
     if (view === "advanced") {
       if (dirtyInputs.model) {
-        return currentModel?.startsWith("openhands/");
+        return currentModel?.startsWith("wsai_code/");
       }
-      return settings?.llm_model?.startsWith("openhands/");
+      return settings?.llm_model?.startsWith("wsai_code/");
     }
 
     return false;
   };
 
-  const shouldUseOpenHandsKey = isOpenHandsProvider() && isSaasMode;
+  const shouldUseWSAI CODEKey = isWSAI CODEProvider() && isSaasMode;
 
   // Determine if we should hide the agent dropdown when V1 conversation API is enabled
   const isV1Enabled = settings?.v1_enabled;
@@ -225,8 +225,8 @@ function LlmSettingsScreen() {
 
     const fullLlmModel = provider && model && `${provider}/${model}`;
 
-    // Use OpenHands-managed key for OpenHands provider in SaaS mode
-    const finalApiKey = shouldUseOpenHandsKey ? null : apiKey;
+    // Use WSAI CODE-managed key for WSAI CODE provider in SaaS mode
+    const finalApiKey = shouldUseWSAI CODEKey ? null : apiKey;
 
     saveSettings(
       {
@@ -276,8 +276,8 @@ function LlmSettingsScreen() {
       .get("security-analyzer-input")
       ?.toString();
 
-    // Use OpenHands-managed key for OpenHands provider in SaaS mode
-    const finalApiKey = shouldUseOpenHandsKey ? null : apiKey;
+    // Use WSAI CODE-managed key for WSAI CODE provider in SaaS mode
+    const finalApiKey = shouldUseWSAI CODEKey ? null : apiKey;
 
     saveSettings(
       {
@@ -512,19 +512,19 @@ function LlmSettingsScreen() {
                 <>
                   <ModelSelector
                     models={modelsAndProviders}
-                    currentModel={settings.llm_model || DEFAULT_OPENHANDS_MODEL}
+                    currentModel={settings.llm_model || DEFAULT_WSAI_CODE_MODEL}
                     onChange={handleModelIsDirty}
                     onDefaultValuesChanged={onDefaultValuesChanged}
                     wrapperClassName="!flex-col !gap-6"
                   />
-                  {(settings.llm_model?.startsWith("openhands/") ||
-                    currentSelectedModel?.startsWith("openhands/")) && (
-                    <OpenHandsApiKeyHelp testId="openhands-api-key-help" />
+                  {(settings.llm_model?.startsWith("wsai_code/") ||
+                    currentSelectedModel?.startsWith("wsai_code/")) && (
+                    <WSAI CODEApiKeyHelp testId="wsai_code-api-key-help" />
                   )}
                 </>
               )}
 
-              {!shouldUseOpenHandsKey && (
+              {!shouldUseWSAI CODEKey && (
                 <>
                   <SettingsInput
                     testId="llm-api-key-input"
@@ -561,15 +561,15 @@ function LlmSettingsScreen() {
                 testId="llm-custom-model-input"
                 name="llm-custom-model-input"
                 label={t(I18nKey.SETTINGS$CUSTOM_MODEL)}
-                defaultValue={settings.llm_model || DEFAULT_OPENHANDS_MODEL}
-                placeholder={DEFAULT_OPENHANDS_MODEL}
+                defaultValue={settings.llm_model || DEFAULT_WSAI_CODE_MODEL}
+                placeholder={DEFAULT_WSAI_CODE_MODEL}
                 type="text"
                 className="w-full max-w-[680px]"
                 onChange={handleCustomModelIsDirty}
               />
-              {(settings.llm_model?.startsWith("openhands/") ||
-                currentSelectedModel?.startsWith("openhands/")) && (
-                <OpenHandsApiKeyHelp testId="openhands-api-key-help-2" />
+              {(settings.llm_model?.startsWith("wsai_code/") ||
+                currentSelectedModel?.startsWith("wsai_code/")) && (
+                <WSAI CODEApiKeyHelp testId="wsai_code-api-key-help-2" />
               )}
 
               <SettingsInput
@@ -583,7 +583,7 @@ function LlmSettingsScreen() {
                 onChange={handleBaseUrlIsDirty}
               />
 
-              {!shouldUseOpenHandsKey && (
+              {!shouldUseWSAI CODEKey && (
                 <>
                   <SettingsInput
                     testId="llm-api-key-input"

@@ -5,18 +5,18 @@ requires = [
 ]
 
 [tool.poetry]
-name = "openhands-ai"
+name = "wsai_code-ai"
 version = "1.1.0"
-description = "OpenHands: Code Less, Make More"
-authors = [ "OpenHands" ]
+description = "WSAI CODE: Code Less, Make More"
+authors = [ "WSAI CODE" ]
 license = "MIT"
 readme = "README.md"
-repository = "https://github.com/OpenHands/OpenHands"
+repository = "https://github.com/WSAI CODE/WSAI CODE"
 packages = [
-  { include = "openhands/**/*" },
+  { include = "wsai_code/**/*" },
   { include = "third_party/**/*" },
-  { include = "pyproject.toml", to = "openhands" },
-  { include = "poetry.lock", to = "openhands" },
+  { include = "pyproject.toml", to = "wsai_code" },
+  { include = "poetry.lock", to = "wsai_code" },
 ]
 include = [
   "skills/**/*",
@@ -62,7 +62,7 @@ opentelemetry-exporter-otlp-proto-grpc = "^1.33.1"
 libtmux = ">=0.46.2"
 pygithub = "^2.5.0"
 joblib = "*"
-openhands-aci = "0.3.2"
+wsai_code-aci = "0.3.2"
 python-socketio = "^5.11.4"
 sse-starlette = "^3.0.2"
 psutil = "*"
@@ -110,12 +110,12 @@ e2b-code-interpreter = { version = "^2.0.0", optional = true }
 pybase62 = "^1.0.0"
 
 # V1 dependencies
-#openhands-agent-server = { git = "https://github.com/OpenHands/agent-sdk.git", subdirectory = "openhands-agent-server", rev = "15f565b8ac38876e40dc05c08e2b04ccaae4a66d" }
-#openhands-sdk = { git = "https://github.com/OpenHands/agent-sdk.git", subdirectory = "openhands-sdk", rev = "15f565b8ac38876e40dc05c08e2b04ccaae4a66d" }
-#openhands-tools = { git = "https://github.com/OpenHands/agent-sdk.git", subdirectory = "openhands-tools", rev = "15f565b8ac38876e40dc05c08e2b04ccaae4a66d" }
-openhands-sdk = "1.8.1"
-openhands-agent-server = "1.8.1"
-openhands-tools = "1.8.1"
+#wsai_code-agent-server = { git = "https://github.com/WSAI CODE/agent-sdk.git", subdirectory = "wsai_code-agent-server", rev = "15f565b8ac38876e40dc05c08e2b04ccaae4a66d" }
+#wsai_code-sdk = { git = "https://github.com/WSAI CODE/agent-sdk.git", subdirectory = "wsai_code-sdk", rev = "15f565b8ac38876e40dc05c08e2b04ccaae4a66d" }
+#wsai_code-tools = { git = "https://github.com/WSAI CODE/agent-sdk.git", subdirectory = "wsai_code-tools", rev = "15f565b8ac38876e40dc05c08e2b04ccaae4a66d" }
+wsai_code-sdk = "1.8.1"
+wsai_code-agent-server = "1.8.1"
+wsai_code-tools = "1.8.1"
 python-jose = { version = ">=3.3", extras = [ "cryptography" ] }
 sqlalchemy = { extras = [ "asyncio" ], version = "^2.0.40" }
 pg8000 = "^1.31.5"

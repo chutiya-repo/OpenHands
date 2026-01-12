@@ -22,6 +22,6 @@ decrypt_and_move() {
 }
 
 # Decrypt each secret file
-decrypt_and_move "openhands/envs/feature/secrets/github-app.yaml" "github_decrypted.yaml"
-decrypt_and_move "openhands/envs/staging/secrets/keycloak-realm.yaml" "keycloak_realm_decrypted.yaml"
-decrypt_and_move "openhands/envs/staging/secrets/keycloak-admin.yaml" "keycloak_admin_decrypted.yaml"
+decrypt_and_move "wsai_code/envs/feature/secrets/github-app.yaml" "github_decrypted.yaml"
+decrypt_and_move "wsai_code/envs/staging/secrets/keycloak-realm.yaml" "keycloak_realm_decrypted.yaml"
+decrypt_and_move "wsai_code/envs/staging/secrets/keycloak-admin.yaml" "keycloak_admin_decrypted.yaml"

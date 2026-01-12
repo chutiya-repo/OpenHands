@@ -1,7 +1,7 @@
 import type {
   GitChangeStatus,
   V1GitChangeStatus,
-} from "#/api/open-hands.types";
+} from "#/api/wsai-code.types";
 
 /**
  * Maps V1 git change status to legacy V0 status format

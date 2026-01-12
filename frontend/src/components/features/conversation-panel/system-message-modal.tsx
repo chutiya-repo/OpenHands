@@ -42,7 +42,7 @@ export function SystemMessageModal({
         >
           <SystemMessageHeader
             agentClass={systemMessage.agent_class}
-            openhandsVersion={systemMessage.openhands_version}
+            wsai_codeVersion={systemMessage.wsai_code_version}
           />
 
           <div className="w-full">

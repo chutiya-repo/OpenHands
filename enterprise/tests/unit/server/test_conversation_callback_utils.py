@@ -8,9 +8,9 @@ import pytest
 from server.utils.conversation_callback_utils import update_active_working_seconds
 from storage.conversation_work import ConversationWork
 
-from openhands.core.schema.agent import AgentState
-from openhands.events.observation.agent import AgentStateChangedObservation
-from openhands.storage.files import FileStore
+from wsai_code.core.schema.agent import AgentState
+from wsai_code.events.observation.agent import AgentStateChangedObservation
+from wsai_code.storage.files import FileStore
 
 
 class TestUpdateActiveWorkingSeconds:
