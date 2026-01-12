@@ -8,21 +8,21 @@ import httpx
 import modal
 import tenacity
 
-from openhands.core.config import OpenHandsConfig
-from openhands.events import EventStream
-from openhands.integrations.provider import PROVIDER_TOKEN_TYPE
-from openhands.runtime.impl.action_execution.action_execution_client import (
+from wsai_code.core.config import WSAI CODEConfig
+from wsai_code.events import EventStream
+from wsai_code.integrations.provider import PROVIDER_TOKEN_TYPE
+from wsai_code.runtime.impl.action_execution.action_execution_client import (
     ActionExecutionClient,
 )
-from openhands.runtime.plugins import PluginRequirement
-from openhands.runtime.runtime_status import RuntimeStatus
-from openhands.runtime.utils.command import get_action_execution_server_startup_command
-from openhands.runtime.utils.runtime_build import (
+from wsai_code.runtime.plugins import PluginRequirement
+from wsai_code.runtime.runtime_status import RuntimeStatus
+from wsai_code.runtime.utils.command import get_action_execution_server_startup_command
+from wsai_code.runtime.utils.runtime_build import (
     BuildFromImageType,
     prep_build_folder,
 )
-from openhands.utils.async_utils import call_sync_from_async
-from openhands.utils.tenacity_stop import stop_if_should_exit
+from wsai_code.utils.async_utils import call_sync_from_async
+from wsai_code.utils.tenacity_stop import stop_if_should_exit
 
 # FIXME: this will not work in HA mode. We need a better way to track IDs
 MODAL_RUNTIME_IDS: dict[str, str] = {}
@@ -34,20 +34,20 @@ class ModalRuntime(ActionExecutionClient):
     When receive an event, it will send the event to runtime-client which run inside the Modal sandbox environment.
 
     Args:
-        config (OpenHandsConfig): The application configuration.
+        config (WSAI CODEConfig): The application configuration.
         event_stream (EventStream): The event stream to subscribe to.
         sid (str, optional): The session ID. Defaults to 'default'.
         plugins (list[PluginRequirement] | None, optional): List of plugin requirements. Defaults to None.
         env_vars (dict[str, str] | None, optional): Environment variables to set. Defaults to None.
     """
 
-    container_name_prefix = "openhands-sandbox-"
+    container_name_prefix = "wsai_code-sandbox-"
     sandbox: modal.Sandbox | None
     sid: str
 
     def __init__(
         self,
-        config: OpenHandsConfig,
+        config: WSAI CODEConfig,
         event_stream: EventStream,
         sid: str = "default",
         plugins: list[PluginRequirement] | None = None,
@@ -80,7 +80,7 @@ class ModalRuntime(ActionExecutionClient):
             modal_token_secret,
         )
         self.app = modal.App.lookup(
-            "openhands", create_if_missing=True, client=self.modal_client
+            "wsai_code", create_if_missing=True, client=self.modal_client
         )
 
         # workspace_base cannot be used because we can't bind mount into a sandbox.
@@ -245,7 +245,7 @@ echo 'export INPUTRC=/etc/inputrc' >> /etc/bash.bashrc
             self.sandbox = modal.Sandbox.create(
                 *sandbox_start_cmd,
                 secrets=[env_secret],
-                workdir="/openhands/code",
+                workdir="/wsai_code/code",
                 encrypted_ports=[self.container_port, self._vscode_port],
                 image=self.image,
                 app=self.app,

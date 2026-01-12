@@ -1,10 +1,10 @@
 from unittest.mock import patch
 
-from openhands.controller.state.state import State, TrafficControlState
-from openhands.core.schema import AgentState
-from openhands.events.event import Event
-from openhands.llm.metrics import Metrics
-from openhands.storage.memory import InMemoryFileStore
+from wsai_code.controller.state.state import State, TrafficControlState
+from wsai_code.core.schema import AgentState
+from wsai_code.events.event import Event
+from wsai_code.llm.metrics import Metrics
+from wsai_code.storage.memory import InMemoryFileStore
 
 
 def example_event(index: int) -> Event:

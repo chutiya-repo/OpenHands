@@ -12,22 +12,22 @@ from evaluation.utils.shared import (
     compatibility_for_eval_history_pairs,
     get_default_sandbox_config_for_eval,
     get_metrics,
-    get_openhands_config_for_eval,
+    get_wsai_code_config_for_eval,
     make_metadata,
     prepare_dataset,
     reset_logger_for_multiprocessing,
     run_evaluation,
 )
-from openhands.controller.state.state import State
-from openhands.core.config import (
-    OpenHandsConfig,
+from wsai_code.controller.state.state import State
+from wsai_code.core.config import (
+    WSAI CODEConfig,
     get_llm_config_arg,
     parse_arguments,
 )
-from openhands.core.logger import openhands_logger as logger
-from openhands.core.main import create_runtime, run_controller
-from openhands.events.action import MessageAction
-from openhands.utils.async_utils import call_async_from_sync
+from wsai_code.core.logger import wsai_code_logger as logger
+from wsai_code.core.main import create_runtime, run_controller
+from wsai_code.events.action import MessageAction
+from wsai_code.utils.async_utils import call_async_from_sync
 
 # Only CodeActAgent can delegate to BrowsingAgent
 SUPPORTED_AGENT_CLS = {'CodeActAgent'}
@@ -35,13 +35,13 @@ SUPPORTED_AGENT_CLS = {'CodeActAgent'}
 
 def get_config(
     metadata: EvalMetadata,
-) -> OpenHandsConfig:
+) -> WSAI CODEConfig:
     assert metadata.max_iterations == 1, (
         'max_iterations must be 1 for browsing delegation evaluation.'
     )
     sandbox_config = get_default_sandbox_config_for_eval()
     sandbox_config.base_container_image = 'python:3.12-bookworm'
-    config = get_openhands_config_for_eval(
+    config = get_wsai_code_config_for_eval(
         metadata=metadata, runtime='docker', sandbox_config=sandbox_config
     )
     config.set_llm_config(metadata.llm_config)
@@ -133,7 +133,7 @@ def process_instance(
 if __name__ == '__main__':
     args = parse_arguments()
 
-    dataset = load_dataset('OpenHands/eval-browsing-instructions')
+    dataset = load_dataset('WSAI CODE/eval-browsing-instructions')
     dataset = dataset['train'].to_pandas()
     assert dataset.columns.tolist() == ['instance_id', 'instruction']
 

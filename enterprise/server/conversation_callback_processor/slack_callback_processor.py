@@ -14,12 +14,12 @@ from storage.conversation_callback import (
     ConversationCallbackProcessor,
 )
 
-from openhands.core.logger import openhands_logger as logger
-from openhands.core.schema.agent import AgentState
-from openhands.events.action import MessageAction
-from openhands.events.observation.agent import AgentStateChangedObservation
-from openhands.events.serialization.event import event_to_dict
-from openhands.server.shared import conversation_manager
+from wsai_code.core.logger import wsai_code_logger as logger
+from wsai_code.core.schema.agent import AgentState
+from wsai_code.events.action import MessageAction
+from wsai_code.events.observation.agent import AgentStateChangedObservation
+from wsai_code.events.serialization.event import event_to_dict
+from wsai_code.server.shared import conversation_manager
 
 token_manager = TokenManager()
 slack_manager = SlackManager(token_manager)

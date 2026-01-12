@@ -13,10 +13,10 @@ from storage.api_key_store import ApiKeyStore
 from storage.database import session_maker
 from storage.saas_settings_store import SaasSettingsStore
 
-from openhands.core.logger import openhands_logger as logger
-from openhands.server.user_auth import get_user_id
-from openhands.utils.async_utils import call_sync_from_async
-from openhands.utils.http_session import httpx_verify_option
+from wsai_code.core.logger import wsai_code_logger as logger
+from wsai_code.server.user_auth import get_user_id
+from wsai_code.utils.async_utils import call_sync_from_async
+from wsai_code.utils.http_session import httpx_verify_option
 
 
 # Helper functions for BYOR API key management

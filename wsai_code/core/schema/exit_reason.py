@@ -1,0 +1,14 @@
+# IMPORTANT: LEGACY V0 CODE
+# This file is part of the legacy (V0) implementation of WSAI CODE and will be removed soon as we complete the migration to V1.
+# WSAI CODE V1 uses the Software Agent SDK for the agentic core and runs a new application server. Please refer to:
+#   - V1 agentic core (SDK): https://github.com/WSAI CODE/software-agent-sdk
+#   - V1 application server (in this repo): wsai_code/app_server/
+# Unless you are working on deprecation, please avoid extending this legacy file and consult the V1 codepaths above.
+# Tag: Legacy-V0
+from enum import Enum
+
+
+class ExitReason(Enum):
+    INTENTIONAL = 'intentional'
+    INTERRUPTED = 'interrupted'
+    ERROR = 'error'

@@ -14,7 +14,7 @@ from integrations.manager import Manager
 from integrations.models import JobContext, Message
 from integrations.utils import (
     HOST_URL,
-    OPENHANDS_RESOLVER_TEMPLATES_DIR,
+    WSAI_CODE_RESOLVER_TEMPLATES_DIR,
     filter_potential_repos_by_user_msg,
     get_session_expired_message,
 )
@@ -26,17 +26,17 @@ from storage.linear_integration_store import LinearIntegrationStore
 from storage.linear_user import LinearUser
 from storage.linear_workspace import LinearWorkspace
 
-from openhands.core.logger import openhands_logger as logger
-from openhands.integrations.provider import ProviderHandler
-from openhands.integrations.service_types import Repository
-from openhands.server.shared import server_config
-from openhands.server.types import (
+from wsai_code.core.logger import wsai_code_logger as logger
+from wsai_code.integrations.provider import ProviderHandler
+from wsai_code.integrations.service_types import Repository
+from wsai_code.server.shared import server_config
+from wsai_code.server.types import (
     LLMAuthenticationError,
     MissingSettingsError,
     SessionExpiredError,
 )
-from openhands.server.user_auth.user_auth import UserAuth
-from openhands.utils.http_session import httpx_verify_option
+from wsai_code.server.user_auth.user_auth import UserAuth
+from wsai_code.utils.http_session import httpx_verify_option
 
 
 class LinearManager(Manager):
@@ -45,13 +45,13 @@ class LinearManager(Manager):
         self.integration_store = LinearIntegrationStore.get_instance()
         self.api_url = 'https://api.linear.app/graphql'
         self.jinja_env = Environment(
-            loader=FileSystemLoader(OPENHANDS_RESOLVER_TEMPLATES_DIR + 'linear')
+            loader=FileSystemLoader(WSAI_CODE_RESOLVER_TEMPLATES_DIR + 'linear')
         )
 
     async def authenticate_user(
         self, linear_user_id: str, workspace_id: int
     ) -> tuple[LinearUser | None, UserAuth | None]:
-        """Authenticate Linear user and get their OpenHands user auth."""
+        """Authenticate Linear user and get their WSAI CODE user auth."""
 
         # Find active Linear user by Linear user ID and workspace ID
         linear_user = await self.integration_store.get_active_user(
@@ -146,7 +146,7 @@ class LinearManager(Manager):
             data = payload.get('data', {})
             comment = data.get('body', '')
 
-            if '@openhands' not in comment:
+            if '@wsai_code' not in comment:
                 return None
 
             issue_data = data.get('issue', {})
@@ -156,15 +156,15 @@ class LinearManager(Manager):
             data = payload.get('data', {})
             labels = data.get('labels', [])
 
-            has_openhands_label = False
+            has_wsai_code_label = False
             label_id = ''
             for label in labels:
-                if label.get('name') == 'openhands':
+                if label.get('name') == 'wsai_code':
                     label_id = label.get('id', '')
-                    has_openhands_label = True
+                    has_wsai_code_label = True
                     break
 
-            if not has_openhands_label and not label_id:
+            if not has_wsai_code_label and not label_id:
                 return None
 
             labelIdChanges = data.get('updatedFrom', {}).get('labelIds', [])
@@ -386,11 +386,11 @@ class LinearManager(Manager):
 
         except MissingSettingsError as e:
             logger.warning(f'[Linear] Missing settings error: {str(e)}')
-            msg_info = f'Please re-login into [OpenHands Cloud]({HOST_URL}) before starting a job.'
+            msg_info = f'Please re-login into [WSAI CODE Cloud]({HOST_URL}) before starting a job.'
 
         except LLMAuthenticationError as e:
             logger.warning(f'[Linear] LLM authentication error: {str(e)}')
-            msg_info = f'Please set a valid LLM API key in [OpenHands Cloud]({HOST_URL}) before starting a job.'
+            msg_info = f'Please set a valid LLM API key in [WSAI CODE Cloud]({HOST_URL}) before starting a job.'
 
         except SessionExpiredError as e:
             logger.warning(f'[Linear] Session expired: {str(e)}')

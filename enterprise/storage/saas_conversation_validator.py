@@ -4,10 +4,10 @@ from server.auth.token_manager import TokenManager
 from socketio.exceptions import ConnectionRefusedError
 from storage.api_key_store import ApiKeyStore
 
-from openhands.core.config import load_openhands_config
-from openhands.core.logger import openhands_logger as logger
-from openhands.server.shared import ConversationStoreImpl
-from openhands.storage.conversation.conversation_validator import ConversationValidator
+from wsai_code.core.config import load_wsai_code_config
+from wsai_code.core.logger import wsai_code_logger as logger
+from wsai_code.server.shared import ConversationStoreImpl
+from wsai_code.storage.conversation.conversation_validator import ConversationValidator
 
 
 class SaasConversationValidator(ConversationValidator):
@@ -63,7 +63,7 @@ class SaasConversationValidator(ConversationValidator):
         Raises:
             ConnectionRefusedError: If the user does not have access to the conversation
         """
-        config = load_openhands_config()
+        config = load_wsai_code_config()
         conversation_store = await ConversationStoreImpl.get_instance(config, user_id)
 
         if not await conversation_store.validate_metadata(conversation_id, user_id):
@@ -113,7 +113,7 @@ class SaasConversationValidator(ConversationValidator):
 
         # Fall back to cookie authentication
         token_manager = TokenManager()
-        config = load_openhands_config()
+        config = load_wsai_code_config()
         cookies = (
             dict(cookie.split('=', 1) for cookie in cookies_str.split('; '))
             if cookies_str

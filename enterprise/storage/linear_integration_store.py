@@ -8,7 +8,7 @@ from storage.linear_conversation import LinearConversation
 from storage.linear_user import LinearUser
 from storage.linear_workspace import LinearWorkspace
 
-from openhands.core.logger import openhands_logger as logger
+from wsai_code.core.logger import wsai_code_logger as logger
 
 
 @dataclass

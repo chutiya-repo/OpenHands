@@ -1,9 +1,9 @@
 import json
 
-from openhands.core.schema import ActionType, ObservationType
-from openhands.events.action.action import ActionSecurityRisk
-from openhands.events.action.mcp import MCPAction
-from openhands.events.observation.mcp import MCPObservation
+from wsai_code.core.schema import ActionType, ObservationType
+from wsai_code.events.action.action import ActionSecurityRisk
+from wsai_code.events.action.mcp import MCPAction
+from wsai_code.events.observation.mcp import MCPObservation
 
 
 def test_mcp_action_creation():
@@ -133,7 +133,7 @@ def test_mcp_observation_with_arguments():
     assert observation.arguments['list_arg'] == ['a', 'b', 'c']
 
     # Test serialization
-    from openhands.events.serialization import event_to_dict
+    from wsai_code.events.serialization import event_to_dict
 
     serialized = event_to_dict(observation)
 

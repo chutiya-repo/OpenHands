@@ -1,9 +1,9 @@
 import os
 from typing import Callable
 
-from openhands.core.config import OpenHandsConfig
-from openhands.core.logger import openhands_logger as logger
-from openhands.events.action import (
+from wsai_code.core.config import WSAI CODEConfig
+from wsai_code.core.logger import wsai_code_logger as logger
+from wsai_code.events.action import (
     BrowseURLAction,
     BrowseInteractiveAction,
     CmdRunAction,
@@ -12,7 +12,7 @@ from openhands.events.action import (
     FileWriteAction,
     IPythonRunCellAction,
 )
-from openhands.events.observation import (
+from wsai_code.events.observation import (
     BrowserOutputObservation,
     CmdOutputObservation,
     ErrorObservation,
@@ -22,16 +22,16 @@ from openhands.events.observation import (
     IPythonRunCellObservation,
     Observation,
 )
-from openhands.events.stream import EventStream
-from openhands.integrations.provider import PROVIDER_TOKEN_TYPE
-from openhands.llm.llm_registry import LLMRegistry
-from openhands.runtime.impl.action_execution.action_execution_client import (
+from wsai_code.events.stream import EventStream
+from wsai_code.integrations.provider import PROVIDER_TOKEN_TYPE
+from wsai_code.llm.llm_registry import LLMRegistry
+from wsai_code.runtime.impl.action_execution.action_execution_client import (
     ActionExecutionClient,
 )
-from openhands.runtime.plugins import PluginRequirement
-from openhands.runtime.runtime_status import RuntimeStatus
-from openhands.runtime.utils.files import insert_lines, read_lines
-from openhands.utils.async_utils import call_sync_from_async
+from wsai_code.runtime.plugins import PluginRequirement
+from wsai_code.runtime.runtime_status import RuntimeStatus
+from wsai_code.runtime.utils.files import insert_lines, read_lines
+from wsai_code.utils.async_utils import call_sync_from_async
 from third_party.runtime.impl.e2b.filestore import E2BFileStore
 from third_party.runtime.impl.e2b.sandbox import E2BBox, E2BSandbox
 
@@ -42,7 +42,7 @@ class E2BRuntime(ActionExecutionClient):
     
     def __init__(
         self,
-        config: OpenHandsConfig,
+        config: WSAI CODEConfig,
         event_stream: EventStream,
         llm_registry: LLMRegistry,
         sid: str = "default",
@@ -390,13 +390,13 @@ class E2BRuntime(ActionExecutionClient):
         return ""
     
     @classmethod
-    def setup(cls, config: OpenHandsConfig, headless_mode: bool = False) -> None:
+    def setup(cls, config: WSAI CODEConfig, headless_mode: bool = False) -> None:
         """Set up the E2B runtime environment."""
         logger.info("E2B runtime setup called")
         pass
     
     @classmethod
-    def teardown(cls, config: OpenHandsConfig) -> None:
+    def teardown(cls, config: WSAI CODEConfig) -> None:
         """Tear down the E2B runtime environment."""
         logger.info("E2B runtime teardown called")
         pass

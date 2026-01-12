@@ -1,8 +1,8 @@
-import { OpenHandsParsedEvent } from ".";
+import { WSAI CODEParsedEvent } from ".";
 import {
   UserMessageAction,
   AssistantMessageAction,
-  OpenHandsAction,
+  WSAI CODEAction,
   SystemMessageAction,
   CommandAction,
   FinishAction,
@@ -13,14 +13,14 @@ import {
   CommandObservation,
   ErrorObservation,
   MCPObservation,
-  OpenHandsObservation,
+  WSAI CODEObservation,
   TaskTrackingObservation,
 } from "./observations";
 import { StatusUpdate } from "./variances";
 
-export const isOpenHandsEvent = (
+export const isWSAI CODEEvent = (
   event: unknown,
-): event is OpenHandsParsedEvent =>
+): event is WSAI CODEParsedEvent =>
   typeof event === "object" &&
   event !== null &&
   "id" in event &&
@@ -28,76 +28,76 @@ export const isOpenHandsEvent = (
   "message" in event &&
   "timestamp" in event;
 
-export const isOpenHandsAction = (
-  event: OpenHandsParsedEvent,
-): event is OpenHandsAction => "action" in event;
+export const isWSAI CODEAction = (
+  event: WSAI CODEParsedEvent,
+): event is WSAI CODEAction => "action" in event;
 
-export const isOpenHandsObservation = (
-  event: OpenHandsParsedEvent,
-): event is OpenHandsObservation => "observation" in event;
+export const isWSAI CODEObservation = (
+  event: WSAI CODEParsedEvent,
+): event is WSAI CODEObservation => "observation" in event;
 
 export const isUserMessage = (
-  event: OpenHandsParsedEvent,
+  event: WSAI CODEParsedEvent,
 ): event is UserMessageAction =>
-  isOpenHandsAction(event) &&
+  isWSAI CODEAction(event) &&
   event.source === "user" &&
   event.action === "message";
 
 export const isAssistantMessage = (
-  event: OpenHandsParsedEvent,
+  event: WSAI CODEParsedEvent,
 ): event is AssistantMessageAction =>
-  isOpenHandsAction(event) &&
+  isWSAI CODEAction(event) &&
   event.source === "agent" &&
   (event.action === "message" || event.action === "finish");
 
 export const isErrorObservation = (
-  event: OpenHandsParsedEvent,
+  event: WSAI CODEParsedEvent,
 ): event is ErrorObservation =>
-  isOpenHandsObservation(event) && event.observation === "error";
+  isWSAI CODEObservation(event) && event.observation === "error";
 
 export const isCommandAction = (
-  event: OpenHandsParsedEvent,
-): event is CommandAction => isOpenHandsAction(event) && event.action === "run";
+  event: WSAI CODEParsedEvent,
+): event is CommandAction => isWSAI CODEAction(event) && event.action === "run";
 
 export const isAgentStateChangeObservation = (
-  event: OpenHandsParsedEvent,
+  event: WSAI CODEParsedEvent,
 ): event is AgentStateChangeObservation =>
-  isOpenHandsObservation(event) && event.observation === "agent_state_changed";
+  isWSAI CODEObservation(event) && event.observation === "agent_state_changed";
 
 export const isCommandObservation = (
-  event: OpenHandsParsedEvent,
+  event: WSAI CODEParsedEvent,
 ): event is CommandObservation =>
-  isOpenHandsObservation(event) && event.observation === "run";
+  isWSAI CODEObservation(event) && event.observation === "run";
 
 export const isFinishAction = (
-  event: OpenHandsParsedEvent,
+  event: WSAI CODEParsedEvent,
 ): event is FinishAction =>
-  isOpenHandsAction(event) && event.action === "finish";
+  isWSAI CODEAction(event) && event.action === "finish";
 
 export const isSystemMessage = (
-  event: OpenHandsParsedEvent,
+  event: WSAI CODEParsedEvent,
 ): event is SystemMessageAction =>
-  isOpenHandsAction(event) && event.action === "system";
+  isWSAI CODEAction(event) && event.action === "system";
 
 export const isRejectObservation = (
-  event: OpenHandsParsedEvent,
-): event is OpenHandsObservation =>
-  isOpenHandsObservation(event) && event.observation === "user_rejected";
+  event: WSAI CODEParsedEvent,
+): event is WSAI CODEObservation =>
+  isWSAI CODEObservation(event) && event.observation === "user_rejected";
 
 export const isMcpObservation = (
-  event: OpenHandsParsedEvent,
+  event: WSAI CODEParsedEvent,
 ): event is MCPObservation =>
-  isOpenHandsObservation(event) && event.observation === "mcp";
+  isWSAI CODEObservation(event) && event.observation === "mcp";
 
 export const isTaskTrackingAction = (
-  event: OpenHandsParsedEvent,
+  event: WSAI CODEParsedEvent,
 ): event is TaskTrackingAction =>
-  isOpenHandsAction(event) && event.action === "task_tracking";
+  isWSAI CODEAction(event) && event.action === "task_tracking";
 
 export const isTaskTrackingObservation = (
-  event: OpenHandsParsedEvent,
+  event: WSAI CODEParsedEvent,
 ): event is TaskTrackingObservation =>
-  isOpenHandsObservation(event) && event.observation === "task_tracking";
+  isWSAI CODEObservation(event) && event.observation === "task_tracking";
 
 export const isStatusUpdate = (event: unknown): event is StatusUpdate =>
   typeof event === "object" &&
@@ -107,6 +107,6 @@ export const isStatusUpdate = (event: unknown): event is StatusUpdate =>
   "id" in event;
 
 export const isActionOrObservation = (
-  event: OpenHandsParsedEvent,
-): event is OpenHandsAction | OpenHandsObservation =>
-  isOpenHandsAction(event) || isOpenHandsObservation(event);
+  event: WSAI CODEParsedEvent,
+): event is WSAI CODEAction | WSAI CODEObservation =>
+  isWSAI CODEAction(event) || isWSAI CODEObservation(event);

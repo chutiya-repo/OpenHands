@@ -11,7 +11,7 @@ DB_HOST = os.environ.get('DB_HOST', 'localhost')  # for non-GCP environments
 DB_PORT = os.environ.get('DB_PORT', '5432')  # for non-GCP environments
 DB_USER = os.environ.get('DB_USER', 'postgres')
 DB_PASS = os.environ.get('DB_PASS', 'postgres').strip()
-DB_NAME = os.environ.get('DB_NAME', 'openhands')
+DB_NAME = os.environ.get('DB_NAME', 'wsai_code')
 
 GCP_DB_INSTANCE = os.environ.get('GCP_DB_INSTANCE')  # for GCP environments
 GCP_PROJECT = os.environ.get('GCP_PROJECT')

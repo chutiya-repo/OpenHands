@@ -1,7 +1,7 @@
 import logging
 from unittest.mock import patch
 
-from openhands.core.logger import SensitiveDataFilter
+from wsai_code.core.logger import SensitiveDataFilter
 
 
 @patch.dict(

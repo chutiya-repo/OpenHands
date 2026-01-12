@@ -38,7 +38,7 @@ export function LaunchMicroagentModal({
     useMicroagentPrompt(eventId);
 
   const { data: microagents, isLoading: microagentsIsLoading } =
-    useGetMicroagents(`${selectedRepo}/.openhands/microagents`);
+    useGetMicroagents(`${selectedRepo}/.wsai_code/microagents`);
 
   const [triggers, setTriggers] = React.useState<string[]>([]);
 

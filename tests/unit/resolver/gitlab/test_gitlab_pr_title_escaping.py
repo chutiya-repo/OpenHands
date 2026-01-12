@@ -2,10 +2,10 @@ import os
 import subprocess
 import tempfile
 
-from openhands.core.logger import openhands_logger as logger
-from openhands.integrations.service_types import ProviderType
-from openhands.resolver.interfaces.issue import Issue
-from openhands.resolver.send_pull_request import make_commit, send_pull_request
+from wsai_code.core.logger import wsai_code_logger as logger
+from wsai_code.integrations.service_types import ProviderType
+from wsai_code.resolver.interfaces.issue import Issue
+from wsai_code.resolver.send_pull_request import make_commit, send_pull_request
 
 
 def test_commit_message_with_quotes():
@@ -91,7 +91,7 @@ def test_pr_title_with_quotes(monkeypatch):
     monkeypatch.setattr('httpx.post', mock_post)
     monkeypatch.setattr('httpx.get', lambda *args, **kwargs: MockGetResponse())
     monkeypatch.setattr(
-        'openhands.resolver.interfaces.github.GithubIssueHandler.branch_exists',
+        'wsai_code.resolver.interfaces.github.GithubIssueHandler.branch_exists',
         lambda *args, **kwargs: False,
     )
 

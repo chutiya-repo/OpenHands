@@ -2,7 +2,7 @@ import os
 
 from server.auth.sheets_client import GoogleSheetsClient
 
-from openhands.core.logger import openhands_logger as logger
+from wsai_code.core.logger import wsai_code_logger as logger
 
 
 class UserVerifier:

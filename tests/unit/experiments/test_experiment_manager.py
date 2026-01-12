@@ -6,13 +6,13 @@ from uuid import UUID, uuid4
 
 import pytest
 
-from openhands.app_server.app_conversation.live_status_app_conversation_service import (
+from wsai_code.app_server.app_conversation.live_status_app_conversation_service import (
     LiveStatusAppConversationService,
 )
-from openhands.app_server.sandbox.sandbox_models import SandboxInfo, SandboxStatus
-from openhands.experiments.experiment_manager import ExperimentManager
-from openhands.sdk import Agent
-from openhands.sdk.llm import LLM
+from wsai_code.app_server.sandbox.sandbox_models import SandboxInfo, SandboxStatus
+from wsai_code.experiments.experiment_manager import ExperimentManager
+from wsai_code.sdk import Agent
+from wsai_code.sdk.llm import LLM
 
 
 class TestExperimentManager:
@@ -90,7 +90,7 @@ class TestExperimentManagerIntegration:
         self.mock_agent.system_prompt_filename = 'default_system_prompt.j2'
         self.mock_agent.model_copy = Mock(return_value=self.mock_agent)
 
-    @patch('openhands.experiments.experiment_manager.ExperimentManagerImpl')
+    @patch('wsai_code.experiments.experiment_manager.ExperimentManagerImpl')
     def test_start_app_conversation_calls_experiment_manager_v1(
         self, mock_experiment_manager_impl
     ):
@@ -193,7 +193,7 @@ class TestExperimentManagerIntegration:
             sandbox_startup_poll_frequency=1,
             httpx_client=httpx_client,
             web_url=None,
-            openhands_provider_base_url=None,
+            wsai_code_provider_base_url=None,
             access_token_hard_timeout=None,
         )
 
@@ -228,11 +228,11 @@ class TestExperimentManagerIntegration:
                 return_value=mock_agent,
             ),
             patch(
-                'openhands.app_server.app_conversation.live_status_app_conversation_service.uuid4',
+                'wsai_code.app_server.app_conversation.live_status_app_conversation_service.uuid4',
                 return_value=fixed_conversation_id,
             ),
             patch(
-                'openhands.app_server.app_conversation.live_status_app_conversation_service.ExperimentManagerImpl'
+                'wsai_code.app_server.app_conversation.live_status_app_conversation_service.ExperimentManagerImpl'
             ) as mock_experiment_manager,
         ):
             # Configure the experiment manager mock to return the same agent

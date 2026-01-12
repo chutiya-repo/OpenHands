@@ -1,4 +1,4 @@
-import { OpenHandsEvent } from "#/types/v1/core";
+import { WSAI CODEEvent } from "#/types/v1/core";
 import {
   isActionEvent,
   isObservationEvent,
@@ -7,7 +7,7 @@ import {
   isConversationStateUpdateEvent,
 } from "#/types/v1/type-guards";
 
-export const shouldRenderEvent = (event: OpenHandsEvent) => {
+export const shouldRenderEvent = (event: WSAI CODEEvent) => {
   // Explicitly exclude system events that should not be rendered in chat
   if (isConversationStateUpdateEvent(event)) {
     return false;
@@ -49,5 +49,5 @@ export const shouldRenderEvent = (event: OpenHandsEvent) => {
   return false;
 };
 
-export const hasUserEvent = (events: OpenHandsEvent[]) =>
+export const hasUserEvent = (events: WSAI CODEEvent[]) =>
   events.some((event) => event.source === "user");

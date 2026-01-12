@@ -13,7 +13,7 @@
     ],
     "python.analysis.packageIndexDepths": [
         {
-            "name": "openhands",
+            "name": "wsai_code",
             "depth": 10,
             "includeAllSymbols": true
         }

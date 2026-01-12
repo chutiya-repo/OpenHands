@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 
-export const openHands = axios.create({
+export const wsaiCode = axios.create({
   baseURL: `${window.location.protocol}//${import.meta.env.VITE_BACKEND_BASE_URL || window?.location.host}`,
 });
 
@@ -41,7 +41,7 @@ const checkForEmailVerificationError = (data: any): boolean => {
 };
 
 // Set up the global interceptor
-openHands.interceptors.response.use(
+wsaiCode.interceptors.response.use(
   (response: AxiosResponse) => response,
   (error: AxiosError) => {
     // Check if it's a 403 error with the email verification message
