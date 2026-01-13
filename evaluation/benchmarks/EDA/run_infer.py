@@ -10,22 +10,22 @@ from evaluation.utils.shared import (
     EvalOutput,
     compatibility_for_eval_history_pairs,
     get_metrics,
-    get_openhands_config_for_eval,
+    get_wsaicode_config_for_eval,
     make_metadata,
     prepare_dataset,
     reset_logger_for_multiprocessing,
     run_evaluation,
 )
-from openhands.controller.state.state import State
-from openhands.core.config import (
-    OpenHandsConfig,
+from wsaicode.controller.state.state import State
+from wsaicode.core.config import (
+    WSAICodeConfig,
     get_evaluation_parser,
     get_llm_config_arg,
 )
-from openhands.core.logger import openhands_logger as logger
-from openhands.core.main import create_runtime, run_controller
-from openhands.events.action import MessageAction
-from openhands.utils.async_utils import call_async_from_sync
+from wsaicode.core.logger import wsaicode_logger as logger
+from wsaicode.core.main import create_runtime, run_controller
+from wsaicode.events.action import MessageAction
+from wsaicode.utils.async_utils import call_async_from_sync
 
 game = None
 
@@ -60,9 +60,9 @@ AGENT_CLS_TO_INST_SUFFIX = {
 
 def get_config(
     metadata: EvalMetadata,
-) -> OpenHandsConfig:
+) -> WSAICodeConfig:
     # Create config with EDA-specific container image
-    config = get_openhands_config_for_eval(
+    config = get_wsaicode_config_for_eval(
         metadata=metadata,
         runtime='docker',
     )

@@ -12,7 +12,7 @@ from integrations.jira.jira_view import (
     JiraNewConversationView,
 )
 
-from openhands.core.schema.agent import AgentState
+from wsaicode.core.schema.agent import AgentState
 
 
 class TestJiraNewConversationView:
@@ -25,7 +25,7 @@ class TestJiraNewConversationView:
         assert instructions == 'Test Jira instructions template'
         assert 'TEST-123' in user_msg
         assert 'Test Issue' in user_msg
-        assert 'Fix this bug @openhands' in user_msg
+        assert 'Fix this bug @wsaicode' in user_msg
 
     @patch('integrations.jira.jira_view.create_new_conversation')
     @patch('integrations.jira.jira_view.integration_store')
@@ -92,7 +92,7 @@ class TestJiraExistingConversationView:
         assert instructions == ''
         assert 'TEST-123' in user_msg
         assert 'Test Issue' in user_msg
-        assert 'Fix this bug @openhands' in user_msg
+        assert 'Fix this bug @wsaicode' in user_msg
 
     @patch('integrations.jira.jira_view.ConversationStoreImpl.get_instance')
     @patch('integrations.jira.jira_view.setup_init_conversation_settings')

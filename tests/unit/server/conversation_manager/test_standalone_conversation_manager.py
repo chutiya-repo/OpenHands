@@ -5,13 +5,13 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
-from openhands.core.config.openhands_config import OpenHandsConfig
-from openhands.server.conversation_manager.standalone_conversation_manager import (
+from wsaicode.core.config.wsaicode_config import WSAICodeConfig
+from wsaicode.server.conversation_manager.standalone_conversation_manager import (
     StandaloneConversationManager,
 )
-from openhands.server.monitoring import MonitoringListener
-from openhands.server.session.conversation_init_data import ConversationInitData
-from openhands.storage.memory import InMemoryFileStore
+from wsaicode.server.monitoring import MonitoringListener
+from wsaicode.server.session.conversation_init_data import ConversationInitData
+from wsaicode.storage.memory import InMemoryFileStore
 
 
 @dataclass
@@ -49,23 +49,23 @@ async def test_init_new_local_session():
     is_agent_loop_running_mock.return_value = True
     with (
         patch(
-            'openhands.server.conversation_manager.standalone_conversation_manager.Session',
+            'wsaicode.server.conversation_manager.standalone_conversation_manager.Session',
             mock_session,
         ),
         patch(
-            'openhands.server.conversation_manager.standalone_conversation_manager.StandaloneConversationManager.get_running_agent_loops',
+            'wsaicode.server.conversation_manager.standalone_conversation_manager.StandaloneConversationManager.get_running_agent_loops',
             get_running_agent_loops_mock,
         ),
     ):
         async with StandaloneConversationManager(
-            sio, OpenHandsConfig(), InMemoryFileStore(), MonitoringListener()
+            sio, WSAICodeConfig(), InMemoryFileStore(), MonitoringListener()
         ) as conversation_manager:
             await conversation_manager.maybe_start_agent_loop(
                 'new-session-id', ConversationInitData(), 1
             )
             with (
                 patch(
-                    'openhands.server.conversation_manager.standalone_conversation_manager.StandaloneConversationManager.is_agent_loop_running',
+                    'wsaicode.server.conversation_manager.standalone_conversation_manager.StandaloneConversationManager.is_agent_loop_running',
                     is_agent_loop_running_mock,
                 ),
             ):
@@ -93,23 +93,23 @@ async def test_join_local_session():
     is_agent_loop_running_mock.return_value = True
     with (
         patch(
-            'openhands.server.conversation_manager.standalone_conversation_manager.Session',
+            'wsaicode.server.conversation_manager.standalone_conversation_manager.Session',
             mock_session,
         ),
         patch(
-            'openhands.server.conversation_manager.standalone_conversation_manager.StandaloneConversationManager.get_running_agent_loops',
+            'wsaicode.server.conversation_manager.standalone_conversation_manager.StandaloneConversationManager.get_running_agent_loops',
             get_running_agent_loops_mock,
         ),
     ):
         async with StandaloneConversationManager(
-            sio, OpenHandsConfig(), InMemoryFileStore(), MonitoringListener()
+            sio, WSAICodeConfig(), InMemoryFileStore(), MonitoringListener()
         ) as conversation_manager:
             await conversation_manager.maybe_start_agent_loop(
                 'new-session-id', ConversationInitData(), None
             )
             with (
                 patch(
-                    'openhands.server.conversation_manager.standalone_conversation_manager.StandaloneConversationManager.is_agent_loop_running',
+                    'wsaicode.server.conversation_manager.standalone_conversation_manager.StandaloneConversationManager.is_agent_loop_running',
                     is_agent_loop_running_mock,
                 ),
             ):
@@ -141,16 +141,16 @@ async def test_add_to_local_event_stream():
     get_running_agent_loops_mock.return_value = set()
     with (
         patch(
-            'openhands.server.conversation_manager.standalone_conversation_manager.Session',
+            'wsaicode.server.conversation_manager.standalone_conversation_manager.Session',
             mock_session,
         ),
         patch(
-            'openhands.server.conversation_manager.standalone_conversation_manager.StandaloneConversationManager.get_running_agent_loops',
+            'wsaicode.server.conversation_manager.standalone_conversation_manager.StandaloneConversationManager.get_running_agent_loops',
             get_running_agent_loops_mock,
         ),
     ):
         async with StandaloneConversationManager(
-            sio, OpenHandsConfig(), InMemoryFileStore(), MonitoringListener()
+            sio, WSAICodeConfig(), InMemoryFileStore(), MonitoringListener()
         ) as conversation_manager:
             await conversation_manager.maybe_start_agent_loop(
                 'new-session-id', ConversationInitData(), 1
@@ -169,7 +169,7 @@ async def test_cleanup_session_connections():
     sio = get_mock_sio()
     sio.disconnect = AsyncMock()  # Mock the disconnect method
     async with StandaloneConversationManager(
-        sio, OpenHandsConfig(), InMemoryFileStore(), MonitoringListener()
+        sio, WSAICodeConfig(), InMemoryFileStore(), MonitoringListener()
     ) as conversation_manager:
         conversation_manager._local_connection_id_to_session_id.update(
             {

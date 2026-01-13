@@ -16,29 +16,29 @@ import ruamel.yaml
 from evaluation.utils.shared import (
     EvalMetadata,
     get_default_sandbox_config_for_eval,
-    get_openhands_config_for_eval,
+    get_wsaicode_config_for_eval,
     make_metadata,
 )
-from openhands.core.config import (
+from wsaicode.core.config import (
     LLMConfig,
-    OpenHandsConfig,
+    WSAICodeConfig,
     get_evaluation_parser,
-    load_openhands_config,
+    load_wsaicode_config,
 )
-from openhands.core.logger import openhands_logger as logger
-from openhands.core.main import create_runtime
-from openhands.events.action import CmdRunAction
-from openhands.events.observation import CmdOutputObservation
-from openhands.runtime.base import Runtime
-from openhands.utils.async_utils import call_async_from_sync
+from wsaicode.core.logger import wsaicode_logger as logger
+from wsaicode.core.main import create_runtime
+from wsaicode.events.action import CmdRunAction
+from wsaicode.events.observation import CmdOutputObservation
+from wsaicode.runtime.base import Runtime
+from wsaicode.utils.async_utils import call_async_from_sync
 
 
 def get_config(
     metadata: EvalMetadata,
-) -> OpenHandsConfig:
+) -> WSAICodeConfig:
     sandbox_config = get_default_sandbox_config_for_eval()
     sandbox_config.base_container_image = 'python:3.12-bookworm'
-    config = get_openhands_config_for_eval(
+    config = get_wsaicode_config_for_eval(
         metadata=metadata,
         runtime='docker',
         sandbox_config=sandbox_config,
@@ -49,7 +49,7 @@ def get_config(
     return config
 
 
-config = load_openhands_config()
+config = load_wsaicode_config()
 
 
 def load_bench_config():
@@ -100,7 +100,7 @@ def run_eval(
     obs = runtime.run_action(action)
     assert obs.exit_code == 0
 
-    action = CmdRunAction(command='git switch open-hands-integration')
+    action = CmdRunAction(command='git switch wsai-code-integration')
     logger.info(action, extra={'msg_type': 'ACTION'})
     obs = runtime.run_action(action)
     assert obs.exit_code == 0

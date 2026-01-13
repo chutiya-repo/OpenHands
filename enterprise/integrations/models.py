@@ -2,13 +2,13 @@ from enum import Enum
 
 from pydantic import BaseModel
 
-from openhands.core.schema import AgentState
+from wsaicode.core.schema import AgentState
 
 
 class SourceType(str, Enum):
     GITHUB = 'github'
     GITLAB = 'gitlab'
-    OPENHANDS = 'openhands'
+    WSAI_CODE = 'wsaicode'
     SLACK = 'slack'
     JIRA = 'jira'
     JIRA_DC = 'jira_dc'

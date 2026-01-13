@@ -12,8 +12,8 @@ from server.constants import (
 from storage.saas_settings_store import SaasSettingsStore
 from storage.user_settings import UserSettings
 
-from openhands.core.config.openhands_config import OpenHandsConfig
-from openhands.server.settings import Settings
+from wsaicode.core.config.wsaicode_config import WSAICodeConfig
+from wsaicode.server.settings import Settings
 
 
 @pytest.fixture
@@ -76,7 +76,7 @@ def mock_github_user():
 
 @pytest.fixture
 def mock_config():
-    config = MagicMock(spec=OpenHandsConfig)
+    config = MagicMock(spec=WSAICodeConfig)
     config.jwt_secret = SecretStr('test_secret')
     config.file_store = 'google_cloud'
     config.file_store_path = 'bucket'

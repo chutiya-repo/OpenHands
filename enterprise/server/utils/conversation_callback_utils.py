@@ -13,21 +13,21 @@ from storage.conversation_work import ConversationWork
 from storage.database import session_maker
 from storage.stored_conversation_metadata import StoredConversationMetadata
 
-from openhands.core.config import load_openhands_config
-from openhands.core.schema.agent import AgentState
-from openhands.events.event_store import EventStore
-from openhands.events.observation.agent import AgentStateChangedObservation
-from openhands.events.serialization.event import event_from_dict
-from openhands.server.services.conversation_stats import ConversationStats
-from openhands.storage import get_file_store
-from openhands.storage.files import FileStore
-from openhands.storage.locations import (
+from wsaicode.core.config import load_wsaicode_config
+from wsaicode.core.schema.agent import AgentState
+from wsaicode.events.event_store import EventStore
+from wsaicode.events.observation.agent import AgentStateChangedObservation
+from wsaicode.events.serialization.event import event_from_dict
+from wsaicode.server.services.conversation_stats import ConversationStats
+from wsaicode.storage import get_file_store
+from wsaicode.storage.files import FileStore
+from wsaicode.storage.locations import (
     get_conversation_agent_state_filename,
     get_conversation_dir,
 )
-from openhands.utils.async_utils import call_sync_from_async
+from wsaicode.utils.async_utils import call_sync_from_async
 
-config = load_openhands_config()
+config = load_wsaicode_config()
 file_store = get_file_store(config.file_store, config.file_store_path)
 
 

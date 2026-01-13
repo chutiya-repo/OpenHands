@@ -1,7 +1,7 @@
 from fastapi import HTTPException, Request, status
 
-from openhands.core.logger import openhands_logger as logger
-from openhands.server.shared import sio
+from wsaicode.core.logger import wsaicode_logger as logger
+from wsaicode.server.shared import sio
 
 # Rate limiting constants
 RATE_LIMIT_USER_SECONDS = 120  # 2 minutes per user_id

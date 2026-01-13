@@ -2,17 +2,17 @@ from unittest.mock import patch
 
 from pydantic import SecretStr
 
-from openhands.core.config.llm_config import LLMConfig
-from openhands.core.config.openhands_config import OpenHandsConfig
-from openhands.core.config.sandbox_config import SandboxConfig
-from openhands.core.config.security_config import SecurityConfig
-from openhands.server.routes.settings import convert_to_settings
-from openhands.storage.data_models.settings import Settings
+from wsaicode.core.config.llm_config import LLMConfig
+from wsaicode.core.config.wsaicode_config import WSAICodeConfig
+from wsaicode.core.config.sandbox_config import SandboxConfig
+from wsaicode.core.config.security_config import SecurityConfig
+from wsaicode.server.routes.settings import convert_to_settings
+from wsaicode.storage.data_models.settings import Settings
 
 
 def test_settings_from_config():
     # Mock configuration
-    mock_app_config = OpenHandsConfig(
+    mock_app_config = WSAICodeConfig(
         default_agent='test-agent',
         max_iterations=100,
         security=SecurityConfig(
@@ -30,7 +30,7 @@ def test_settings_from_config():
     )
 
     with patch(
-        'openhands.storage.data_models.settings.load_openhands_config',
+        'wsaicode.storage.data_models.settings.load_wsaicode_config',
         return_value=mock_app_config,
     ):
         settings = Settings.from_config()
@@ -50,7 +50,7 @@ def test_settings_from_config():
 
 def test_settings_from_config_no_api_key():
     # Mock configuration without API key
-    mock_app_config = OpenHandsConfig(
+    mock_app_config = WSAICodeConfig(
         default_agent='test-agent',
         max_iterations=100,
         security=SecurityConfig(
@@ -66,7 +66,7 @@ def test_settings_from_config_no_api_key():
     )
 
     with patch(
-        'openhands.storage.data_models.settings.load_openhands_config',
+        'wsaicode.storage.data_models.settings.load_wsaicode_config',
         return_value=mock_app_config,
     ):
         settings = Settings.from_config()

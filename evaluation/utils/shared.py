@@ -15,14 +15,14 @@ import pandas as pd
 from pydantic import BaseModel
 from tqdm import tqdm
 
-from openhands.controller.state.state import State
-from openhands.core.config import LLMConfig, SandboxConfig
-from openhands.core.config.agent_config import AgentConfig
-from openhands.core.config.condenser_config import (
+from wsaicode.controller.state.state import State
+from wsaicode.core.config import LLMConfig, SandboxConfig
+from wsaicode.core.config.agent_config import AgentConfig
+from wsaicode.core.config.condenser_config import (
     CondenserConfig,
     NoOpCondenserConfig,
 )
-from openhands.core.exceptions import (
+from wsaicode.core.exceptions import (
     AgentRuntimeBuildError,
     AgentRuntimeDisconnectedError,
     AgentRuntimeError,
@@ -31,14 +31,14 @@ from openhands.core.exceptions import (
     AgentRuntimeTimeoutError,
     AgentRuntimeUnavailableError,
 )
-from openhands.core.logger import get_console_handler
-from openhands.core.logger import openhands_logger as logger
-from openhands.events.action import Action
-from openhands.events.action.message import MessageAction
-from openhands.events.event import Event
-from openhands.events.serialization.event import event_to_dict
-from openhands.events.utils import get_pairs_from_events
-from openhands.memory.condenser import get_condensation_metadata
+from wsaicode.core.logger import get_console_handler
+from wsaicode.core.logger import wsaicode_logger as logger
+from wsaicode.events.action import Action
+from wsaicode.events.action.message import MessageAction
+from wsaicode.events.event import Event
+from wsaicode.events.serialization.event import event_to_dict
+from wsaicode.events.utils import get_pairs_from_events
+from wsaicode.memory.condenser import get_condensation_metadata
 
 
 class EvalMetadata(BaseModel):
@@ -333,7 +333,7 @@ def log_skipped_maximum_retries_exceeded(instance, metadata, error, max_retries=
     Returns:
         EvalOutput with the error information
     """
-    from openhands.core.logger import openhands_logger as logger
+    from wsaicode.core.logger import wsaicode_logger as logger
 
     # Log the error
     logger.exception(error)
@@ -378,7 +378,7 @@ def log_skipped_maximum_retries_exceeded(instance, metadata, error, max_retries=
 
 def check_maximum_retries_exceeded(eval_output_dir):
     """Check if maximum_retries_exceeded.jsonl exists and output a message."""
-    from openhands.core.logger import openhands_logger as logger
+    from wsaicode.core.logger import wsaicode_logger as logger
 
     retries_file_path = os.path.join(eval_output_dir, 'maximum_retries_exceeded.jsonl')
     if os.path.exists(retries_file_path):
@@ -701,7 +701,7 @@ def get_default_sandbox_config_for_eval() -> SandboxConfig:
         use_host_network=False,
         # large enough timeout, since some testcases take very long to run
         timeout=300,
-        api_key=os.environ.get('ALLHANDS_API_KEY', None),
+        api_key=os.environ.get('WSAI_CODE_API_KEY', None),
         runtime_startup_env_vars={'NO_CHANGE_TIMEOUT_SECONDS': '30'},
         remote_runtime_api_url=os.environ.get('SANDBOX_REMOTE_RUNTIME_API_URL'),
         keep_runtime_alive=False,
@@ -712,7 +712,7 @@ def get_default_sandbox_config_for_eval() -> SandboxConfig:
     )
 
 
-def get_openhands_config_for_eval(
+def get_wsaicode_config_for_eval(
     metadata: EvalMetadata | None = None,
     sandbox_config: SandboxConfig | None = None,
     runtime: str | None = None,
@@ -722,9 +722,9 @@ def get_openhands_config_for_eval(
     workspace_base: str | None = None,
     workspace_mount_path: str | None = None,
 ):
-    """Create an OpenHandsConfig with common patterns used across evaluation scripts.
+    """Create an WSAICodeConfig with common patterns used across evaluation scripts.
 
-    This function provides a standardized way to create OpenHands configurations
+    This function provides a standardized way to create WSAI CODE configurations
     for evaluation runs, with sensible defaults that match the patterns used in
     most run_infer.py scripts. Individual evaluation scripts can override specific
     attributes as needed.
@@ -740,11 +740,11 @@ def get_openhands_config_for_eval(
         workspace_mount_path: Workspace mount path. Defaults to None
 
     Returns:
-        OpenHandsConfig: Configured for evaluation with eval-specific overrides applied
+        WSAICodeConfig: Configured for evaluation with eval-specific overrides applied
     """
     # Defer import to avoid circular imports at module load time
-    from openhands.core.config.openhands_config import (
-        OpenHandsConfig as _OHConfig,  # type: ignore
+    from wsaicode.core.config.wsaicode_config import (
+        WSAICodeConfig as _OHConfig,  # type: ignore
     )
 
     # Use provided sandbox config or get default
@@ -774,7 +774,7 @@ def get_openhands_config_for_eval(
     # Create the base config with evaluation-specific overrides
     config = _OHConfig(
         default_agent=default_agent,
-        run_as_openhands=False,
+        run_as_wsaicode=False,
         runtime=runtime,
         max_iterations=max_iterations,
         enable_browser=enable_browser,

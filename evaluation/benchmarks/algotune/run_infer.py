@@ -19,19 +19,19 @@ from evaluation.utils.shared import (
     run_evaluation,
     update_llm_config_for_completions_logging,
 )
-from openhands.controller.state.state import State
-from openhands.core.config import (
+from wsaicode.controller.state.state import State
+from wsaicode.core.config import (
     AgentConfig,
-    OpenHandsConfig,
+    WSAICodeConfig,
     get_agent_config_arg,
     get_evaluation_parser,
     get_llm_config_arg,
 )
-from openhands.core.logger import openhands_logger as logger
-from openhands.core.main import create_runtime, run_controller
-from openhands.events.action import CmdRunAction, MessageAction
-from openhands.runtime.base import Runtime
-from openhands.utils.async_utils import call_async_from_sync
+from wsaicode.core.logger import wsaicode_logger as logger
+from wsaicode.core.main import create_runtime, run_controller
+from wsaicode.events.action import CmdRunAction, MessageAction
+from wsaicode.runtime.base import Runtime
+from wsaicode.utils.async_utils import call_async_from_sync
 
 
 def discover_tasks():
@@ -70,13 +70,13 @@ def algotune_user_response(state, runtime: Runtime, **kwargs):
 
 def get_config(
     metadata: EvalMetadata, workspace_id: str = None, enable_volumes: bool = True
-) -> OpenHandsConfig:
-    """Configure OpenHands for algorithm optimization evaluation."""
+) -> WSAICodeConfig:
+    """Configure WSAI CODE for algorithm optimization evaluation."""
 
     sandbox_config = get_default_sandbox_config_for_eval()
     sandbox_config.timeout = 600  # Set execution timeout to 10 minutes
     sandbox_config.remote_runtime_api_timeout = 600
-    sandbox_config.base_container_image = 'linhaowei1/algotune-openhands:v0.0.2'
+    sandbox_config.base_container_image = 'linhaowei1/algotune-wsaicode:v0.0.2'
     sandbox_config.use_host_network = True
     sandbox_config.enable_auto_lint = True
 
@@ -119,9 +119,9 @@ def get_config(
     sandbox_config.docker_runtime_kwargs = {'labels': container_labels}
     logger.info(f'Container labels: {container_labels}')
 
-    config = OpenHandsConfig(
+    config = WSAICodeConfig(
         default_agent=metadata.agent_class,
-        run_as_openhands=False,
+        run_as_wsaicode=False,
         runtime='docker',
         max_iterations=metadata.max_iterations,
         sandbox=sandbox_config,

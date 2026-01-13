@@ -1,4 +1,4 @@
-import { openHands } from "../open-hands-axios";
+import { openHands } from "../wsai-code-axios";
 import { AuthenticateResponse, GitHubAccessTokenResponse } from "./auth.types";
 import { GetConfigResponse } from "../option-service/option.types";
 

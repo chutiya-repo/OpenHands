@@ -23,8 +23,8 @@ class Manager(ABC):
 
     @abstractmethod
     def start_job(self):
-        "Kick off a job with openhands agent"
+        "Kick off a job with wsaicode agent"
         raise NotImplementedError
 
     def create_outgoing_message(self, msg: str | dict, ephemeral: bool = False):
-        return Message(source=SourceType.OPENHANDS, message=msg, ephemeral=ephemeral)
+        return Message(source=SourceType.WSAI_CODE, message=msg, ephemeral=ephemeral)

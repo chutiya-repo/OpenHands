@@ -9,12 +9,12 @@ from server.config import get_config
 from storage.database import session_maker
 from storage.saas_secrets_store import SaasSecretsStore
 
-from openhands.core.logger import openhands_logger as logger
-from openhands.integrations.gitlab.gitlab_service import GitLabServiceImpl
-from openhands.integrations.provider import PROVIDER_TOKEN_TYPE, ProviderType
-from openhands.integrations.service_types import Comment
-from openhands.server.services.conversation_service import create_new_conversation
-from openhands.storage.data_models.conversation_metadata import ConversationTrigger
+from wsaicode.core.logger import wsaicode_logger as logger
+from wsaicode.integrations.gitlab.gitlab_service import GitLabServiceImpl
+from wsaicode.integrations.provider import PROVIDER_TOKEN_TYPE, ProviderType
+from wsaicode.integrations.service_types import Comment
+from wsaicode.server.services.conversation_service import create_new_conversation
+from wsaicode.storage.data_models.conversation_metadata import ConversationTrigger
 
 OH_LABEL, INLINE_OH_LABEL = get_oh_labels(HOST)
 CONFIDENTIAL_NOTE = 'confidential_note'

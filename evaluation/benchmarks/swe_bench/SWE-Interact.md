@@ -10,7 +10,7 @@ After following the [README](./README.md) to set up the environment, you would n
 model="litellm_proxy/gpt-4o-2024-08-06"
 api_key="<your-api-key>"
 temperature = 0.0
-base_url = "https://llm-proxy.eval.all-hands.dev"
+base_url = "https://llm-proxy.eval.wsai-code.dev"
 ```
 
 ## Running the Benchmark
@@ -87,6 +87,6 @@ Where:
 - `{model}` is the model name
 - `{date}` is the run date
 - `{max_iter}` is the maximum iterations
-- `{version}` is the OpenHands version
+- `{version}` is the WSAI CODE version
 - `{options}` includes any additional options (e.g., no-hint, with-browsing)
 - `{run_number}` is the run number

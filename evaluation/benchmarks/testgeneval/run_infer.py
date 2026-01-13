@@ -11,7 +11,7 @@ import pandas as pd
 import toml
 from datasets import load_dataset
 
-import openhands.agenthub
+import wsaicode.agenthub
 from evaluation.benchmarks.testgeneval.constants import MAP_REPO_VERSION_TO_SPECS
 from evaluation.benchmarks.testgeneval.prompt import (
     CODEACT_TESTGEN_PROMPT,
@@ -25,7 +25,7 @@ from evaluation.utils.shared import (
     assert_and_raise,
     codeact_user_response,
     get_metrics,
-    get_openhands_config_for_eval,
+    get_wsaicode_config_for_eval,
     is_fatal_evaluation_error,
     make_metadata,
     prepare_dataset,
@@ -33,21 +33,21 @@ from evaluation.utils.shared import (
     run_evaluation,
     update_llm_config_for_completions_logging,
 )
-from openhands.controller.state.state import State
-from openhands.core.config import (
+from wsaicode.controller.state.state import State
+from wsaicode.core.config import (
     AgentConfig,
-    OpenHandsConfig,
+    WSAICodeConfig,
     SandboxConfig,
     get_evaluation_parser,
     get_llm_config_arg,
 )
-from openhands.core.logger import openhands_logger as logger
-from openhands.core.main import create_runtime, run_controller
-from openhands.events.action import CmdRunAction, MessageAction
-from openhands.events.observation import CmdOutputObservation, ErrorObservation
-from openhands.events.serialization.event import event_to_dict
-from openhands.runtime.base import Runtime
-from openhands.utils.async_utils import call_async_from_sync
+from wsaicode.core.logger import wsaicode_logger as logger
+from wsaicode.core.main import create_runtime, run_controller
+from wsaicode.events.action import CmdRunAction, MessageAction
+from wsaicode.events.observation import CmdOutputObservation, ErrorObservation
+from wsaicode.events.serialization.event import event_to_dict
+from wsaicode.runtime.base import Runtime
+from wsaicode.utils.async_utils import call_async_from_sync
 
 RUN_WITH_BROWSING = os.environ.get('RUN_WITH_BROWSING', 'false').lower() == 'true'
 
@@ -102,7 +102,7 @@ def get_instruction(instance: pd.Series, metadata: EvalMetadata):
     return instruction
 
 
-# TODO: migrate all swe-bench docker to ghcr.io/openhands
+# TODO: migrate all swe-bench docker to ghcr.io/wsaicode
 DOCKER_IMAGE_PREFIX = os.environ.get('EVAL_DOCKER_IMAGE_PREFIX', 'docker.io/kdjain/')
 logger.info(f'Using docker image prefix: {DOCKER_IMAGE_PREFIX}')
 
@@ -118,13 +118,13 @@ def get_instance_docker_image(instance_id: str) -> str:
 def get_config(
     instance: pd.Series,
     metadata: EvalMetadata,
-) -> OpenHandsConfig:
+) -> WSAICodeConfig:
     # We use a different instance image for the each instance of TestGenEval
     base_container_image = get_instance_docker_image(instance['instance_id_swebench'])
     logger.info(
         f'Using instance container image: {base_container_image}. '
         f'Please make sure this image exists. '
-        f'Submit an issue on https://github.com/OpenHands/OpenHands if you run into any issues.'
+        f'Submit an issue on https://github.com/wsaicode/wsaicode if you run into any issues.'
     )
 
     sandbox_config = SandboxConfig(
@@ -135,7 +135,7 @@ def get_config(
         timeout=300,
         # Add platform to the sandbox config to solve issue 4401
         platform='linux/amd64',
-        api_key=os.environ.get('ALLHANDS_API_KEY', None),
+        api_key=os.environ.get('WSAI_CODE_API_KEY', None),
         remote_runtime_api_url=os.environ.get(
             'SANDBOX_REMOTE_RUNTIME_API_URL', 'http://localhost:8000'
         ),
@@ -143,7 +143,7 @@ def get_config(
         remote_runtime_init_timeout=3600,
     )
 
-    config = get_openhands_config_for_eval(
+    config = get_wsaicode_config_for_eval(
         metadata=metadata,
         sandbox_config=sandbox_config,
         runtime=os.environ.get('RUNTIME', 'docker'),
@@ -528,7 +528,7 @@ if __name__ == '__main__':
                 preds_map[pred['id']] = pred['preds']['full'][0]
 
     # NOTE: It is preferable to load datasets from huggingface datasets and perform post-processing
-    # so we don't need to manage file uploading to OpenHands's repo
+    # so we don't need to manage file uploading to WSAI CODE's repo
     dataset = load_dataset(args.dataset, split=args.split)
     logger.info(f'Loaded dataset {args.dataset} with split {args.split}')
     testgeneval_filepairs = prepare_dataset_pre(dataset.to_pandas(), 'id')
@@ -544,7 +544,7 @@ if __name__ == '__main__':
         raise ValueError(f'Could not find LLM config: --llm_config {args.llm_config}')
 
     details = {}
-    _agent_cls = openhands.agenthub.Agent.get_cls(args.agent_cls)
+    _agent_cls = wsaicode.agenthub.Agent.get_cls(args.agent_cls)
 
     dataset_descrption = (
         args.dataset.replace('/', '__') + '-' + args.split.replace('/', '__')

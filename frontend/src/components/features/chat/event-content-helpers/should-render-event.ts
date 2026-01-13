@@ -1,27 +1,27 @@
-import { OpenHandsAction } from "#/types/core/actions";
-import { OpenHandsEventType } from "#/types/core/base";
+import { WSAICodeAction } from "#/types/core/actions";
+import { WSAICodeEventType } from "#/types/core/base";
 import {
   isCommandAction,
   isCommandObservation,
-  isOpenHandsAction,
-  isOpenHandsObservation,
+  isWSAICodeAction,
+  isWSAICodeObservation,
 } from "#/types/core/guards";
-import { OpenHandsObservation } from "#/types/core/observations";
+import { WSAICodeObservation } from "#/types/core/observations";
 
-const COMMON_NO_RENDER_LIST: OpenHandsEventType[] = [
+const COMMON_NO_RENDER_LIST: WSAICodeEventType[] = [
   "system",
   "agent_state_changed",
   "change_agent_state",
 ];
 
-const ACTION_NO_RENDER_LIST: OpenHandsEventType[] = ["recall"];
+const ACTION_NO_RENDER_LIST: WSAICodeEventType[] = ["recall"];
 
-const OBSERVATION_NO_RENDER_LIST: OpenHandsEventType[] = ["think"];
+const OBSERVATION_NO_RENDER_LIST: WSAICodeEventType[] = ["think"];
 
 export const shouldRenderEvent = (
-  event: OpenHandsAction | OpenHandsObservation,
+  event: WSAICodeAction | WSAICodeObservation,
 ) => {
-  if (isOpenHandsAction(event)) {
+  if (isWSAICodeAction(event)) {
     if (isCommandAction(event) && event.source === "user") {
       // For user commands, we always hide them from the chat interface
       return false;
@@ -31,7 +31,7 @@ export const shouldRenderEvent = (
     return !noRenderList.includes(event.action);
   }
 
-  if (isOpenHandsObservation(event)) {
+  if (isWSAICodeObservation(event)) {
     if (isCommandObservation(event) && event.source === "user") {
       // For user commands, we always hide them from the chat interface
       return false;
@@ -47,6 +47,6 @@ export const shouldRenderEvent = (
 };
 
 export const hasUserEvent = (
-  events: (OpenHandsAction | OpenHandsObservation)[],
+  events: (WSAICodeAction | WSAICodeObservation)[],
 ) =>
-  events.some((event) => isOpenHandsAction(event) && event.source === "user");
+  events.some((event) => isWSAICodeAction(event) && event.source === "user");

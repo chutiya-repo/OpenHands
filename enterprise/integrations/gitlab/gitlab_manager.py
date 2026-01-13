@@ -14,7 +14,7 @@ from integrations.types import ResolverViewInterface
 from integrations.utils import (
     CONVERSATION_URL,
     HOST_URL,
-    OPENHANDS_RESOLVER_TEMPLATES_DIR,
+    WSAI_CODE_RESOLVER_TEMPLATES_DIR,
     get_session_expired_message,
 )
 from jinja2 import Environment, FileSystemLoader
@@ -22,15 +22,15 @@ from pydantic import SecretStr
 from server.auth.token_manager import TokenManager
 from server.utils.conversation_callback_utils import register_callback_processor
 
-from openhands.core.logger import openhands_logger as logger
-from openhands.integrations.gitlab.gitlab_service import GitLabServiceImpl
-from openhands.integrations.provider import ProviderToken, ProviderType
-from openhands.server.types import (
+from wsaicode.core.logger import wsaicode_logger as logger
+from wsaicode.integrations.gitlab.gitlab_service import GitLabServiceImpl
+from wsaicode.integrations.provider import ProviderToken, ProviderType
+from wsaicode.server.types import (
     LLMAuthenticationError,
     MissingSettingsError,
     SessionExpiredError,
 )
-from openhands.storage.data_models.secrets import Secrets
+from wsaicode.storage.data_models.secrets import Secrets
 
 
 class GitlabManager(Manager):
@@ -38,7 +38,7 @@ class GitlabManager(Manager):
         self.token_manager = token_manager
 
         self.jinja_env = Environment(
-            loader=FileSystemLoader(OPENHANDS_RESOLVER_TEMPLATES_DIR + 'gitlab')
+            loader=FileSystemLoader(WSAI_CODE_RESOLVER_TEMPLATES_DIR + 'gitlab')
         )
 
     def _confirm_incoming_source_type(self, message: Message):
@@ -238,21 +238,21 @@ class GitlabManager(Manager):
                 )
 
                 conversation_link = CONVERSATION_URL.format(conversation_id)
-                msg_info = f"I'm on it! {user_info.username} can [track my progress at all-hands.dev]({conversation_link})"
+                msg_info = f"I'm on it! {user_info.username} can [track my progress at wsai-code.dev]({conversation_link})"
 
             except MissingSettingsError as e:
                 logger.warning(
                     f'[GitLab] Missing settings error for user {user_info.username}: {str(e)}'
                 )
 
-                msg_info = f'@{user_info.username} please re-login into [OpenHands Cloud]({HOST_URL}) before starting a job.'
+                msg_info = f'@{user_info.username} please re-login into [WSAI CODE Cloud]({HOST_URL}) before starting a job.'
 
             except LLMAuthenticationError as e:
                 logger.warning(
                     f'[GitLab] LLM authentication error for user {user_info.username}: {str(e)}'
                 )
 
-                msg_info = f'@{user_info.username} please set a valid LLM API key in [OpenHands Cloud]({HOST_URL}) before starting a job.'
+                msg_info = f'@{user_info.username} please set a valid LLM API key in [WSAI CODE Cloud]({HOST_URL}) before starting a job.'
 
             except SessionExpiredError as e:
                 logger.warning(

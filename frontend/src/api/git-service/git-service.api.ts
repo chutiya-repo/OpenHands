@@ -1,4 +1,4 @@
-import { openHands } from "../open-hands-axios";
+import { openHands } from "../wsai-code-axios";
 import { Provider } from "#/types/settings";
 import { GitRepository, PaginatedBranchesResponse, Branch } from "#/types/git";
 import { extractNextPageFromLink } from "#/utils/extract-next-page-from-link";
@@ -7,7 +7,7 @@ import {
   MicroagentContentResponse,
   GitChange,
   GitChangeDiff,
-} from "../open-hands.types";
+} from "../wsai-code.types";
 import ConversationService from "../conversation-service/conversation-service.api";
 
 /**

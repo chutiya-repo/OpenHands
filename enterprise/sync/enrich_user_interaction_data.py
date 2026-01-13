@@ -1,10 +1,10 @@
 import asyncio
 
 from integrations.github.data_collector import GitHubDataCollector
-from storage.openhands_pr import OpenhandsPR
-from storage.openhands_pr_store import OpenhandsPRStore
+from storage.wsaicode_pr import OpenhandsPR
+from storage.wsaicode_pr_store import OpenhandsPRStore
 
-from openhands.core.logger import openhands_logger as logger
+from wsaicode.core.logger import wsaicode_logger as logger
 
 PROCESS_AMOUNT = 50
 MAX_RETRIES = 3

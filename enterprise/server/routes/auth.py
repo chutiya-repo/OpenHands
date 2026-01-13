@@ -29,13 +29,13 @@ from storage.database import session_maker
 from storage.saas_settings_store import SaasSettingsStore
 from storage.user_settings import UserSettings
 
-from openhands.core.logger import openhands_logger as logger
-from openhands.integrations.provider import ProviderHandler
-from openhands.integrations.service_types import ProviderType, TokenResponse
-from openhands.server.services.conversation_service import create_provider_tokens_object
-from openhands.server.shared import config
-from openhands.server.user_auth import get_access_token
-from openhands.server.user_auth.user_auth import get_user_auth
+from wsaicode.core.logger import wsaicode_logger as logger
+from wsaicode.integrations.provider import ProviderHandler
+from wsaicode.integrations.service_types import ProviderType, TokenResponse
+from wsaicode.server.services.conversation_service import create_provider_tokens_object
+from wsaicode.server.shared import config
+from wsaicode.server.user_auth import get_access_token
+from wsaicode.server.user_auth.user_auth import get_user_auth
 
 with warnings.catch_warnings():
     warnings.simplefilter('ignore')
@@ -97,7 +97,7 @@ def get_cookie_samesite(request: Request) -> Literal['lax', 'strict']:
     return (
         'lax'
         if request.url.hostname == 'localhost'
-        or (request.url.hostname or '').endswith('staging.all-hands.dev')
+        or (request.url.hostname or '').endswith('staging.wsai-code.dev')
         else 'strict'
     )
 

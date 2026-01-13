@@ -11,31 +11,31 @@ class TestCircularImports(unittest.TestCase):
         Test that there are no circular imports in key modules that were previously problematic.
 
         This test specifically checks the modules that were involved in a previous circular import issue:
-        - openhands.utils.prompt
-        - openhands.agenthub.codeact_agent.tools.bash
-        - openhands.agenthub.codeact_agent.tools.prompt
-        - openhands.memory.memory
-        - openhands.memory.conversation_memory
+        - wsaicode.utils.prompt
+        - wsaicode.agenthub.codeact_agent.tools.bash
+        - wsaicode.agenthub.codeact_agent.tools.prompt
+        - wsaicode.memory.memory
+        - wsaicode.memory.conversation_memory
         """
         # Get the project root directory
         project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 
         # Map module names to file paths
         module_paths = {
-            'openhands.utils.prompt': os.path.join(
-                project_root, 'openhands/utils/prompt.py'
+            'wsaicode.utils.prompt': os.path.join(
+                project_root, 'wsaicode/utils/prompt.py'
             ),
-            'openhands.agenthub.codeact_agent.tools.bash': os.path.join(
-                project_root, 'openhands/agenthub/codeact_agent/tools/bash.py'
+            'wsaicode.agenthub.codeact_agent.tools.bash': os.path.join(
+                project_root, 'wsaicode/agenthub/codeact_agent/tools/bash.py'
             ),
-            'openhands.agenthub.codeact_agent.tools.prompt': os.path.join(
-                project_root, 'openhands/agenthub/codeact_agent/tools/prompt.py'
+            'wsaicode.agenthub.codeact_agent.tools.prompt': os.path.join(
+                project_root, 'wsaicode/agenthub/codeact_agent/tools/prompt.py'
             ),
-            'openhands.memory.memory': os.path.join(
-                project_root, 'openhands/memory/memory.py'
+            'wsaicode.memory.memory': os.path.join(
+                project_root, 'wsaicode/memory/memory.py'
             ),
-            'openhands.memory.conversation_memory': os.path.join(
-                project_root, 'openhands/memory/conversation_memory.py'
+            'wsaicode.memory.conversation_memory': os.path.join(
+                project_root, 'wsaicode/memory/conversation_memory.py'
             ),
         }
 
@@ -89,12 +89,12 @@ class TestCircularImports(unittest.TestCase):
                         parts = line[7:].split(',')
                         for part in parts:
                             module_part = part.strip().split(' as ')[0].strip()
-                            if module_part.startswith('openhands.'):
+                            if module_part.startswith('wsaicode.'):
                                 imported_modules.append(module_part)
                     elif line.startswith('from '):
                         # Handle "from module import name" or "from module import name as alias"
                         module_part = line[5:].split(' import ')[0].strip()
-                        if module_part.startswith('openhands.'):
+                        if module_part.startswith('wsaicode.'):
                             imported_modules.append(module_part)
 
                 module_imports[module_name] = imported_modules
@@ -114,20 +114,20 @@ class TestCircularImports(unittest.TestCase):
         Test for the specific circular import pattern that caused the issue in the stack trace.
 
         The problematic pattern was:
-        openhands.utils.prompt imports from openhands.agenthub.codeact_agent.tools.bash
-        openhands.agenthub.codeact_agent.tools.bash imports from openhands.agenthub.codeact_agent.tools.prompt
-        openhands.agenthub.codeact_agent.tools.prompt imports from openhands.utils.prompt
+        wsaicode.utils.prompt imports from wsaicode.agenthub.codeact_agent.tools.bash
+        wsaicode.agenthub.codeact_agent.tools.bash imports from wsaicode.agenthub.codeact_agent.tools.prompt
+        wsaicode.agenthub.codeact_agent.tools.prompt imports from wsaicode.utils.prompt
         """
         # Get the project root directory
         project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 
         # Check if the problematic pattern exists
-        prompt_path = os.path.join(project_root, 'openhands/utils/prompt.py')
+        prompt_path = os.path.join(project_root, 'wsaicode/utils/prompt.py')
         bash_path = os.path.join(
-            project_root, 'openhands/agenthub/codeact_agent/tools/bash.py'
+            project_root, 'wsaicode/agenthub/codeact_agent/tools/bash.py'
         )
         tools_prompt_path = os.path.join(
-            project_root, 'openhands/agenthub/codeact_agent/tools/prompt.py'
+            project_root, 'wsaicode/agenthub/codeact_agent/tools/prompt.py'
         )
 
         # Check if all files exist
@@ -149,20 +149,20 @@ class TestCircularImports(unittest.TestCase):
         # Check for the problematic imports
         prompt_imports_bash = (
             re.search(
-                r'from openhands\.agenthub\.codeact_agent\.tools\.bash import',
+                r'from wsaicode\.agenthub\.codeact_agent\.tools\.bash import',
                 prompt_code,
             )
             is not None
         )
         bash_imports_tools_prompt = (
             re.search(
-                r'from openhands\.agenthub\.codeact_agent\.tools\.prompt import',
+                r'from wsaicode\.agenthub\.codeact_agent\.tools\.prompt import',
                 bash_code,
             )
             is not None
         )
         tools_prompt_imports_prompt = (
-            re.search(r'from openhands\.utils\.prompt import', tools_prompt_code)
+            re.search(r'from wsaicode\.utils\.prompt import', tools_prompt_code)
             is not None
         )
 
@@ -174,9 +174,9 @@ class TestCircularImports(unittest.TestCase):
         ):
             self.fail(
                 'Circular import pattern detected:\n'
-                'openhands.utils.prompt imports from openhands.agenthub.codeact_agent.tools.bash\n'
-                'openhands.agenthub.codeact_agent.tools.bash imports from openhands.agenthub.codeact_agent.tools.prompt\n'
-                'openhands.agenthub.codeact_agent.tools.prompt imports from openhands.utils.prompt'
+                'wsaicode.utils.prompt imports from wsaicode.agenthub.codeact_agent.tools.bash\n'
+                'wsaicode.agenthub.codeact_agent.tools.bash imports from wsaicode.agenthub.codeact_agent.tools.prompt\n'
+                'wsaicode.agenthub.codeact_agent.tools.prompt imports from wsaicode.utils.prompt'
             )
 
     def test_detect_circular_imports_in_server_modules(self):
@@ -184,32 +184,32 @@ class TestCircularImports(unittest.TestCase):
         Test for circular imports in the server modules that were involved in the stack trace.
 
         The problematic modules were:
-        - openhands.server.shared
-        - openhands.server.conversation_manager.conversation_manager
-        - openhands.server.session.agent_session
-        - openhands.server.session
-        - openhands.server.session.session
+        - wsaicode.server.shared
+        - wsaicode.server.conversation_manager.conversation_manager
+        - wsaicode.server.session.agent_session
+        - wsaicode.server.session
+        - wsaicode.server.session.session
         """
         # Get the project root directory
         project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 
         # Map module names to file paths
         module_paths = {
-            'openhands.server.shared': os.path.join(
-                project_root, 'openhands/server/shared.py'
+            'wsaicode.server.shared': os.path.join(
+                project_root, 'wsaicode/server/shared.py'
             ),
-            'openhands.server.conversation_manager.conversation_manager': os.path.join(
+            'wsaicode.server.conversation_manager.conversation_manager': os.path.join(
                 project_root,
-                'openhands/server/conversation_manager/conversation_manager.py',
+                'wsaicode/server/conversation_manager/conversation_manager.py',
             ),
-            'openhands.server.session.agent_session': os.path.join(
-                project_root, 'openhands/server/session/agent_session.py'
+            'wsaicode.server.session.agent_session': os.path.join(
+                project_root, 'wsaicode/server/session/agent_session.py'
             ),
-            'openhands.server.session.__init__': os.path.join(
-                project_root, 'openhands/server/session/__init__.py'
+            'wsaicode.server.session.__init__': os.path.join(
+                project_root, 'wsaicode/server/session/__init__.py'
             ),
-            'openhands.server.session.session': os.path.join(
-                project_root, 'openhands/server/session/session.py'
+            'wsaicode.server.session.session': os.path.join(
+                project_root, 'wsaicode/server/session/session.py'
             ),
         }
 
@@ -233,21 +233,21 @@ class TestCircularImports(unittest.TestCase):
         Test for circular imports in the MCP modules that were involved in the stack trace.
 
         The problematic modules were:
-        - openhands.mcp
-        - openhands.mcp.utils
-        - openhands.memory.memory
+        - wsaicode.mcp
+        - wsaicode.mcp.utils
+        - wsaicode.memory.memory
         """
         # Get the project root directory
         project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 
         # Map module names to file paths
         module_paths = {
-            'openhands.mcp.__init__': os.path.join(
-                project_root, 'openhands/mcp/__init__.py'
+            'wsaicode.mcp.__init__': os.path.join(
+                project_root, 'wsaicode/mcp/__init__.py'
             ),
-            'openhands.mcp.utils': os.path.join(project_root, 'openhands/mcp/utils.py'),
-            'openhands.memory.memory': os.path.join(
-                project_root, 'openhands/memory/memory.py'
+            'wsaicode.mcp.utils': os.path.join(project_root, 'wsaicode/mcp/utils.py'),
+            'wsaicode.memory.memory': os.path.join(
+                project_root, 'wsaicode/memory/memory.py'
             ),
         }
 
@@ -278,18 +278,18 @@ class TestCircularImports(unittest.TestCase):
 
         # Define the modules involved in the stack trace
         modules = [
-            'openhands.utils.prompt',
-            'openhands.agenthub.codeact_agent.tools.bash',
-            'openhands.agenthub.codeact_agent.tools.prompt',
-            'openhands.memory.memory',
-            'openhands.memory.conversation_memory',
-            'openhands.server.shared',
-            'openhands.server.conversation_manager.conversation_manager',
-            'openhands.server.session.agent_session',
-            'openhands.server.session.__init__',
-            'openhands.server.session.session',
-            'openhands.mcp.__init__',
-            'openhands.mcp.utils',
+            'wsaicode.utils.prompt',
+            'wsaicode.agenthub.codeact_agent.tools.bash',
+            'wsaicode.agenthub.codeact_agent.tools.prompt',
+            'wsaicode.memory.memory',
+            'wsaicode.memory.conversation_memory',
+            'wsaicode.server.shared',
+            'wsaicode.server.conversation_manager.conversation_manager',
+            'wsaicode.server.session.agent_session',
+            'wsaicode.server.session.__init__',
+            'wsaicode.server.session.session',
+            'wsaicode.mcp.__init__',
+            'wsaicode.mcp.utils',
         ]
 
         # Map module names to file paths
@@ -329,12 +329,12 @@ class TestCircularImports(unittest.TestCase):
                     parts = line[7:].split(',')
                     for part in parts:
                         module_part = part.strip().split(' as ')[0].strip()
-                        if module_part.startswith('openhands.'):
+                        if module_part.startswith('wsaicode.'):
                             imported_modules.append(module_part)
                 elif line.startswith('from '):
                     # Handle "from module import name" or "from module import name as alias"
                     module_part = line[5:].split(' import ')[0].strip()
-                    if module_part.startswith('openhands.'):
+                    if module_part.startswith('wsaicode.'):
                         imported_modules.append(module_part)
 
             import_graph[module_name] = [

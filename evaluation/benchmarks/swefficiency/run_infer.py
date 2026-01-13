@@ -11,7 +11,7 @@ import pandas as pd
 import toml
 from datasets import load_dataset
 
-import openhands.agenthub
+import wsaicode.agenthub
 from evaluation.benchmarks.swe_bench.binary_patch_utils import (
     remove_binary_diffs,
     remove_binary_files_from_git,
@@ -31,28 +31,28 @@ from evaluation.utils.shared import (
     run_evaluation,
     update_llm_config_for_completions_logging,
 )
-from openhands.controller.state.state import State
-from openhands.core.config import (
+from wsaicode.controller.state.state import State
+from wsaicode.core.config import (
     AgentConfig,
-    OpenHandsConfig,
+    WSAICodeConfig,
     get_evaluation_parser,
     get_llm_config_arg,
 )
-from openhands.core.config.condenser_config import NoOpCondenserConfig
-from openhands.core.config.utils import get_condenser_config_arg
-from openhands.core.logger import openhands_logger as logger
-from openhands.core.main import create_runtime, run_controller
-from openhands.critic import AgentFinishedCritic
-from openhands.events.action import CmdRunAction, FileReadAction, MessageAction
-from openhands.events.observation import (
+from wsaicode.core.config.condenser_config import NoOpCondenserConfig
+from wsaicode.core.config.utils import get_condenser_config_arg
+from wsaicode.core.logger import wsaicode_logger as logger
+from wsaicode.core.main import create_runtime, run_controller
+from wsaicode.critic import AgentFinishedCritic
+from wsaicode.events.action import CmdRunAction, FileReadAction, MessageAction
+from wsaicode.events.observation import (
     CmdOutputObservation,
     ErrorObservation,
     FileReadObservation,
 )
-from openhands.events.serialization.event import event_from_dict, event_to_dict
-from openhands.runtime.base import Runtime
-from openhands.utils.async_utils import call_async_from_sync
-from openhands.utils.shutdown_listener import sleep_if_should_continue
+from wsaicode.events.serialization.event import event_from_dict, event_to_dict
+from wsaicode.runtime.base import Runtime
+from wsaicode.utils.async_utils import call_async_from_sync
+from wsaicode.utils.shutdown_listener import sleep_if_should_continue
 
 USE_HINT_TEXT = os.environ.get('USE_HINT_TEXT', 'false').lower() == 'true'
 RUN_WITH_BROWSING = os.environ.get('RUN_WITH_BROWSING', 'false').lower() == 'true'
@@ -120,7 +120,7 @@ def get_config(
     instance: pd.Series,
     metadata: EvalMetadata,
     cpu_group: list[int] | None = None,
-) -> OpenHandsConfig:
+) -> WSAICodeConfig:
     # We use a different instance image for the each instance of swe-bench eval
     base_container_image = get_instance_docker_image(
         instance['instance_id'],
@@ -128,7 +128,7 @@ def get_config(
     logger.info(
         f'Using instance container image: {base_container_image}. '
         f'Please make sure this image exists. '
-        f'Submit an issue on https://github.com/All-Hands-AI/OpenHands if you run into any issues.'
+        f'Submit an issue on https://github.com/All-Hands-AI/WSAI CODE if you run into any issues.'
     )
 
     sandbox_config = get_default_sandbox_config_for_eval()
@@ -160,9 +160,9 @@ def get_config(
 
     # Note: We keep rm_all_containers = False for worker process safety
 
-    config = OpenHandsConfig(
+    config = WSAICodeConfig(
         default_agent=metadata.agent_class,
-        run_as_openhands=False,
+        run_as_wsaicode=False,
         max_iterations=metadata.max_iterations,
         runtime=os.environ.get('RUNTIME', 'docker'),
         sandbox=sandbox_config,
@@ -522,7 +522,7 @@ def cleanup_docker_resources_for_worker():
 
     # Clean up any stale port locks from crashed processes
     try:
-        from openhands.runtime.utils.port_lock import cleanup_stale_locks
+        from wsaicode.runtime.utils.port_lock import cleanup_stale_locks
 
         cleanup_stale_locks(max_age_seconds=300)  # Clean up locks older than 5 minutes
     except Exception as e:
@@ -737,7 +737,7 @@ if __name__ == '__main__':
     args, _ = parser.parse_known_args()
 
     # NOTE: It is preferable to load datasets from huggingface datasets and perform post-processing
-    # so we don't need to manage file uploading to OpenHands's repo
+    # so we don't need to manage file uploading to WSAI CODE's repo
 
     # dataset = load_dataset(args.dataset, split=args.split)
     # swe_bench_tests = filter_dataset(dataset.to_pandas(), 'instance_id')
@@ -784,7 +784,7 @@ if __name__ == '__main__':
         )
 
     details = {'mode': args.mode}
-    _agent_cls = openhands.agenthub.Agent.get_cls(args.agent_cls)
+    _agent_cls = wsaicode.agenthub.Agent.get_cls(args.agent_cls)
 
     dataset_descrption = (
         args.dataset.replace('/', '__') + '-' + args.split.replace('/', '__')

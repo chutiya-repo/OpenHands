@@ -12,12 +12,12 @@ from experiments.constants import EXPERIMENT_CONDENSER_MAX_STEP
 from server.constants import IS_FEATURE_ENV
 from storage.experiment_assignment_store import ExperimentAssignmentStore
 
-from openhands.core.logger import openhands_logger as logger
-from openhands.sdk import Agent
-from openhands.sdk.context.condenser import (
+from wsaicode.core.logger import wsaicode_logger as logger
+from wsaicode.sdk import Agent
+from wsaicode.sdk.context.condenser import (
     LLMSummarizingCondenser,
 )
-from openhands.server.session.conversation_init_data import ConversationInitData
+from wsaicode.server.session.conversation_init_data import ConversationInitData
 
 
 def _get_condenser_max_step_variant(user_id, conversation_id):
@@ -161,7 +161,7 @@ def handle_condenser_max_step_experiment(
 
     try:
         # Apply the variant to this conversation only; do not persist to DB.
-        # Not all OpenHands versions expose `condenser_max_size` on settings.
+        # Not all WSAI CODE versions expose `condenser_max_size` on settings.
         if hasattr(conversation_settings, 'condenser_max_size'):
             conversation_settings.condenser_max_size = condenser_max_size
             logger.info(

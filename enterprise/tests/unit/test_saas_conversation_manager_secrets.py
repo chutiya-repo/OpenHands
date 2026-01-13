@@ -8,10 +8,10 @@ import pytest
 from pydantic import SecretStr
 from server.saas_nested_conversation_manager import SaasNestedConversationManager
 
-from openhands.core.config.openhands_config import OpenHandsConfig
-from openhands.integrations.provider import CustomSecret
-from openhands.server.config.server_config import ServerConfig
-from openhands.storage.memory import InMemoryFileStore
+from wsaicode.core.config.wsaicode_config import WSAICodeConfig
+from wsaicode.integrations.provider import CustomSecret
+from wsaicode.server.config.server_config import ServerConfig
+from wsaicode.storage.memory import InMemoryFileStore
 
 
 class MockHTTPXResponse:
@@ -50,7 +50,7 @@ def saas_manager():
     """Create a SaasNestedConversationManager instance for testing."""
     manager = SaasNestedConversationManager(
         sio=MagicMock(),
-        config=MagicMock(spec=OpenHandsConfig),
+        config=MagicMock(spec=WSAICodeConfig),
         server_config=MagicMock(spec=ServerConfig),
         file_store=MagicMock(spec=InMemoryFileStore),
         event_retrieval=MagicMock(),

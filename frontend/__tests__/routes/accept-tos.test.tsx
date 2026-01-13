@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AcceptTOS from "#/routes/accept-tos";
 import * as CaptureConsent from "#/utils/handle-capture-consent";
-import { openHands } from "#/api/open-hands-axios";
+import { openHands } from "#/api/wsai-code-axios";
 
 // Mock the react-router hooks
 vi.mock("react-router", () => ({
@@ -22,7 +22,7 @@ vi.mock("react-router", () => ({
 }));
 
 // Mock the axios instance
-vi.mock("#/api/open-hands-axios", () => ({
+vi.mock("#/api/wsai-code-axios", () => ({
   openHands: {
     post: vi.fn(),
   },

@@ -1,6 +1,6 @@
 import pytest
 
-from openhands.utils import environment
+from wsaicode.utils import environment
 
 
 @pytest.fixture(autouse=True)
