@@ -9,17 +9,17 @@ from storage.jira_integration_store import JiraIntegrationStore
 from storage.jira_user import JiraUser
 from storage.jira_workspace import JiraWorkspace
 
-from openhands.core.logger import openhands_logger as logger
-from openhands.core.schema.agent import AgentState
-from openhands.events.action import MessageAction
-from openhands.events.serialization.event import event_to_dict
-from openhands.server.services.conversation_service import (
+from wsaicode.core.logger import wsaicode_logger as logger
+from wsaicode.core.schema.agent import AgentState
+from wsaicode.events.action import MessageAction
+from wsaicode.events.serialization.event import event_to_dict
+from wsaicode.server.services.conversation_service import (
     create_new_conversation,
     setup_init_conversation_settings,
 )
-from openhands.server.shared import ConversationStoreImpl, config, conversation_manager
-from openhands.server.user_auth.user_auth import UserAuth
-from openhands.storage.data_models.conversation_metadata import ConversationTrigger
+from wsaicode.server.shared import ConversationStoreImpl, config, conversation_manager
+from wsaicode.server.user_auth.user_auth import UserAuth
+from wsaicode.storage.data_models.conversation_metadata import ConversationTrigger
 
 integration_store = JiraIntegrationStore.get_instance()
 

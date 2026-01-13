@@ -5,21 +5,21 @@ from pathlib import Path
 
 from conftest import _close_test_runtime, _load_runtime
 
-from openhands.controller.state.state import State
-from openhands.core.config.config_utils import OH_DEFAULT_AGENT
-from openhands.core.config.openhands_config import OpenHandsConfig
-from openhands.core.main import run_controller
-from openhands.core.schema.agent import AgentState
-from openhands.events.action.empty import NullAction
-from openhands.events.action.message import MessageAction
-from openhands.events.event import EventSource
-from openhands.events.observation.commands import CmdOutputObservation
+from wsaicode.controller.state.state import State
+from wsaicode.core.config.config_utils import OH_DEFAULT_AGENT
+from wsaicode.core.config.wsaicode_config import WSAICodeConfig
+from wsaicode.core.main import run_controller
+from wsaicode.core.schema.agent import AgentState
+from wsaicode.events.action.empty import NullAction
+from wsaicode.events.action.message import MessageAction
+from wsaicode.events.event import EventSource
+from wsaicode.events.observation.commands import CmdOutputObservation
 
 
 def _get_config(trajectory_name: str, agent: str = OH_DEFAULT_AGENT):
-    return OpenHandsConfig(
+    return WSAICodeConfig(
         default_agent=agent,
-        run_as_openhands=False,
+        run_as_wsaicode=False,
         # do not mount workspace
         workspace_base=None,
         workspace_mount_path=None,
@@ -29,11 +29,11 @@ def _get_config(trajectory_name: str, agent: str = OH_DEFAULT_AGENT):
     )
 
 
-def test_simple_replay(temp_dir, runtime_cls, run_as_openhands):
+def test_simple_replay(temp_dir, runtime_cls, run_as_wsaicode):
     """A simple replay test that involves simple terminal operations and edits
     (creating a simple 2048 game), using the default agent
     """
-    runtime, config = _load_runtime(temp_dir, runtime_cls, run_as_openhands)
+    runtime, config = _load_runtime(temp_dir, runtime_cls, run_as_wsaicode)
     config.replay_trajectory_path = str(
         (Path(__file__).parent / 'trajs' / 'basic.json').resolve()
     )
@@ -52,7 +52,7 @@ def test_simple_replay(temp_dir, runtime_cls, run_as_openhands):
     _close_test_runtime(runtime)
 
 
-def test_simple_gui_replay(temp_dir, runtime_cls, run_as_openhands):
+def test_simple_gui_replay(temp_dir, runtime_cls, run_as_wsaicode):
     """A simple replay test that involves simple terminal operations and edits
     (writing a Vue.js App), using the default agent
 
@@ -62,7 +62,7 @@ def test_simple_gui_replay(temp_dir, runtime_cls, run_as_openhands):
     2. In GUI mode, agents typically don't finish; rather, they wait for the next
     task from the user, so this exported trajectory ends with awaiting_user_input
     """
-    runtime, config = _load_runtime(temp_dir, runtime_cls, run_as_openhands)
+    runtime, config = _load_runtime(temp_dir, runtime_cls, run_as_wsaicode)
 
     config = _get_config('basic_gui_mode')
     config.security.confirmation_mode = False
@@ -82,7 +82,7 @@ def test_simple_gui_replay(temp_dir, runtime_cls, run_as_openhands):
     _close_test_runtime(runtime)
 
 
-def test_replay_wrong_initial_state(temp_dir, runtime_cls, run_as_openhands):
+def test_replay_wrong_initial_state(temp_dir, runtime_cls, run_as_wsaicode):
     """Replay requires a consistent initial state to start with, otherwise it might
     be producing garbage. The trajectory used in this test assumes existence of
     a file named 'game_2048.py', which doesn't exist when we replay the trajectory
@@ -90,7 +90,7 @@ def test_replay_wrong_initial_state(temp_dir, runtime_cls, run_as_openhands):
     look like: the following events would still be replayed even though they are
     meaningless.
     """
-    runtime, config = _load_runtime(temp_dir, runtime_cls, run_as_openhands)
+    runtime, config = _load_runtime(temp_dir, runtime_cls, run_as_wsaicode)
     config.replay_trajectory_path = str(
         (Path(__file__).parent / 'trajs' / 'wrong_initial_state.json').resolve()
     )
@@ -117,14 +117,14 @@ def test_replay_wrong_initial_state(temp_dir, runtime_cls, run_as_openhands):
     _close_test_runtime(runtime)
 
 
-def test_replay_basic_interactions(temp_dir, runtime_cls, run_as_openhands):
+def test_replay_basic_interactions(temp_dir, runtime_cls, run_as_wsaicode):
     """Replay a trajectory that involves interactions, i.e. with user messages
     in the middle. This tests two things:
     1) The controller should be able to replay all actions without human
     interference (no asking for user input).
     2) The user messages in the trajectory should appear in the history.
     """
-    runtime, config = _load_runtime(temp_dir, runtime_cls, run_as_openhands)
+    runtime, config = _load_runtime(temp_dir, runtime_cls, run_as_wsaicode)
 
     config = _get_config('basic_interactions')
     config.security.confirmation_mode = False

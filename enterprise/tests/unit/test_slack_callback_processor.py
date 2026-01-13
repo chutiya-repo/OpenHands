@@ -11,10 +11,10 @@ from server.conversation_callback_processor.slack_callback_processor import (
 )
 from storage.conversation_callback import ConversationCallback
 
-from openhands.core.schema.agent import AgentState
-from openhands.events.action import MessageAction
-from openhands.events.observation.agent import AgentStateChangedObservation
-from openhands.server.shared import conversation_manager
+from wsaicode.core.schema.agent import AgentState
+from wsaicode.events.action import MessageAction
+from wsaicode.events.observation.agent import AgentStateChangedObservation
+from wsaicode.server.shared import conversation_manager
 
 
 @pytest.fixture

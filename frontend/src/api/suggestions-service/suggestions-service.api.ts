@@ -1,5 +1,5 @@
 import { SuggestedTask } from "#/utils/types";
-import { openHands } from "../open-hands-axios";
+import { openHands } from "../wsai-code-axios";
 
 export class SuggestionsService {
   static async getSuggestedTasks(): Promise<SuggestedTask[]> {

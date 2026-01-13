@@ -2,7 +2,7 @@ import os
 
 import pytest
 
-from openhands.core.config import OpenHandsConfig, load_from_env
+from wsaicode.core.config import WSAICodeConfig, load_from_env
 
 
 def test_load_from_env_with_dict(monkeypatch, default_config):
@@ -35,5 +35,5 @@ def test_load_from_env_with_dict(monkeypatch, default_config):
 
 @pytest.fixture
 def default_config():
-    # Fixture to provide a default OpenHandsConfig instance
-    yield OpenHandsConfig()
+    # Fixture to provide a default WSAICodeConfig instance
+    yield WSAICodeConfig()

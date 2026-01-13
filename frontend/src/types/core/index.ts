@@ -1,11 +1,11 @@
-import { OpenHandsAction } from "./actions";
-import { OpenHandsObservation } from "./observations";
-import { OpenHandsVariance } from "./variances";
+import { WSAICodeAction } from "./actions";
+import { WSAICodeObservation } from "./observations";
+import { WSAICodeVariance } from "./variances";
 
 /**
  * @deprecated Will be removed once we fully transition to v1 events
  */
-export type OpenHandsParsedEvent =
-  | OpenHandsAction
-  | OpenHandsObservation
-  | OpenHandsVariance;
+export type WSAICodeParsedEvent =
+  | WSAICodeAction
+  | WSAICodeObservation
+  | WSAICodeVariance;

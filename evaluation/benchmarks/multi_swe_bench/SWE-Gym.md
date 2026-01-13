@@ -31,22 +31,22 @@ We use it to train strong LM agents that achieve state-of-the-art open results o
 </p>
 
 ---
-# Run SWE-Gym with OpenHands
+# Run SWE-Gym with WSAI CODE
 
 The process of running SWE-Gym is very similar to how you'd run SWE-Bench evaluation.
 
 
-1. First, clone OpenHands repo `git clone https://github.com/OpenHands/OpenHands.git`
-2. Then setup the repo following [Development.md](https://github.com/OpenHands/OpenHands/blob/main/Development.md)
+1. First, clone WSAI CODE repo `git clone https://github.com/wsaicode/wsaicode.git`
+2. Then setup the repo following [Development.md](https://github.com/wsaicode/wsaicode/blob/main/Development.md)
 3. Then you can simply serve your own model as an OpenAI compatible endpoint, put those info in config.toml. You can do this by following instruction [here](../../README.md#setup).
 4. And then simply do the following to sample for 16x parallelism:
 
 ```bash
-export ALLHANDS_API_KEY=ah-yourkey  # You don't need to set this when running these in local docker container
+export WSAI_CODE_API_KEY=ah-yourkey  # You don't need to set this when running these in local docker container
 ./evaluation/benchmarks/multi_swe_bench/scripts/rollout_swegym.sh llm.mymodel-temp05 'train-t05' 16
 ```
 
-NOTE: SWE-Gym sampling with parallelism is currently only tested with AllHands RemoteRuntime (limited beta). Fill [this form](https://docs.google.com/forms/d/e/1FAIpQLSckVz_JFwg2_mOxNZjCtr7aoBFI2Mwdan3f75J_TrdMS1JV2g/viewform) to apply for access.
+NOTE: SWE-Gym sampling with parallelism is currently only tested with WSAI CODE RemoteRuntime (limited beta). Fill [this form](https://docs.google.com/forms/d/e/1FAIpQLSckVz_JFwg2_mOxNZjCtr7aoBFI2Mwdan3f75J_TrdMS1JV2g/viewform) to apply for access.
 
 
 5. When `rollout_swegym.sh` finishes, you will get a file called `output.with_completions.jsonl.gz`. Then you can use [`./scripts/swegym/convert_data.ipynb`](./scripts/swegym/convert_data.ipynb) to convert them into SFT data format.
@@ -55,9 +55,9 @@ NOTE: SWE-Gym sampling with parallelism is currently only tested with AllHands R
 
 To run the data conversion notebook, follow these steps:
 
-1. Navigate to the OpenHands repository root:
+1. Navigate to the WSAI CODE repository root:
 ```bash
-cd openhands_repo
+cd wsaicode_repo
 ```
 
 2. Set the PYTHONPATH and start Jupyter notebook:
@@ -93,9 +93,9 @@ We create SWE-Gym, the first environment for training SWE agents, with **2.4K re
 
 ## SWE-Gym trains LMs as agents
 
-When fine-tuned on less than 500 agent-environment interaction trajectories sampled from it from GPT-4o and Claude 3.5 Sonnet, we achieve **+14%** absolute gains on SWE-Bench Verified with an 32B LM-powered OpenHands agent.
+When fine-tuned on less than 500 agent-environment interaction trajectories sampled from it from GPT-4o and Claude 3.5 Sonnet, we achieve **+14%** absolute gains on SWE-Bench Verified with an 32B LM-powered WSAI CODE agent.
 
-![OpenHands Performance diff before and after training](https://github.com/SWE-Gym/SWE-Gym/blob/main/assets/images/oh-agent.jpg?raw=true)
+![WSAI CODE Performance diff before and after training](https://github.com/SWE-Gym/SWE-Gym/blob/main/assets/images/oh-agent.jpg?raw=true)
 
 
 ## SWE-Gym enables self-improvement
@@ -117,8 +117,8 @@ These verifiers identify most promising solutions via best-of-n selection, toget
 ![Inference Time Scaling for Moatless Agent](https://github.com/SWE-Gym/SWE-Gym/blob/main/assets/images/inference-ml.jpg?raw=true)
 *Inference Time Scaling for Moatless Agent*
 
-![Inference Time Scaling for OpenHands Agent](https://github.com/SWE-Gym/SWE-Gym/blob/main/assets/images/inference-oh.jpg?raw=true)
-*Inference Time Scaling for OpenHands Agent*
+![Inference Time Scaling for WSAI CODE Agent](https://github.com/SWE-Gym/SWE-Gym/blob/main/assets/images/inference-oh.jpg?raw=true)
+*Inference Time Scaling for WSAI CODE Agent*
 
 
 ## Our baselines on SWE-Gym shows strong scaling trends

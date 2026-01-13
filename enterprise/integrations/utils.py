@@ -14,23 +14,23 @@ from storage.stored_repository import StoredRepository
 from storage.user_repo_map import UserRepositoryMap
 from storage.user_repo_map_store import UserRepositoryMapStore
 
-from openhands.core.config.openhands_config import OpenHandsConfig
-from openhands.core.logger import openhands_logger as logger
-from openhands.core.schema.agent import AgentState
-from openhands.events import Event, EventSource
-from openhands.events.action import (
+from wsaicode.core.config.wsaicode_config import WSAICodeConfig
+from wsaicode.core.logger import wsaicode_logger as logger
+from wsaicode.core.schema.agent import AgentState
+from wsaicode.events import Event, EventSource
+from wsaicode.events.action import (
     AgentFinishAction,
     MessageAction,
 )
-from openhands.events.event_filter import EventFilter
-from openhands.events.event_store_abc import EventStoreABC
-from openhands.events.observation.agent import AgentStateChangedObservation
-from openhands.integrations.service_types import Repository
-from openhands.storage.data_models.conversation_status import ConversationStatus
-from openhands.utils.async_utils import call_sync_from_async
+from wsaicode.events.event_filter import EventFilter
+from wsaicode.events.event_store_abc import EventStoreABC
+from wsaicode.events.observation.agent import AgentStateChangedObservation
+from wsaicode.integrations.service_types import Repository
+from wsaicode.storage.data_models.conversation_status import ConversationStatus
+from wsaicode.utils.async_utils import call_sync_from_async
 
 if TYPE_CHECKING:
-    from openhands.server.conversation_manager.conversation_manager import (
+    from wsaicode.server.conversation_manager.conversation_manager import (
         ConversationManager,
     )
 
@@ -67,8 +67,8 @@ def get_session_expired_message(username: str | None = None) -> str:
         A formatted session expired message
     """
     if username:
-        return f'@{username} your session has expired. Please login again at [OpenHands Cloud]({HOST_URL}) and try again.'
-    return f'Your session has expired. Please login again at [OpenHands Cloud]({HOST_URL}) and try again.'
+        return f'@{username} your session has expired. Please login again at [WSAI CODE Cloud]({HOST_URL}) and try again.'
+    return f'Your session has expired. Please login again at [WSAI CODE Cloud]({HOST_URL}) and try again.'
 
 
 # Toggle for solvability report feature
@@ -85,28 +85,28 @@ ENABLE_V1_SLACK_RESOLVER = (
     os.getenv('ENABLE_V1_SLACK_RESOLVER', 'false').lower() == 'true'
 )
 
-OPENHANDS_RESOLVER_TEMPLATES_DIR = (
-    os.getenv('OPENHANDS_RESOLVER_TEMPLATES_DIR')
-    or 'openhands/integrations/templates/resolver/'
+WSAI_CODE_RESOLVER_TEMPLATES_DIR = (
+    os.getenv('WSAI_CODE_RESOLVER_TEMPLATES_DIR')
+    or 'wsaicode/integrations/templates/resolver/'
 )
-jinja_env = Environment(loader=FileSystemLoader(OPENHANDS_RESOLVER_TEMPLATES_DIR))
+jinja_env = Environment(loader=FileSystemLoader(WSAI_CODE_RESOLVER_TEMPLATES_DIR))
 
 
 def get_oh_labels(web_host: str) -> tuple[str, str]:
-    """Get the OpenHands labels based on the web host.
+    """Get the WSAI CODE labels based on the web host.
 
     Args:
         web_host: The web host string to check
 
     Returns:
         A tuple of (oh_label, inline_oh_label) where:
-        - oh_label is 'openhands-exp' for staging/local hosts, 'openhands' otherwise
-        - inline_oh_label is '@openhands-exp' for staging/local hosts, '@openhands' otherwise
+        - oh_label is 'wsaicode-exp' for staging/local hosts, 'wsaicode' otherwise
+        - inline_oh_label is '@wsaicode-exp' for staging/local hosts, '@wsaicode' otherwise
     """
     web_host = web_host.strip()
     is_staging_or_local = 'staging' in web_host or 'local' in web_host
-    oh_label = 'openhands-exp' if is_staging_or_local else 'openhands'
-    inline_oh_label = '@openhands-exp' if is_staging_or_local else '@openhands'
+    oh_label = 'wsaicode-exp' if is_staging_or_local else 'wsaicode'
+    inline_oh_label = '@wsaicode-exp' if is_staging_or_local else '@wsaicode'
     return oh_label, inline_oh_label
 
 
@@ -152,17 +152,17 @@ def has_exact_mention(text: str, mention: str) -> bool:
 
     Args:
         text: The text to check for mentions
-        mention: The mention to look for (e.g. "@openhands")
+        mention: The mention to look for (e.g. "@wsaicode")
 
     Returns:
         bool: True if the exact mention is found, False otherwise
 
     Example:
-        >>> has_exact_mention("Hello @openhands!", "@openhands")  # True
-        >>> has_exact_mention("Hello @openhands-agent!", "@openhands")  # False
-        >>> has_exact_mention("(@openhands)", "@openhands")  # True
-        >>> has_exact_mention("user@openhands.com", "@openhands")  # False
-        >>> has_exact_mention("Hello @OpenHands!", "@openhands")  # True (case-insensitive)
+        >>> has_exact_mention("Hello @wsaicode!", "@wsaicode")  # True
+        >>> has_exact_mention("Hello @wsaicode-agent!", "@wsaicode")  # False
+        >>> has_exact_mention("(@wsaicode)", "@wsaicode")  # True
+        >>> has_exact_mention("user@wsaicode.com", "@wsaicode")  # False
+        >>> has_exact_mention("Hello @WSAI CODE!", "@wsaicode")  # True (case-insensitive)
     """
     # Convert both text and mention to lowercase for case-insensitive matching
     text_lower = text.lower()
@@ -200,7 +200,7 @@ def get_readable_error_reason(reason: str):
 def get_summary_for_agent_state(
     observations: list[AgentStateChangedObservation], conversation_link: str
 ) -> str:
-    unknown_error_msg = f'OpenHands encountered an unknown error. [See the conversation]({conversation_link}) for more information, or try again'
+    unknown_error_msg = f'WSAI CODE encountered an unknown error. [See the conversation]({conversation_link}) for more information, or try again'
 
     if len(observations) == 0:
         logger.error(
@@ -221,7 +221,7 @@ def get_summary_for_agent_state(
                 'observation_reason': getattr(observation, 'reason', None),
             },
         )
-        return 'OpenHands was rate limited by the LLM provider. Please try again later.'
+        return 'WSAI CODE was rate limited by the LLM provider. Please try again later.'
 
     if state == AgentState.ERROR:
         reason = observation.reason
@@ -237,7 +237,7 @@ def get_summary_for_agent_state(
             },
         )
 
-        return f'OpenHands encountered an error: **{reason}**.\n\n[See the conversation]({conversation_link}) for more information.'
+        return f'WSAI CODE encountered an error: **{reason}**.\n\n[See the conversation]({conversation_link}) for more information.'
 
     if state == AgentState.AWAITING_USER_INPUT:
         logger.info(
@@ -248,7 +248,7 @@ def get_summary_for_agent_state(
                 'observation_reason': getattr(observation, 'reason', None),
             },
         )
-        return f'OpenHands is waiting for your input. [Continue the conversation]({conversation_link}) to provide additional instructions.'
+        return f'WSAI CODE is waiting for your input. [Continue the conversation]({conversation_link}) to provide additional instructions.'
 
     # Log unknown agent state as error
     logger.error(
@@ -438,7 +438,7 @@ async def store_repositories_in_db(repos: list[Repository], user_id: str) -> Non
         user_repos.append(user_repo_map)
 
     # Get config instance
-    config = OpenHandsConfig()
+    config = WSAICodeConfig()
 
     try:
         # Store repositories in the repos table
@@ -470,7 +470,7 @@ def infer_repo_from_message(user_msg: str) -> list[str]:
     # Captures: protocol, domain, owner, repo (with optional .git extension)
     git_url_pattern = r'https?://(?:github\.com|gitlab\.com|bitbucket\.org)/([a-zA-Z0-9_.-]+)/([a-zA-Z0-9_.-]+?)(?:\.git)?(?:[/?#].*?)?(?=\s|$|[^\w.-])'
 
-    # Pattern to match direct owner/repo mentions (e.g., "OpenHands/OpenHands")
+    # Pattern to match direct owner/repo mentions (e.g., "WSAI CODE/WSAI CODE")
     # Must be surrounded by word boundaries or specific characters to avoid false positives
     direct_pattern = (
         r'(?:^|\s|[\[\(\'"])([a-zA-Z0-9_.-]+)/([a-zA-Z0-9_.-]+)(?=\s|$|[\]\)\'",.])'

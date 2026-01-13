@@ -5,39 +5,39 @@ from unittest.mock import MagicMock, Mock
 import pytest
 from litellm import ChatCompletionMessageToolCall
 
-from openhands.controller.state.state import State
-from openhands.core.config.agent_config import AgentConfig
-from openhands.core.message import ImageContent, Message, TextContent
-from openhands.events.action import (
+from wsaicode.controller.state.state import State
+from wsaicode.core.config.agent_config import AgentConfig
+from wsaicode.core.message import ImageContent, Message, TextContent
+from wsaicode.events.action import (
     AgentFinishAction,
     CmdRunAction,
     MessageAction,
 )
-from openhands.events.action.message import SystemMessageAction
-from openhands.events.event import (
+from wsaicode.events.action.message import SystemMessageAction
+from wsaicode.events.event import (
     Event,
     EventSource,
     FileEditSource,
     FileReadSource,
     RecallType,
 )
-from openhands.events.observation import CmdOutputObservation
-from openhands.events.observation.agent import (
+from wsaicode.events.observation import CmdOutputObservation
+from wsaicode.events.observation.agent import (
     MicroagentKnowledge,
     RecallObservation,
 )
-from openhands.events.observation.browse import BrowserOutputObservation
-from openhands.events.observation.commands import (
+from wsaicode.events.observation.browse import BrowserOutputObservation
+from wsaicode.events.observation.commands import (
     CmdOutputMetadata,
     IPythonRunCellObservation,
 )
-from openhands.events.observation.delegate import AgentDelegateObservation
-from openhands.events.observation.error import ErrorObservation
-from openhands.events.observation.files import FileEditObservation, FileReadObservation
-from openhands.events.observation.reject import UserRejectObservation
-from openhands.events.tool import ToolCallMetadata
-from openhands.memory.conversation_memory import ConversationMemory
-from openhands.utils.prompt import PromptManager, RepositoryInfo, RuntimeInfo
+from wsaicode.events.observation.delegate import AgentDelegateObservation
+from wsaicode.events.observation.error import ErrorObservation
+from wsaicode.events.observation.files import FileEditObservation, FileReadObservation
+from wsaicode.events.observation.reject import UserRejectObservation
+from wsaicode.events.tool import ToolCallMetadata
+from wsaicode.memory.conversation_memory import ConversationMemory
+from wsaicode.utils.prompt import PromptManager, RepositoryInfo, RuntimeInfo
 
 
 @pytest.fixture
@@ -69,9 +69,9 @@ def conversation_memory(agent_config):
 
 @pytest.fixture
 def prompt_dir(tmp_path):
-    # Copy contents from "openhands/agenthub/codeact_agent" to the temp directory
+    # Copy contents from "wsaicode/agenthub/codeact_agent" to the temp directory
     shutil.copytree(
-        'openhands/agenthub/codeact_agent/prompts', tmp_path, dirs_exist_ok=True
+        'wsaicode/agenthub/codeact_agent/prompts', tmp_path, dirs_exist_ok=True
     )
 
     # Return the temporary directory path
@@ -1670,7 +1670,7 @@ def test_process_events_does_not_reinsert_condensed_initial_message(
     initial_user_message._id = 1
 
     # Create a condensation summary observation
-    from openhands.events.observation.agent import AgentCondensationObservation
+    from wsaicode.events.observation.agent import AgentCondensationObservation
 
     condensation_summary = AgentCondensationObservation(
         content='Summary: User requested tasks A, B, C. Task A was completed successfully.'

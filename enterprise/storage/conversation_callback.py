@@ -10,8 +10,8 @@ from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Text, text
 from sqlalchemy import Enum as SQLEnum
 from storage.base import Base
 
-from openhands.events.observation.agent import AgentStateChangedObservation
-from openhands.utils.import_utils import get_impl
+from wsaicode.events.observation.agent import AgentStateChangedObservation
+from wsaicode.utils.import_utils import get_impl
 
 
 class ConversationCallbackProcessor(BaseModel, ABC):

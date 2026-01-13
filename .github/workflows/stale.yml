@@ -9,7 +9,7 @@ on:
 jobs:
   stale:
     runs-on: blacksmith-4vcpu-ubuntu-2204
-    if: github.repository == 'OpenHands/OpenHands'
+    if: github.repository == 'WSAI CODE/WSAI CODE'
     steps:
       - uses: actions/stale@v9
         with:

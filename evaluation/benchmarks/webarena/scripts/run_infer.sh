@@ -27,13 +27,13 @@ if [ -z "$AGENT" ]; then
   AGENT="BrowsingAgent"
 fi
 
-get_openhands_version
+get_wsaicode_version
 
 echo "AGENT: $AGENT"
-echo "OPENHANDS_VERSION: $OPENHANDS_VERSION"
+echo "WSAI_CODE_VERSION: $WSAI_CODE_VERSION"
 echo "MODEL_CONFIG: $MODEL_CONFIG"
 
-EVAL_NOTE="$OPENHANDS_VERSION"
+EVAL_NOTE="$WSAI_CODE_VERSION"
 
 COMMAND="poetry run python evaluation/benchmarks/webarena/run_infer.py \
   --agent-cls $AGENT \

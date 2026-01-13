@@ -1,5 +1,5 @@
-import { openHands } from "#/api/open-hands-axios";
-import { Conversation, ResultSet } from "#/api/open-hands.types";
+import { openHands } from "#/api/wsai-code-axios";
+import { Conversation, ResultSet } from "#/api/wsai-code.types";
 
 class MicroagentManagementService {
   /**

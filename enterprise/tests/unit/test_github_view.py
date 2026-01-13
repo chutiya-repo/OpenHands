@@ -9,34 +9,34 @@ from integrations.types import UserData
 
 class TestGithubLabels(TestCase):
     def test_labels_with_staging(self):
-        oh_label, inline_oh_label = get_oh_labels('staging.all-hands.dev')
-        self.assertEqual(oh_label, 'openhands-exp')
-        self.assertEqual(inline_oh_label, '@openhands-exp')
+        oh_label, inline_oh_label = get_oh_labels('staging.wsai-code.dev')
+        self.assertEqual(oh_label, 'wsaicode-exp')
+        self.assertEqual(inline_oh_label, '@wsaicode-exp')
 
     def test_labels_with_staging_v2(self):
-        oh_label, inline_oh_label = get_oh_labels('main.staging.all-hands.dev')
-        self.assertEqual(oh_label, 'openhands-exp')
-        self.assertEqual(inline_oh_label, '@openhands-exp')
+        oh_label, inline_oh_label = get_oh_labels('main.staging.wsai-code.dev')
+        self.assertEqual(oh_label, 'wsaicode-exp')
+        self.assertEqual(inline_oh_label, '@wsaicode-exp')
 
     def test_labels_with_local(self):
         oh_label, inline_oh_label = get_oh_labels('localhost:3000')
-        self.assertEqual(oh_label, 'openhands-exp')
-        self.assertEqual(inline_oh_label, '@openhands-exp')
+        self.assertEqual(oh_label, 'wsaicode-exp')
+        self.assertEqual(inline_oh_label, '@wsaicode-exp')
 
     def test_labels_with_prod(self):
-        oh_label, inline_oh_label = get_oh_labels('app.all-hands.dev')
-        self.assertEqual(oh_label, 'openhands')
-        self.assertEqual(inline_oh_label, '@openhands')
+        oh_label, inline_oh_label = get_oh_labels('app.wsai-code.dev')
+        self.assertEqual(oh_label, 'wsaicode')
+        self.assertEqual(inline_oh_label, '@wsaicode')
 
     def test_labels_with_spaces(self):
         """Test that spaces are properly stripped"""
         oh_label, inline_oh_label = get_oh_labels('  local  ')
-        self.assertEqual(oh_label, 'openhands-exp')
-        self.assertEqual(inline_oh_label, '@openhands-exp')
+        self.assertEqual(oh_label, 'wsaicode-exp')
+        self.assertEqual(inline_oh_label, '@wsaicode-exp')
 
 
 class TestGithubCommentCaseInsensitivity(TestCase):
-    @mock.patch('integrations.github.github_view.INLINE_OH_LABEL', '@openhands')
+    @mock.patch('integrations.github.github_view.INLINE_OH_LABEL', '@wsaicode')
     def test_issue_comment_case_insensitivity(self):
         # Test with lowercase mention
         message_lower = Message(
@@ -44,7 +44,7 @@ class TestGithubCommentCaseInsensitivity(TestCase):
             message={
                 'payload': {
                     'action': 'created',
-                    'comment': {'body': 'hello @openhands please help'},
+                    'comment': {'body': 'hello @wsaicode please help'},
                     'issue': {'number': 1},
                 }
             },
@@ -56,7 +56,7 @@ class TestGithubCommentCaseInsensitivity(TestCase):
             message={
                 'payload': {
                     'action': 'created',
-                    'comment': {'body': 'hello @OPENHANDS please help'},
+                    'comment': {'body': 'hello @WSAI_CODE please help'},
                     'issue': {'number': 1},
                 }
             },
@@ -68,7 +68,7 @@ class TestGithubCommentCaseInsensitivity(TestCase):
             message={
                 'payload': {
                     'action': 'created',
-                    'comment': {'body': 'hello @OpenHands please help'},
+                    'comment': {'body': 'hello @WSAI CODE please help'},
                     'issue': {'number': 1},
                 }
             },

@@ -6,13 +6,13 @@ from sqlalchemy.orm import sessionmaker
 from storage.database import session_maker
 from storage.stored_repository import StoredRepository
 
-from openhands.core.config.openhands_config import OpenHandsConfig
+from wsaicode.core.config.wsaicode_config import WSAICodeConfig
 
 
 @dataclass
 class RepositoryStore:
     session_maker: sessionmaker
-    config: OpenHandsConfig
+    config: WSAICodeConfig
 
     def store_projects(self, repositories: list[StoredRepository]) -> None:
         """
@@ -53,6 +53,6 @@ class RepositoryStore:
             session.commit()
 
     @classmethod
-    def get_instance(cls, config: OpenHandsConfig) -> RepositoryStore:
+    def get_instance(cls, config: WSAICodeConfig) -> RepositoryStore:
         """Get an instance of the UserRepositoryStore."""
         return RepositoryStore(session_maker, config)

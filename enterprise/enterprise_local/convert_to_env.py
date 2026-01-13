@@ -97,25 +97,25 @@ convert_yaml_to_env(yaml_file, target_parameters, output_env_file, 'KEYCLOAK_')
 os.remove(yaml_file)
 
 lines = []
-lines.append('KEYCLOAK_SERVER_URL=https://auth.staging.all-hands.dev/')
-lines.append('KEYCLOAK_SERVER_URL_EXT=https://auth.staging.all-hands.dev/')
-lines.append('OPENHANDS_CONFIG_CLS=server.config.SaaSServerConfig')
+lines.append('KEYCLOAK_SERVER_URL=https://auth.staging.wsai-code.dev/')
+lines.append('KEYCLOAK_SERVER_URL_EXT=https://auth.staging.wsai-code.dev/')
+lines.append('WSAI_CODE_CONFIG_CLS=server.config.SaaSServerConfig')
 lines.append(
-    'OPENHANDS_GITHUB_SERVICE_CLS=integrations.github.github_service.SaaSGitHubService'
+    'WSAI_CODE_GITHUB_SERVICE_CLS=integrations.github.github_service.SaaSGitHubService'
 )
 lines.append(
-    'OPENHANDS_GITLAB_SERVICE_CLS=integrations.gitlab.gitlab_service.SaaSGitLabService'
+    'WSAI_CODE_GITLAB_SERVICE_CLS=integrations.gitlab.gitlab_service.SaaSGitLabService'
 )
 lines.append(
-    'OPENHANDS_BITBUCKET_SERVICE_CLS=integrations.bitbucket.bitbucket_service.SaaSBitBucketService'
+    'WSAI_CODE_BITBUCKET_SERVICE_CLS=integrations.bitbucket.bitbucket_service.SaaSBitBucketService'
 )
 lines.append(
-    'OPENHANDS_CONVERSATION_VALIDATOR_CLS=storage.saas_conversation_validator.SaasConversationValidator'
+    'WSAI_CODE_CONVERSATION_VALIDATOR_CLS=storage.saas_conversation_validator.SaasConversationValidator'
 )
 lines.append('POSTHOG_CLIENT_KEY=test')
 lines.append('ENABLE_PROACTIVE_CONVERSATION_STARTERS=true')
 lines.append('MAX_CONCURRENT_CONVERSATIONS=10')
-lines.append('LITE_LLM_API_URL=https://llm-proxy.eval.all-hands.dev')
+lines.append('LITE_LLM_API_URL=https://llm-proxy.eval.wsai-code.dev')
 lines.append('LITELLM_DEFAULT_MODEL=litellm_proxy/claude-opus-4-5-20251101')
 lines.append(f'LITE_LLM_API_KEY={lite_llm_api_key}')
 lines.append('LOCAL_DEPLOYMENT=true')

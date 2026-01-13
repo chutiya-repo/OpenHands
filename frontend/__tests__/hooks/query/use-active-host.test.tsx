@@ -20,7 +20,7 @@ vi.mock("#/hooks/use-runtime-is-ready", () => ({
   useRuntimeIsReady: () => true,
 }));
 
-vi.mock("#/api/open-hands", () => ({
+vi.mock("#/api/wsai-code", () => ({
   default: {
     getWebHosts: vi
       .fn()

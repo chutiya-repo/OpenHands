@@ -1,0 +1,50 @@
+{
+    "name": "wsaicode-memory-monitor",
+    "displayName": "WSAI CODE Memory Monitor",
+    "description": "A VSCode extension for monitoring system and process memory usage",
+    "version": "0.1.0",
+    "publisher": "wsaicode",
+    "engines": {
+        "vscode": "^1.98.2"
+    },
+    "categories": [
+        "Other",
+        "Monitoring"
+    ],
+    "activationEvents": [
+        "onStartupFinished"
+    ],
+    "main": "./extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "wsaicode-memory-monitor.startMemoryMonitor",
+                "title": "Start Memory Monitor"
+            },
+            {
+                "command": "wsaicode-memory-monitor.stopMemoryMonitor",
+                "title": "Stop Memory Monitor"
+            },
+            {
+                "command": "wsaicode-memory-monitor.showMemoryDetails",
+                "title": "Show Memory Details"
+            }
+        ],
+        "menus": {
+            "commandPalette": [
+                {
+                    "command": "wsaicode-memory-monitor.startMemoryMonitor",
+                    "group": "WSAI CODE"
+                },
+                {
+                    "command": "wsaicode-memory-monitor.stopMemoryMonitor",
+                    "group": "WSAI CODE"
+                },
+                {
+                    "command": "wsaicode-memory-monitor.showMemoryDetails",
+                    "group": "WSAI CODE"
+                }
+            ]
+        }
+    }
+}

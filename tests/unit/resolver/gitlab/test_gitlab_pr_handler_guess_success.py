@@ -3,12 +3,12 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from openhands.core.config import LLMConfig
-from openhands.events.action.message import MessageAction
-from openhands.llm.llm import LLM
-from openhands.resolver.interfaces.gitlab import GitlabPRHandler
-from openhands.resolver.interfaces.issue import Issue, ReviewThread
-from openhands.resolver.interfaces.issue_definitions import ServiceContextPR
+from wsaicode.core.config import LLMConfig
+from wsaicode.events.action.message import MessageAction
+from wsaicode.llm.llm import LLM
+from wsaicode.resolver.interfaces.gitlab import GitlabPRHandler
+from wsaicode.resolver.interfaces.issue import Issue, ReviewThread
+from wsaicode.resolver.interfaces.issue_definitions import ServiceContextPR
 
 
 @pytest.fixture

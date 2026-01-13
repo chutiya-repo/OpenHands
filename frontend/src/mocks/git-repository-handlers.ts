@@ -2,7 +2,7 @@ import { delay, http, HttpResponse } from "msw";
 import { GitRepository, Branch, PaginatedBranchesResponse } from "#/types/git";
 import { Provider } from "#/types/settings";
 import { RepositoryMicroagent } from "#/types/microagent-management";
-import { MicroagentContentResponse } from "#/api/open-hands.types";
+import { MicroagentContentResponse } from "#/api/wsai-code.types";
 
 // Generate a list of mock repositories with realistic data
 const generateMockRepositories = (

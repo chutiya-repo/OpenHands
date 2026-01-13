@@ -1,20 +1,20 @@
 import pytest
 from pydantic import SecretStr
 
-from openhands.core.config import LLMConfig
-from openhands.integrations.provider import ProviderType
-from openhands.resolver.interfaces.azure_devops import AzureDevOpsIssueHandler
-from openhands.resolver.interfaces.forgejo import (
+from wsaicode.core.config import LLMConfig
+from wsaicode.integrations.provider import ProviderType
+from wsaicode.resolver.interfaces.azure_devops import AzureDevOpsIssueHandler
+from wsaicode.resolver.interfaces.forgejo import (
     ForgejoIssueHandler,
     ForgejoPRHandler,
 )
-from openhands.resolver.interfaces.github import GithubIssueHandler, GithubPRHandler
-from openhands.resolver.interfaces.gitlab import GitlabIssueHandler, GitlabPRHandler
-from openhands.resolver.interfaces.issue_definitions import (
+from wsaicode.resolver.interfaces.github import GithubIssueHandler, GithubPRHandler
+from wsaicode.resolver.interfaces.gitlab import GitlabIssueHandler, GitlabPRHandler
+from wsaicode.resolver.interfaces.issue_definitions import (
     ServiceContextIssue,
     ServiceContextPR,
 )
-from openhands.resolver.issue_handler_factory import IssueHandlerFactory
+from wsaicode.resolver.issue_handler_factory import IssueHandlerFactory
 
 
 @pytest.fixture

@@ -123,7 +123,7 @@ async def test_get_credits_success():
                 '74.50'
             )  # 100.00 - 25.50 = 74.50 (no billing margin applied)
             mock_client.__aenter__.return_value.get.assert_called_once_with(
-                'https://llm-proxy.app.all-hands.dev/user/info?user_id=mock_user',
+                'https://llm-proxy.app.wsai-code.dev/user/info?user_id=mock_user',
                 headers={'x-goog-api-key': None},
             )
 
@@ -207,7 +207,7 @@ async def test_create_checkout_session_success(session_maker, mock_checkout_requ
                         'unit_amount': 2500,
                         'currency': 'usd',
                         'product_data': {
-                            'name': 'OpenHands Credits',
+                            'name': 'WSAI CODE Credits',
                             'tax_code': 'txcd_10000000',
                         },
                         'tax_behavior': 'exclusive',
@@ -330,7 +330,7 @@ async def test_success_callback_success():
         # Verify LiteLLM API calls
         mock_client_instance.__aenter__.return_value.get.assert_called_once()
         mock_client_instance.__aenter__.return_value.post.assert_called_once_with(
-            'https://llm-proxy.app.all-hands.dev/user/update',
+            'https://llm-proxy.app.wsai-code.dev/user/update',
             headers={'x-goog-api-key': None},
             json={
                 'user_id': 'mock_user',

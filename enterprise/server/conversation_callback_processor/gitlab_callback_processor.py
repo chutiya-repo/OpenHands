@@ -16,12 +16,12 @@ from storage.conversation_callback import (
 )
 from storage.database import session_maker
 
-from openhands.core.logger import openhands_logger as logger
-from openhands.core.schema.agent import AgentState
-from openhands.events.action import MessageAction
-from openhands.events.observation.agent import AgentStateChangedObservation
-from openhands.events.serialization.event import event_to_dict
-from openhands.server.shared import conversation_manager
+from wsaicode.core.logger import wsaicode_logger as logger
+from wsaicode.core.schema.agent import AgentState
+from wsaicode.events.action import MessageAction
+from wsaicode.events.observation.agent import AgentStateChangedObservation
+from wsaicode.events.serialization.event import event_to_dict
+from wsaicode.server.shared import conversation_manager
 
 token_manager = TokenManager()
 gitlab_manager = GitlabManager(token_manager)
@@ -47,7 +47,7 @@ class GitlabCallbackProcessor(ConversationCallbackProcessor):
         """
         try:
             # Create a message object for GitHub
-            message_obj = Message(source=SourceType.OPENHANDS, message=message)
+            message_obj = Message(source=SourceType.WSAI_CODE, message=message)
 
             # Get the token manager
             token_manager = TokenManager()

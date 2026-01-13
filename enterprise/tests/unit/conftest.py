@@ -51,7 +51,7 @@ def add_minimal_fixtures(session_maker):
             Feedback(
                 id='mock-feedback-id',
                 version='1.0',
-                email='user@all-hands.dev',
+                email='user@wsai-code.dev',
                 polarity='positive',
                 permissions='public',
                 trajectory=[],

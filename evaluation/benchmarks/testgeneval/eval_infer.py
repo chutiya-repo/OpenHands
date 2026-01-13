@@ -37,23 +37,23 @@ from evaluation.benchmarks.testgeneval.utils import load_testgeneval_dataset
 from evaluation.utils.shared import (
     EvalMetadata,
     EvalOutput,
-    get_openhands_config_for_eval,
+    get_wsaicode_config_for_eval,
     prepare_dataset,
     reset_logger_for_multiprocessing,
     run_evaluation,
 )
-from openhands.core.config import OpenHandsConfig, SandboxConfig, get_evaluation_parser
-from openhands.core.logger import openhands_logger as logger
-from openhands.core.main import create_runtime
-from openhands.events.action import CmdRunAction
-from openhands.events.observation import CmdOutputObservation
-from openhands.utils.async_utils import call_async_from_sync
+from wsaicode.core.config import WSAICodeConfig, SandboxConfig, get_evaluation_parser
+from wsaicode.core.logger import wsaicode_logger as logger
+from wsaicode.core.main import create_runtime
+from wsaicode.events.action import CmdRunAction
+from wsaicode.events.observation import CmdOutputObservation
+from wsaicode.utils.async_utils import call_async_from_sync
 
 DOCKER_IMAGE_PREFIX = os.environ.get('EVAL_DOCKER_IMAGE_PREFIX', 'docker.io/kdjain/')
 logger.info(f'Using docker image prefix: {DOCKER_IMAGE_PREFIX}')
 
 
-def get_config(instance: pd.Series) -> OpenHandsConfig:
+def get_config(instance: pd.Series) -> WSAICodeConfig:
     base_container_image = get_instance_docker_image(instance['instance_id_swebench'])
     assert base_container_image, (
         f'Invalid container image for instance {instance["instance_id_swebench"]}.'
@@ -65,13 +65,13 @@ def get_config(instance: pd.Series) -> OpenHandsConfig:
         base_container_image=base_container_image,
         use_host_network=False,
         timeout=1800,  # Longer timeout than default (300)
-        api_key=os.environ.get('ALLHANDS_API_KEY'),
+        api_key=os.environ.get('WSAI_CODE_API_KEY'),
         remote_runtime_api_url=os.environ.get(
             'SANDBOX_REMOTE_RUNTIME_API_URL', 'http://localhost:8000'
         ),
     )
 
-    return get_openhands_config_for_eval(
+    return get_wsaicode_config_for_eval(
         sandbox_config=sandbox_config,
         runtime=os.environ.get('RUNTIME', 'docker'),  # Different default runtime
     )

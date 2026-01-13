@@ -7,14 +7,14 @@ from pydantic import SecretStr
 from storage.saas_secrets_store import SaasSecretsStore
 from storage.stored_custom_secrets import StoredCustomSecrets
 
-from openhands.core.config.openhands_config import OpenHandsConfig
-from openhands.integrations.provider import CustomSecret
-from openhands.storage.data_models.secrets import Secrets
+from wsaicode.core.config.wsaicode_config import WSAICodeConfig
+from wsaicode.integrations.provider import CustomSecret
+from wsaicode.storage.data_models.secrets import Secrets
 
 
 @pytest.fixture
 def mock_config():
-    config = MagicMock(spec=OpenHandsConfig)
+    config = MagicMock(spec=WSAICodeConfig)
     config.jwt_secret = SecretStr('test_secret')
     return config
 

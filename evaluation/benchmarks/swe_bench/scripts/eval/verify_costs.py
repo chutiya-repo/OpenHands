@@ -2,14 +2,14 @@ import argparse
 
 import pandas as pd
 
-from openhands.core.logger import openhands_logger as logger
+from wsaicode.core.logger import wsaicode_logger as logger
 
 
 def verify_instance_costs(row: pd.Series) -> float:
     """Verifies that the accumulated_cost matches the sum of individual costs in metrics.
     Also checks for duplicate consecutive costs which might indicate buggy counting.
     If the consecutive costs are identical, the file is affected by this bug:
-    https://github.com/OpenHands/OpenHands/issues/5383
+    https://github.com/wsaicode/wsaicode/issues/5383
 
     Args:
         row: DataFrame row containing instance data with metrics

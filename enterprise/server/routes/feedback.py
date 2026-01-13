@@ -7,10 +7,10 @@ from storage.database import session_maker
 from storage.feedback import ConversationFeedback
 from storage.stored_conversation_metadata import StoredConversationMetadata
 
-from openhands.events.event_store import EventStore
-from openhands.server.shared import file_store
-from openhands.server.user_auth import get_user_id
-from openhands.utils.async_utils import call_sync_from_async
+from wsaicode.events.event_store import EventStore
+from wsaicode.server.shared import file_store
+from wsaicode.server.user_auth import get_user_id
+from wsaicode.utils.async_utils import call_sync_from_async
 
 router = APIRouter(prefix='/feedback', tags=['feedback'])
 

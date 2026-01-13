@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { openHands } from "#/api/open-hands-axios";
+import { openHands } from "#/api/wsai-code-axios";
 import {
   LLM_API_KEY_QUERY_KEY,
   LlmApiKeyResponse,

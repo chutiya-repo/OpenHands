@@ -1,5 +1,5 @@
-import { OpenHandsEvent } from "#/types/v1/core";
-import { openHands } from "./open-hands-axios";
+import { WSAICodeEvent } from "#/types/v1/core";
+import { openHands } from "./wsai-code-axios";
 
 export interface SharedConversation {
   id: string;
@@ -19,7 +19,7 @@ export interface SharedConversation {
 }
 
 export interface EventPage {
-  items: OpenHandsEvent[];
+  items: WSAICodeEvent[];
   next_page_id: string | null;
 }
 

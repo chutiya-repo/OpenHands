@@ -1,4 +1,4 @@
-"""Shared Conversation router for OpenHands Server."""
+"""Shared Conversation router for WSAI CODE Server."""
 
 from datetime import datetime
 from typing import Annotated

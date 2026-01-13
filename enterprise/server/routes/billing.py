@@ -26,8 +26,8 @@ from storage.database import session_maker
 from storage.saas_settings_store import SaasSettingsStore
 from storage.subscription_access import SubscriptionAccess
 
-from openhands.server.user_auth import get_user_id
-from openhands.utils.http_session import httpx_verify_option
+from wsaicode.server.user_auth import get_user_id
+from wsaicode.utils.http_session import httpx_verify_option
 
 stripe.api_key = STRIPE_API_KEY
 billing_router = APIRouter(prefix='/api/billing')
@@ -42,10 +42,10 @@ def is_all_hands_saas_environment(request: Request) -> bool:
         request: FastAPI Request object
 
     Returns:
-        True if the current domain contains "all-hands.dev" or "openhands.dev" postfix
+        True if the current domain contains "wsai-code.dev" or "wsaicode.dev" postfix
     """
     hostname = request.url.hostname or ''
-    return hostname.endswith('all-hands.dev') or hostname.endswith('openhands.dev')
+    return hostname.endswith('wsai-code.dev') or hostname.endswith('wsaicode.dev')
 
 
 def validate_saas_environment(request: Request) -> None:
@@ -276,7 +276,7 @@ async def create_checkout_session(
                     'unit_amount': body.amount * 100,
                     'currency': 'usd',
                     'product_data': {
-                        'name': 'OpenHands Credits',
+                        'name': 'WSAI CODE Credits',
                         'tax_code': 'txcd_10000000',
                     },
                     'tax_behavior': 'exclusive',

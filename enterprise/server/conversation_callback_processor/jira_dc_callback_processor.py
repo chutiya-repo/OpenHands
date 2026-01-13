@@ -13,12 +13,12 @@ from storage.conversation_callback import (
     ConversationCallbackProcessor,
 )
 
-from openhands.core.logger import openhands_logger as logger
-from openhands.core.schema.agent import AgentState
-from openhands.events.action import MessageAction
-from openhands.events.observation.agent import AgentStateChangedObservation
-from openhands.events.serialization.event import event_to_dict
-from openhands.server.shared import conversation_manager
+from wsaicode.core.logger import wsaicode_logger as logger
+from wsaicode.core.schema.agent import AgentState
+from wsaicode.events.action import MessageAction
+from wsaicode.events.observation.agent import AgentStateChangedObservation
+from wsaicode.events.serialization.event import event_to_dict
+from wsaicode.server.shared import conversation_manager
 
 token_manager = TokenManager()
 jira_dc_manager = JiraDcManager(token_manager)

@@ -5,18 +5,18 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
-from openhands.core.config.openhands_config import OpenHandsConfig
-from openhands.events.action import MessageAction
-from openhands.events.event import EventSource
-from openhands.events.event_store import EventStore
-from openhands.llm.llm_registry import LLMRegistry
-from openhands.server.conversation_manager.standalone_conversation_manager import (
+from wsaicode.core.config.wsaicode_config import WSAICodeConfig
+from wsaicode.events.action import MessageAction
+from wsaicode.events.event import EventSource
+from wsaicode.events.event_store import EventStore
+from wsaicode.llm.llm_registry import LLMRegistry
+from wsaicode.server.conversation_manager.standalone_conversation_manager import (
     StandaloneConversationManager,
 )
-from openhands.server.monitoring import MonitoringListener
-from openhands.storage.data_models.settings import Settings
-from openhands.storage.memory import InMemoryFileStore
-from openhands.utils.conversation_summary import auto_generate_title
+from wsaicode.server.monitoring import MonitoringListener
+from wsaicode.storage.data_models.settings import Settings
+from wsaicode.storage.memory import InMemoryFileStore
+from wsaicode.utils.conversation_summary import auto_generate_title
 
 
 @pytest.mark.asyncio
@@ -40,7 +40,7 @@ async def test_auto_generate_title_with_llm():
 
     # Mock the EventStore class
     with patch(
-        'openhands.utils.conversation_summary.EventStore'
+        'wsaicode.utils.conversation_summary.EventStore'
     ) as mock_event_store_cls:
         # Configure the mock event stream to return our test message
         mock_event_store = MagicMock(spec=EventStore)
@@ -96,7 +96,7 @@ async def test_auto_generate_title_fallback():
 
     # Mock the EventStore class
     with patch(
-        'openhands.utils.conversation_summary.EventStore'
+        'wsaicode.utils.conversation_summary.EventStore'
     ) as mock_event_store_cls:
         # Configure the mock event stream to return our test message
         mock_event_store = MagicMock(spec=EventStore)
@@ -141,7 +141,7 @@ async def test_auto_generate_title_no_messages():
 
     # Mock the EventStore class
     with patch(
-        'openhands.utils.conversation_summary.EventStore'
+        'wsaicode.utils.conversation_summary.EventStore'
     ) as mock_event_store_cls:
         # Configure the mock event store to return no events
         mock_event_store = MagicMock(spec=EventStore)
@@ -199,7 +199,7 @@ async def test_update_conversation_with_title():
     # Create the conversation manager
     manager = StandaloneConversationManager(
         sio=sio,
-        config=OpenHandsConfig(),
+        config=WSAICodeConfig(),
         file_store=file_store,
         server_config=server_config,
         monitoring_listener=MonitoringListener(),
@@ -210,7 +210,7 @@ async def test_update_conversation_with_title():
 
     # Mock the auto_generate_title function
     with patch(
-        'openhands.server.conversation_manager.standalone_conversation_manager.auto_generate_title',
+        'wsaicode.server.conversation_manager.standalone_conversation_manager.auto_generate_title',
         AsyncMock(return_value='Generated Title'),
     ):
         # Call the method

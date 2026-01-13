@@ -1,6 +1,6 @@
 import axios from "axios";
-import { openHands } from "../open-hands-axios";
-import { ConversationTrigger, GetVSCodeUrlResponse } from "../open-hands.types";
+import { openHands } from "../wsai-code-axios";
+import { ConversationTrigger, GetVSCodeUrlResponse } from "../wsai-code.types";
 import { Provider } from "#/types/settings";
 import { buildHttpBaseUrl } from "#/utils/websocket-url";
 import { buildSessionHeaders } from "#/utils/utils";

@@ -18,7 +18,7 @@ src/api/
 ├── organization-service/
 │   ├── organization-service.api.ts
 │   └── organization.types.ts
-└── open-hands-axios.ts           # Shared axios instance
+└── wsai-code-axios.ts           # Shared axios instance
 ```
 
 ## Creating a Service
@@ -27,7 +27,7 @@ Use an object literal with named export. Use object destructuring for parameters
 
 ```typescript
 // feature-service/feature-service.api.ts
-import { openHands } from "../open-hands-axios";
+import { openHands } from "../wsai-code-axios";
 import { Feature, CreateFeatureParams } from "./feature.types";
 
 export const featureService = {

@@ -9,8 +9,8 @@ from server.sharing.shared_conversation_models import (
     SharedConversationSortOrder,
 )
 
-from openhands.app_server.services.injector import Injector
-from openhands.sdk.utils.models import DiscriminatedUnionMixin
+from wsaicode.app_server.services.injector import Injector
+from wsaicode.sdk.utils.models import DiscriminatedUnionMixin
 
 
 class SharedConversationInfoService(ABC):

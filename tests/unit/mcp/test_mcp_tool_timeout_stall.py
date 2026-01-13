@@ -7,19 +7,19 @@ from unittest import mock
 import pytest
 from mcp import McpError
 
-from openhands.controller.agent import Agent
-from openhands.controller.agent_controller import AgentController
-from openhands.core.schema import AgentState
-from openhands.events.action.mcp import MCPAction
-from openhands.events.action.message import SystemMessageAction
-from openhands.events.event import EventSource
-from openhands.events.observation.mcp import MCPObservation
-from openhands.events.stream import EventStream
-from openhands.mcp.client import MCPClient
-from openhands.mcp.tool import MCPClientTool
-from openhands.mcp.utils import call_tool_mcp
-from openhands.server.services.conversation_stats import ConversationStats
-from openhands.storage.memory import InMemoryFileStore
+from wsaicode.controller.agent import Agent
+from wsaicode.controller.agent_controller import AgentController
+from wsaicode.core.schema import AgentState
+from wsaicode.events.action.mcp import MCPAction
+from wsaicode.events.action.message import SystemMessageAction
+from wsaicode.events.event import EventSource
+from wsaicode.events.observation.mcp import MCPObservation
+from wsaicode.events.stream import EventStream
+from wsaicode.mcp.client import MCPClient
+from wsaicode.mcp.tool import MCPClientTool
+from wsaicode.mcp.utils import call_tool_mcp
+from wsaicode.server.services.conversation_stats import ConversationStats
+from wsaicode.storage.memory import InMemoryFileStore
 
 
 class MockConfig:
@@ -233,7 +233,7 @@ async def test_mcp_tool_timeout_agent_continuation(conversation_stats):
 
     # Use our fixed function
     with mock.patch(
-        'openhands.mcp.utils.call_tool_mcp', side_effect=fixed_call_tool_mcp
+        'wsaicode.mcp.utils.call_tool_mcp', side_effect=fixed_call_tool_mcp
     ):
         # Call the function that would normally be called by the agent controller
         result = await call_tool_mcp([mock_client], mcp_action)

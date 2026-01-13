@@ -18,25 +18,25 @@ from evaluation.utils.shared import (
     compatibility_for_eval_history_pairs,
     get_default_sandbox_config_for_eval,
     get_metrics,
-    get_openhands_config_for_eval,
+    get_wsaicode_config_for_eval,
     make_metadata,
     prepare_dataset,
     reset_logger_for_multiprocessing,
     run_evaluation,
 )
-from openhands.controller.state.state import State
-from openhands.core.config import (
+from wsaicode.controller.state.state import State
+from wsaicode.core.config import (
     AgentConfig,
-    OpenHandsConfig,
+    WSAICodeConfig,
     get_llm_config_arg,
     parse_arguments,
 )
-from openhands.core.logger import openhands_logger as logger
-from openhands.core.main import create_runtime, run_controller
-from openhands.events.action import AgentFinishAction, CmdRunAction, MessageAction
-from openhands.events.observation import CmdOutputObservation
-from openhands.runtime.base import Runtime
-from openhands.utils.async_utils import call_async_from_sync
+from wsaicode.core.logger import wsaicode_logger as logger
+from wsaicode.core.main import create_runtime, run_controller
+from wsaicode.events.action import AgentFinishAction, CmdRunAction, MessageAction
+from wsaicode.events.observation import CmdOutputObservation
+from wsaicode.runtime.base import Runtime
+from wsaicode.utils.async_utils import call_async_from_sync
 
 EVALUATION_LLM = 'gpt-4-1106-preview'
 
@@ -63,10 +63,10 @@ AGENT_CLS_TO_INST_SUFFIX = {
 
 def get_config(
     metadata: EvalMetadata,
-) -> OpenHandsConfig:
+) -> WSAICodeConfig:
     sandbox_config = get_default_sandbox_config_for_eval()
     sandbox_config.base_container_image = 'python:3.12-bookworm'
-    config = get_openhands_config_for_eval(
+    config = get_wsaicode_config_for_eval(
         metadata=metadata,
         runtime='docker',
         sandbox_config=sandbox_config,
@@ -227,7 +227,7 @@ def process_instance(
 ):
     """Process and evaluate a single instance of the dataset.
 
-    This function executes the OpenHands agent
+    This function executes the WSAI CODE agent
     for a specific instance of the dataset. It retrieves
     the agent's results and evaluates them against the gold
     hypothesis.

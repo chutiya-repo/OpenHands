@@ -17,7 +17,7 @@ The service is configured using environment variables:
 |----------|-------------|---------|
 | `RESEND_API_KEY` | Resend API key | (required) |
 | `RESEND_AUDIENCE_ID` | Resend audience ID | (required) |
-| `KEYCLOAK_REALM` | Keycloak realm | `all-hands` |
+| `KEYCLOAK_REALM` | Keycloak realm | `wsai-code` |
 | `BATCH_SIZE` | Number of users to process in each batch | `100` |
 | `MAX_RETRIES` | Maximum number of retries for API calls | `3` |
 | `INITIAL_BACKOFF_SECONDS` | Initial backoff time for retries | `1` |
@@ -27,7 +27,7 @@ The service is configured using environment variables:
 
 ## Deployment
 
-The service is deployed as part of the openhands Helm chart. To enable it, set the following in your values.yaml:
+The service is deployed as part of the wsaicode Helm chart. To enable it, set the following in your values.yaml:
 
 ```yaml
 resendSync:
@@ -37,7 +37,7 @@ resendSync:
 
 ### Prerequisites
 
-- Kubernetes cluster with the openhands chart deployed
+- Kubernetes cluster with the wsaicode chart deployed
 - Resend.com API key stored in a Kubernetes secret named `resend-api-key`
 - Resend.com audience ID
 
