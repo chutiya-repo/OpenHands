@@ -5,13 +5,13 @@ from litellm.exceptions import (
     RateLimitError,
 )
 
-from openhands.core.config.llm_config import LLMConfig
-from openhands.core.config.openhands_config import OpenHandsConfig
-from openhands.llm.llm_registry import LLMRegistry
-from openhands.runtime.runtime_status import RuntimeStatus
-from openhands.server.services.conversation_stats import ConversationStats
-from openhands.server.session.session import Session
-from openhands.storage.memory import InMemoryFileStore
+from wsaicode.core.config.llm_config import LLMConfig
+from wsaicode.core.config.wsaicode_config import WSAICodeConfig
+from wsaicode.llm.llm_registry import LLMRegistry
+from wsaicode.runtime.runtime_status import RuntimeStatus
+from wsaicode.server.services.conversation_stats import ConversationStats
+from wsaicode.server.session.session import Session
+from wsaicode.storage.memory import InMemoryFileStore
 
 
 @pytest.fixture
@@ -37,7 +37,7 @@ def default_llm_config():
 
 @pytest.fixture
 def llm_registry():
-    config = OpenHandsConfig()
+    config = WSAICodeConfig()
     return LLMRegistry(config=config)
 
 
@@ -50,7 +50,7 @@ def conversation_stats():
 
 
 @pytest.mark.asyncio
-@patch('openhands.llm.llm.litellm_completion')
+@patch('wsaicode.llm.llm.litellm_completion')
 async def test_notify_on_llm_retry(
     mock_litellm_completion,
     mock_sio,
@@ -58,7 +58,7 @@ async def test_notify_on_llm_retry(
     llm_registry,
     conversation_stats,
 ):
-    config = OpenHandsConfig()
+    config = WSAICodeConfig()
     config.set_llm_config(default_llm_config)
     session = Session(
         sid='..sid..',

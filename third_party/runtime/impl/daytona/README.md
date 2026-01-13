@@ -23,41 +23,41 @@ Windows PowerShell:
 $env:DAYTONA_API_KEY="<your-api-key>"
 ```
 
-This step ensures that OpenHands can authenticate with the Daytona platform when it runs.
+This step ensures that WSAI CODE can authenticate with the Daytona platform when it runs.
 
-### Step 3: Run OpenHands Locally Using Docker
-To start the latest version of OpenHands on your machine, execute the following command in your terminal:
+### Step 3: Run WSAI CODE Locally Using Docker
+To start the latest version of WSAI CODE on your machine, execute the following command in your terminal:
 
 Mac/Linux:
 ```bash
-bash -i <(curl -sL https://get.daytona.io/openhands)
+bash -i <(curl -sL https://get.daytona.io/wsaicode)
 ```
 
 Windows:
 ```powershell
-powershell -Command "irm https://get.daytona.io/openhands-windows | iex"
+powershell -Command "irm https://get.daytona.io/wsaicode-windows | iex"
 ```
 
 #### What This Command Does:
-- Downloads the latest OpenHands release script.
+- Downloads the latest WSAI CODE release script.
 - Runs the script in an interactive Bash session.
-- Automatically pulls and runs the OpenHands container using Docker.
-Once executed, OpenHands should be running locally and ready for use.
+- Automatically pulls and runs the WSAI CODE container using Docker.
+Once executed, WSAI CODE should be running locally and ready for use.
 
 
 ## Manual Initialization
 
-### Step 1: Set the `OPENHANDS_VERSION` Environment Variable
-Run the following command in your terminal, replacing `<openhands-release>` with the latest release's version seen in the [main README.md file](https://github.com/OpenHands/OpenHands?tab=readme-ov-file#-quick-start):
+### Step 1: Set the `WSAI_CODE_VERSION` Environment Variable
+Run the following command in your terminal, replacing `<wsaicode-release>` with the latest release's version seen in the [main README.md file](https://github.com/wsaicode/wsaicode?tab=readme-ov-file#-quick-start):
 
 #### Mac/Linux:
 ```bash
-export OPENHANDS_VERSION="<openhands-release>"  # e.g. 0.27
+export WSAI_CODE_VERSION="<wsaicode-release>"  # e.g. 0.27
 ```
 
 #### Windows PowerShell:
 ```powershell
-$env:OPENHANDS_VERSION="<openhands-release>"  # e.g. 0.27
+$env:WSAI_CODE_VERSION="<wsaicode-release>"  # e.g. 0.27
 ```
 
 ### Step 2: Retrieve Your Daytona API Key
@@ -80,43 +80,43 @@ $env:DAYTONA_API_KEY="<your-api-key>"
 ```
 
 ### Step 4: Run the following `docker` command:
-This command pulls and runs the OpenHands container using Docker. Once executed, OpenHands should be running locally and ready for use.
+This command pulls and runs the WSAI CODE container using Docker. Once executed, WSAI CODE should be running locally and ready for use.
 
 #### Mac/Linux:
 ```bash
 docker run -it --rm --pull=always \
-    -e SANDBOX_RUNTIME_CONTAINER_IMAGE=docker.openhands.dev/openhands/runtime:${OPENHANDS_VERSION}-nikolaik \
+    -e SANDBOX_RUNTIME_CONTAINER_IMAGE=docker.wsaicode.dev/wsaicode/runtime:${WSAI_CODE_VERSION}-nikolaik \
     -e LOG_ALL_EVENTS=true \
     -e RUNTIME=daytona \
     -e DAYTONA_API_KEY=${DAYTONA_API_KEY} \
-    -v ~/.openhands:/.openhands \
+    -v ~/.wsaicode:/.wsaicode \
     -p 3000:3000 \
-    --name openhands-app \
-    docker.openhands.dev/openhands/openhands:${OPENHANDS_VERSION}
+    --name wsaicode-app \
+    docker.wsaicode.dev/wsaicode/wsaicode:${WSAI_CODE_VERSION}
 ```
 
-> **Note**: If you used OpenHands before version 0.44, you may want to run `mv ~/.openhands-state ~/.openhands` to migrate your conversation history to the new location.
+> **Note**: If you used WSAI CODE before version 0.44, you may want to run `mv ~/.wsaicode-state ~/.wsaicode` to migrate your conversation history to the new location.
 
 #### Windows:
 ```powershell
 docker run -it --rm --pull=always `
-    -e SANDBOX_RUNTIME_CONTAINER_IMAGE=docker.openhands.dev/openhands/runtime:${env:OPENHANDS_VERSION}-nikolaik `
+    -e SANDBOX_RUNTIME_CONTAINER_IMAGE=docker.wsaicode.dev/wsaicode/runtime:${env:WSAI_CODE_VERSION}-nikolaik `
     -e LOG_ALL_EVENTS=true `
     -e RUNTIME=daytona `
     -e DAYTONA_API_KEY=${env:DAYTONA_API_KEY} `
-    -v ~/.openhands:/.openhands `
+    -v ~/.wsaicode:/.wsaicode `
     -p 3000:3000 `
-    --name openhands-app `
-    docker.openhands.dev/openhands/openhands:${env:OPENHANDS_VERSION}
+    --name wsaicode-app `
+    docker.wsaicode.dev/wsaicode/wsaicode:${env:WSAI_CODE_VERSION}
 ```
 
-> **Note**: If you used OpenHands before version 0.44, you may want to run `mv ~/.openhands-state ~/.openhands` to migrate your conversation history to the new location.
+> **Note**: If you used WSAI CODE before version 0.44, you may want to run `mv ~/.wsaicode-state ~/.wsaicode` to migrate your conversation history to the new location.
 
 > **Tip:** If you don't want your sandboxes to default to the EU region, you can set the `DAYTONA_TARGET` environment variable to `us`
 
-### Running OpenHands Locally Without Docker
+### Running WSAI CODE Locally Without Docker
 
-Alternatively, if you want to run the OpenHands app on your local machine using `make run` without Docker, make sure to set the following environment variables first:
+Alternatively, if you want to run the WSAI CODE app on your local machine using `make run` without Docker, make sure to set the following environment variables first:
 
 #### Mac/Linux:
 ```bash

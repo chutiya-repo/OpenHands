@@ -10,32 +10,32 @@ from server.utils.conversation_callback_utils import invoke_conversation_callbac
 from storage.database import session_maker
 from storage.stored_conversation_metadata import StoredConversationMetadata
 
-from openhands.core.config import LLMConfig
-from openhands.core.config.openhands_config import OpenHandsConfig
-from openhands.core.config.utils import load_openhands_config
-from openhands.core.schema.agent import AgentState
-from openhands.events.action import MessageAction
-from openhands.events.event_store import EventStore
-from openhands.events.event_store_abc import EventStoreABC
-from openhands.events.observation import AgentStateChangedObservation
-from openhands.events.stream import EventStreamSubscriber
-from openhands.llm.llm_registry import LLMRegistry
-from openhands.runtime.runtime_status import RuntimeStatus
-from openhands.server.config.server_config import ServerConfig
-from openhands.server.conversation_manager.conversation_manager import (
+from wsaicode.core.config import LLMConfig
+from wsaicode.core.config.wsaicode_config import WSAICodeConfig
+from wsaicode.core.config.utils import load_wsaicode_config
+from wsaicode.core.schema.agent import AgentState
+from wsaicode.events.action import MessageAction
+from wsaicode.events.event_store import EventStore
+from wsaicode.events.event_store_abc import EventStoreABC
+from wsaicode.events.observation import AgentStateChangedObservation
+from wsaicode.events.stream import EventStreamSubscriber
+from wsaicode.llm.llm_registry import LLMRegistry
+from wsaicode.runtime.runtime_status import RuntimeStatus
+from wsaicode.server.config.server_config import ServerConfig
+from wsaicode.server.conversation_manager.conversation_manager import (
     ConversationManager,
 )
-from openhands.server.conversation_manager.standalone_conversation_manager import (
+from wsaicode.server.conversation_manager.standalone_conversation_manager import (
     StandaloneConversationManager,
 )
-from openhands.server.data_models.agent_loop_info import AgentLoopInfo
-from openhands.server.monitoring import MonitoringListener
-from openhands.server.session.agent_session import WAIT_TIME_BEFORE_CLOSE
-from openhands.server.session.session import Session
-from openhands.server.settings import Settings
-from openhands.storage.files import FileStore
-from openhands.utils.async_utils import call_sync_from_async, wait_all
-from openhands.utils.shutdown_listener import should_continue
+from wsaicode.server.data_models.agent_loop_info import AgentLoopInfo
+from wsaicode.server.monitoring import MonitoringListener
+from wsaicode.server.session.agent_session import WAIT_TIME_BEFORE_CLOSE
+from wsaicode.server.session.session import Session
+from wsaicode.server.settings import Settings
+from wsaicode.storage.files import FileStore
+from wsaicode.utils.async_utils import call_sync_from_async, wait_all
+from wsaicode.utils.shutdown_listener import should_continue
 
 # Time in seconds between cleanup operations for stale conversations
 _CLEANUP_INTERVAL_SECONDS = 15
@@ -695,7 +695,7 @@ class ClusteredConversationManager(StandaloneConversationManager):
     def get_instance(
         cls,
         sio: socketio.AsyncServer,
-        config: OpenHandsConfig,
+        config: WSAICodeConfig,
         file_store: FileStore,
         server_config: ServerConfig,
         monitoring_listener: MonitoringListener | None,
@@ -744,7 +744,7 @@ class ClusteredConversationManager(StandaloneConversationManager):
         # Restart the agent loop
         from storage.saas_settings_store import SaasSettingsStore
 
-        config = load_openhands_config()
+        config = load_wsaicode_config()
         settings_store = await SaasSettingsStore.get_instance(config, user_id)
         settings = await settings_store.load()
         await self.maybe_start_agent_loop(conversation_id, settings, user_id)

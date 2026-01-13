@@ -3,9 +3,9 @@ from unittest.mock import patch
 
 import pytest
 
-from openhands.core.config import OpenHandsConfig
-from openhands.events.action import MessageAction
-from openhands.llm.metrics import Metrics
+from wsaicode.core.config import WSAICodeConfig
+from wsaicode.events.action import MessageAction
+from wsaicode.llm.metrics import Metrics
 
 
 class FakeEventStream:
@@ -73,9 +73,9 @@ def test_state_tracker_save_state_consolidates_metrics(tmp_path):
 
     Eval scripts should read from state.conversation_stats via evaluation.utils.shared.get_metrics.
     """
-    from openhands.controller.state.state_tracker import StateTracker
-    from openhands.server.services.conversation_stats import ConversationStats
-    from openhands.storage.memory import InMemoryFileStore
+    from wsaicode.controller.state.state_tracker import StateTracker
+    from wsaicode.server.services.conversation_stats import ConversationStats
+    from wsaicode.storage.memory import InMemoryFileStore
 
     # Prepare conversation stats with one service metrics
     store = InMemoryFileStore({})
@@ -111,9 +111,9 @@ def test_state_tracker_save_state_consolidates_metrics(tmp_path):
 def test_run_controller_exposes_aggregated_metrics_in_state():
     """Ensure get_metrics(state) reads from ConversationStats when available."""
     from evaluation.utils.shared import get_metrics
-    from openhands.core.main import run_controller
+    from wsaicode.core.main import run_controller
 
-    cfg = OpenHandsConfig()
+    cfg = WSAICodeConfig()
     # Prevent run_controller from trying to persist state via DummyState
     cfg.file_store = 'memory'
 
@@ -177,17 +177,17 @@ def test_run_controller_exposes_aggregated_metrics_in_state():
     # Invoke run_controller under patch context
     with (
         patch(
-            'openhands.core.main.create_registry_and_conversation_stats',
+            'wsaicode.core.main.create_registry_and_conversation_stats',
             side_effect=fake_create_registry_and_conversation_stats,
         ),
-        patch('openhands.core.main.create_agent', side_effect=fake_create_agent),
-        patch('openhands.core.main.create_runtime', side_effect=fake_create_runtime),
-        patch('openhands.core.main.create_memory', side_effect=fake_create_memory),
+        patch('wsaicode.core.main.create_agent', side_effect=fake_create_agent),
+        patch('wsaicode.core.main.create_runtime', side_effect=fake_create_runtime),
+        patch('wsaicode.core.main.create_memory', side_effect=fake_create_memory),
         patch(
-            'openhands.core.main.create_controller', side_effect=fake_create_controller
+            'wsaicode.core.main.create_controller', side_effect=fake_create_controller
         ),
         patch(
-            'openhands.core.main.run_agent_until_done',
+            'wsaicode.core.main.run_agent_until_done',
             side_effect=lambda *args, **kwargs: None,
         ),
     ):

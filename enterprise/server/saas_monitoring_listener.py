@@ -1,12 +1,12 @@
 from server.logger import logger
 
-from openhands.core.config.openhands_config import OpenHandsConfig
-from openhands.core.schema.agent import AgentState
-from openhands.events.event import Event
-from openhands.events.observation import (
+from wsaicode.core.config.wsaicode_config import WSAICodeConfig
+from wsaicode.core.schema.agent import AgentState
+from wsaicode.events.event import Event
+from wsaicode.events.observation import (
     AgentStateChangedObservation,
 )
-from openhands.server.monitoring import MonitoringListener
+from wsaicode.server.monitoring import MonitoringListener
 
 
 class SaaSMonitoringListener(MonitoringListener):
@@ -50,6 +50,6 @@ class SaaSMonitoringListener(MonitoringListener):
     @classmethod
     def get_instance(
         cls,
-        config: OpenHandsConfig,
+        config: WSAICodeConfig,
     ) -> 'SaaSMonitoringListener':
         return cls()

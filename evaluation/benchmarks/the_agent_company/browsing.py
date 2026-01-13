@@ -9,10 +9,10 @@ from dataclasses import dataclass
 from enum import Enum, auto
 from typing import Union
 
-from openhands.core.logger import openhands_logger as logger
-from openhands.events.action import BrowseInteractiveAction
-from openhands.events.observation import BrowserOutputObservation
-from openhands.runtime.base import Runtime
+from wsaicode.core.logger import wsaicode_logger as logger
+from wsaicode.events.action import BrowseInteractiveAction
+from wsaicode.events.observation import BrowserOutputObservation
+from wsaicode.runtime.base import Runtime
 
 
 class ActionType(Enum):
@@ -172,7 +172,7 @@ def pre_login(
     screenshots_dir='screenshots',
 ):
     """Logs in to all the websites that are needed for the evaluation.
-    Once logged in, the sessions would be cached in the browser, so OpenHands
+    Once logged in, the sessions would be cached in the browser, so WSAI CODE
     agent doesn't need to log in to these websites again.
     """
     owncloud_login_actions = [

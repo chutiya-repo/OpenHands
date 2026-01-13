@@ -11,8 +11,8 @@ import {
   CreateMicroagent,
   FileUploadSuccessResponse,
   GetFilesResponse,
-} from "../open-hands.types";
-import { openHands } from "../open-hands-axios";
+} from "../wsai-code.types";
+import { openHands } from "../wsai-code-axios";
 import { Provider } from "#/types/settings";
 import { SuggestedTask } from "#/utils/types";
 import { BatchFeedbackData } from "#/hooks/query/use-batch-feedback";

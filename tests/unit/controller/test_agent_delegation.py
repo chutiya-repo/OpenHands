@@ -5,40 +5,40 @@ from uuid import uuid4
 
 import pytest
 
-from openhands.controller.agent import Agent
-from openhands.controller.agent_controller import AgentController
-from openhands.controller.state.control_flags import (
+from wsaicode.controller.agent import Agent
+from wsaicode.controller.agent_controller import AgentController
+from wsaicode.controller.state.control_flags import (
     BudgetControlFlag,
     IterationControlFlag,
 )
-from openhands.controller.state.state import State
-from openhands.core.config import OpenHandsConfig
-from openhands.core.config.agent_config import AgentConfig
-from openhands.core.config.llm_config import LLMConfig
-from openhands.core.schema import AgentState
-from openhands.events import EventSource, EventStream
-from openhands.events.action import (
+from wsaicode.controller.state.state import State
+from wsaicode.core.config import WSAICodeConfig
+from wsaicode.core.config.agent_config import AgentConfig
+from wsaicode.core.config.llm_config import LLMConfig
+from wsaicode.core.schema import AgentState
+from wsaicode.events import EventSource, EventStream
+from wsaicode.events.action import (
     AgentDelegateAction,
     AgentFinishAction,
     MessageAction,
 )
-from openhands.events.action.agent import RecallAction
-from openhands.events.action.commands import CmdRunAction
-from openhands.events.action.message import SystemMessageAction
-from openhands.events.event import Event, RecallType
-from openhands.events.observation.agent import RecallObservation
-from openhands.events.stream import EventStreamSubscriber
-from openhands.llm.llm import LLM
-from openhands.llm.llm_registry import LLMRegistry
-from openhands.llm.metrics import Metrics
-from openhands.memory.memory import Memory
-from openhands.server.services.conversation_stats import ConversationStats
-from openhands.storage.memory import InMemoryFileStore
+from wsaicode.events.action.agent import RecallAction
+from wsaicode.events.action.commands import CmdRunAction
+from wsaicode.events.action.message import SystemMessageAction
+from wsaicode.events.event import Event, RecallType
+from wsaicode.events.observation.agent import RecallObservation
+from wsaicode.events.stream import EventStreamSubscriber
+from wsaicode.llm.llm import LLM
+from wsaicode.llm.llm_registry import LLMRegistry
+from wsaicode.llm.metrics import Metrics
+from wsaicode.memory.memory import Memory
+from wsaicode.server.services.conversation_stats import ConversationStats
+from wsaicode.storage.memory import InMemoryFileStore
 
 
 @pytest.fixture
 def llm_registry():
-    config = OpenHandsConfig()
+    config = WSAICodeConfig()
     return LLMRegistry(config=config)
 
 

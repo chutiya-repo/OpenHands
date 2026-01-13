@@ -7,13 +7,13 @@ from sqlalchemy.orm import sessionmaker
 from storage.database import session_maker
 from storage.user_repo_map import UserRepositoryMap
 
-from openhands.core.config.openhands_config import OpenHandsConfig
+from wsaicode.core.config.wsaicode_config import WSAICodeConfig
 
 
 @dataclass
 class UserRepositoryMapStore:
     session_maker: sessionmaker
-    config: OpenHandsConfig
+    config: WSAICodeConfig
 
     def store_user_repo_mappings(self, mappings: list[UserRepositoryMap]) -> None:
         """
@@ -59,6 +59,6 @@ class UserRepositoryMapStore:
             session.commit()
 
     @classmethod
-    def get_instance(cls, config: OpenHandsConfig) -> UserRepositoryMapStore:
+    def get_instance(cls, config: WSAICodeConfig) -> UserRepositoryMapStore:
         """Get an instance of the UserRepositoryMapStore."""
         return UserRepositoryMapStore(session_maker, config)

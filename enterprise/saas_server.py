@@ -43,12 +43,12 @@ from server.sharing.shared_event_router import (  # noqa: E402
     router as shared_event_router,
 )
 
-from openhands.server.app import app as base_app  # noqa: E402
-from openhands.server.listen_socket import sio  # noqa: E402
-from openhands.server.middleware import (  # noqa: E402
+from wsaicode.server.app import app as base_app  # noqa: E402
+from wsaicode.server.listen_socket import sio  # noqa: E402
+from wsaicode.server.middleware import (  # noqa: E402
     CacheControlMiddleware,
 )
-from openhands.server.static import SPAStaticFiles  # noqa: E402
+from wsaicode.server.static import SPAStaticFiles  # noqa: E402
 
 directory = os.getenv('FRONTEND_DIRECTORY', './frontend/build')
 

@@ -17,10 +17,10 @@ from server.config import get_config
 from storage.database import session_maker
 from storage.saas_settings_store import SaasSettingsStore
 
-from openhands.core.config import LLMConfig
-from openhands.core.logger import openhands_logger as logger
-from openhands.utils.async_utils import call_sync_from_async
-from openhands.utils.utils import create_registry_and_conversation_stats
+from wsaicode.core.config import LLMConfig
+from wsaicode.core.logger import wsaicode_logger as logger
+from wsaicode.utils.async_utils import call_sync_from_async
+from wsaicode.utils.utils import create_registry_and_conversation_stats
 
 
 def fetch_github_issue_context(

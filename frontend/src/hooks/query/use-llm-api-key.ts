@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { openHands } from "#/api/open-hands-axios";
+import { openHands } from "#/api/wsai-code-axios";
 import { useConfig } from "./use-config";
 
 export const LLM_API_KEY_QUERY_KEY = "llm-api-key";

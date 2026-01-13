@@ -5,12 +5,12 @@ from server.auth.token_manager import TokenManager
 from storage.offline_token_store import OfflineTokenStore
 from storage.stored_offline_token import StoredOfflineToken
 
-from openhands.core.config.openhands_config import OpenHandsConfig
+from wsaicode.core.config.wsaicode_config import WSAICodeConfig
 
 
 @pytest.fixture
 def mock_config():
-    return MagicMock(spec=OpenHandsConfig)
+    return MagicMock(spec=WSAICodeConfig)
 
 
 @pytest.fixture

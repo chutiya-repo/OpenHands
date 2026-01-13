@@ -5,9 +5,9 @@ from server.conversation_callback_processor.linear_callback_processor import (
     LinearCallbackProcessor,
 )
 
-from openhands.core.schema.agent import AgentState
-from openhands.events.action import MessageAction
-from openhands.events.observation.agent import AgentStateChangedObservation
+from wsaicode.core.schema.agent import AgentState
+from wsaicode.events.action import MessageAction
+from wsaicode.events.observation.agent import AgentStateChangedObservation
 
 
 @pytest.fixture

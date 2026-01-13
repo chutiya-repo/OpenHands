@@ -10,7 +10,7 @@ from sqlalchemy.orm import sessionmaker
 from storage.api_key import ApiKey
 from storage.database import session_maker
 
-from openhands.core.logger import openhands_logger as logger
+from wsaicode.core.logger import wsaicode_logger as logger
 
 
 @dataclass

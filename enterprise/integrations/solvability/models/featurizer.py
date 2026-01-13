@@ -5,8 +5,8 @@ from typing import Any
 
 from pydantic import BaseModel
 
-from openhands.core.config import LLMConfig
-from openhands.llm.llm import LLM
+from wsaicode.core.config import LLMConfig
+from wsaicode.llm.llm import LLM
 
 
 class Feature(BaseModel):

@@ -57,7 +57,7 @@ const MOCK_RESPOSITORIES: GitRepository[] = [
   },
   {
     id: "2",
-    full_name: "OpenHands/OpenHands",
+    full_name: "WSAI CODE/WSAI CODE",
     git_provider: "github",
     is_public: true,
     main_branch: "main",
@@ -115,7 +115,7 @@ describe("RepoConnector", () => {
     // Wait for the options to be loaded and displayed
     await waitFor(() => {
       expect(screen.getByText("rbren/polaris")).toBeInTheDocument();
-      expect(screen.getByText("OpenHands/OpenHands")).toBeInTheDocument();
+      expect(screen.getByText("WSAI CODE/WSAI CODE")).toBeInTheDocument();
     });
   });
 
@@ -180,7 +180,7 @@ describe("RepoConnector", () => {
     // @ts-expect-error - only return the APP_MODE and APP_SLUG
     getConfiSpy.mockResolvedValue({
       APP_MODE: "saas",
-      APP_SLUG: "openhands",
+      APP_SLUG: "wsaicode",
     });
 
     const getSettingsSpy = vi.spyOn(SettingsService, "getSettings");
@@ -227,7 +227,7 @@ describe("RepoConnector", () => {
     // @ts-expect-error - only return the APP_MODE and APP_SLUG
     getConfiSpy.mockResolvedValue({
       APP_MODE: "saas",
-      APP_SLUG: "openhands",
+      APP_SLUG: "wsaicode",
     });
 
     const getSettingsSpy = vi.spyOn(SettingsService, "getSettings");

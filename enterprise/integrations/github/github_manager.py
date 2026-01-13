@@ -20,7 +20,7 @@ from integrations.types import ResolverViewInterface
 from integrations.utils import (
     CONVERSATION_URL,
     HOST_URL,
-    OPENHANDS_RESOLVER_TEMPLATES_DIR,
+    WSAI_CODE_RESOLVER_TEMPLATES_DIR,
     get_session_expired_message,
 )
 from integrations.v1_utils import get_saas_user_auth
@@ -30,15 +30,15 @@ from server.auth.constants import GITHUB_APP_CLIENT_ID, GITHUB_APP_PRIVATE_KEY
 from server.auth.token_manager import TokenManager
 from server.utils.conversation_callback_utils import register_callback_processor
 
-from openhands.core.logger import openhands_logger as logger
-from openhands.integrations.provider import ProviderToken, ProviderType
-from openhands.server.types import (
+from wsaicode.core.logger import wsaicode_logger as logger
+from wsaicode.integrations.provider import ProviderToken, ProviderType
+from wsaicode.server.types import (
     LLMAuthenticationError,
     MissingSettingsError,
     SessionExpiredError,
 )
-from openhands.storage.data_models.secrets import Secrets
-from openhands.utils.async_utils import call_sync_from_async
+from wsaicode.storage.data_models.secrets import Secrets
+from wsaicode.utils.async_utils import call_sync_from_async
 
 
 class GithubManager(Manager):
@@ -52,7 +52,7 @@ class GithubManager(Manager):
         )
 
         self.jinja_env = Environment(
-            loader=FileSystemLoader(OPENHANDS_RESOLVER_TEMPLATES_DIR + 'github')
+            loader=FileSystemLoader(WSAI_CODE_RESOLVER_TEMPLATES_DIR + 'github')
         )
 
     def _confirm_incoming_source_type(self, message: Message):
@@ -135,7 +135,7 @@ class GithubManager(Manager):
         username = payload.get('sender', {}).get('login')
         repo_name = self._get_full_repo_name(repo_obj)
 
-        # Suggestions contain `@openhands` macro; avoid kicking off jobs for system recommendations
+        # Suggestions contain `@wsaicode` macro; avoid kicking off jobs for system recommendations
         if GithubFactory.is_pr_comment(
             message
         ) and GithubFailingAction.unqiue_suggestions_header in payload.get(
@@ -226,7 +226,7 @@ class GithubManager(Manager):
             return
 
     async def start_job(self, github_view: ResolverViewInterface):
-        """Kick off a job with openhands agent.
+        """Kick off a job with wsaicode agent.
 
         1. Get user credential
         2. Initialize new conversation with repo
@@ -326,7 +326,7 @@ class GithubManager(Manager):
 
                 # Send message with conversation link
                 conversation_link = CONVERSATION_URL.format(conversation_id)
-                base_msg = f"I'm on it! {user_info.username} can [track my progress at all-hands.dev]({conversation_link})"
+                base_msg = f"I'm on it! {user_info.username} can [track my progress at wsai-code.dev]({conversation_link})"
                 # Combine messages: include solvability report with "I'm on it!" if successful
                 if solvability_summary:
                     msg_info = f'{base_msg}\n\n{solvability_summary}'
@@ -338,14 +338,14 @@ class GithubManager(Manager):
                     f'[GitHub] Missing settings error for user {user_info.username}: {str(e)}'
                 )
 
-                msg_info = f'@{user_info.username} please re-login into [OpenHands Cloud]({HOST_URL}) before starting a job.'
+                msg_info = f'@{user_info.username} please re-login into [WSAI CODE Cloud]({HOST_URL}) before starting a job.'
 
             except LLMAuthenticationError as e:
                 logger.warning(
                     f'[GitHub] LLM authentication error for user {user_info.username}: {str(e)}'
                 )
 
-                msg_info = f'@{user_info.username} please set a valid LLM API key in [OpenHands Cloud]({HOST_URL}) before starting a job.'
+                msg_info = f'@{user_info.username} please set a valid LLM API key in [WSAI CODE Cloud]({HOST_URL}) before starting a job.'
 
             except SessionExpiredError as e:
                 logger.warning(

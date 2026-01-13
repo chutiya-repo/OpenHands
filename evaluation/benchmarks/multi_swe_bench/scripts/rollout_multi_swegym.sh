@@ -34,20 +34,20 @@ poetry run python ./evaluation/benchmarks/multi_swe_bench/scripts/data/data_chan
 SPLIT="train"
 export LANGUAGE=java
 
-if [ -z "$ALLHANDS_API_KEY" ] || [ "$RUNTIME" != "remote" ]; then
-    echo "ALLHANDS_API_KEY is not set or RUNTIME is not set to remote. Will rollout and evaluate locally using Docker. WARNING: A large value of N_WORKERS will result in a large number of Docker containers being spun up and may crash your machine."
+if [ -z "$WSAI_CODE_API_KEY" ] || [ "$RUNTIME" != "remote" ]; then
+    echo "WSAI_CODE_API_KEY is not set or RUNTIME is not set to remote. Will rollout and evaluate locally using Docker. WARNING: A large value of N_WORKERS will result in a large number of Docker containers being spun up and may crash your machine."
     export RUNTIME=docker
 else
-    echo "ALLHANDS_API_KEY is set and RUNTIME is set to remote. Continuing rollout and evaluation with remote runtime..."
-    export SANDBOX_REMOTE_RUNTIME_API_URL="https://runtime.eval.all-hands.dev"
+    echo "WSAI_CODE_API_KEY is set and RUNTIME is set to remote. Continuing rollout and evaluation with remote runtime..."
+    export SANDBOX_REMOTE_RUNTIME_API_URL="https://runtime.eval.wsai-code.dev"
 fi
 
 
 # ===== Run inference =====
 source "evaluation/utils/version_control.sh"
-get_openhands_version
+get_wsaicode_version
 
-echo "OPENHANDS_VERSION: $OPENHANDS_VERSION"
+echo "WSAI_CODE_VERSION: $WSAI_CODE_VERSION"
 echo "MODEL_CONFIG: $MODEL_CONFIG"
 echo "DATASET: $DATASET"
 echo "EVAL_DOCKER_IMAGE_PREFIX: $EVAL_DOCKER_IMAGE_PREFIX"
@@ -57,7 +57,7 @@ export USE_INSTANCE_IMAGE=true
 export USE_HINT_TEXT=false
 export RUN_WITH_BROWSING=false
 echo "USE_HINT_TEXT: $USE_HINT_TEXT"
-EVAL_NOTE="$OPENHANDS_VERSION-no-hint-$EXP_NAME"
+EVAL_NOTE="$WSAI_CODE_VERSION-no-hint-$EXP_NAME"
 
 function run_eval() {
   local eval_note=$1

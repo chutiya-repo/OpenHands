@@ -1,4 +1,4 @@
-from openhands.events.action import (
+from wsaicode.events.action import (
     Action,
     AgentFinishAction,
     AgentRejectAction,
@@ -11,9 +11,9 @@ from openhands.events.action import (
     MessageAction,
     RecallAction,
 )
-from openhands.events.action.action import ActionConfirmationStatus
-from openhands.events.action.files import FileEditSource, FileReadSource
-from openhands.events.serialization import (
+from wsaicode.events.action.action import ActionConfirmationStatus
+from wsaicode.events.action.files import FileEditSource, FileReadSource
+from wsaicode.events.serialization import (
     event_from_dict,
     event_to_dict,
 )

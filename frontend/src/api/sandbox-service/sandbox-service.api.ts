@@ -1,7 +1,7 @@
 // sandbox-service.api.ts
 // This file contains API methods for /api/v1/sandboxes endpoints.
 
-import { openHands } from "../open-hands-axios";
+import { openHands } from "../wsai-code-axios";
 import type { V1SandboxInfo } from "./sandbox-service.types";
 
 export class SandboxService {

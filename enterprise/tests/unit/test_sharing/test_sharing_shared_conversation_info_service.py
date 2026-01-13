@@ -14,18 +14,18 @@ from server.sharing.sql_shared_conversation_info_service import (
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.pool import StaticPool
 
-from openhands.app_server.app_conversation.app_conversation_models import (
+from wsaicode.app_server.app_conversation.app_conversation_models import (
     AppConversationInfo,
 )
-from openhands.app_server.app_conversation.sql_app_conversation_info_service import (
+from wsaicode.app_server.app_conversation.sql_app_conversation_info_service import (
     SQLAppConversationInfoService,
 )
-from openhands.app_server.user.specifiy_user_context import SpecifyUserContext
-from openhands.app_server.utils.sql_utils import Base
-from openhands.integrations.provider import ProviderType
-from openhands.sdk.llm import MetricsSnapshot
-from openhands.sdk.llm.utils.metrics import TokenUsage
-from openhands.storage.data_models.conversation_metadata import ConversationTrigger
+from wsaicode.app_server.user.specifiy_user_context import SpecifyUserContext
+from wsaicode.app_server.utils.sql_utils import Base
+from wsaicode.integrations.provider import ProviderType
+from wsaicode.sdk.llm import MetricsSnapshot
+from wsaicode.sdk.llm.utils.metrics import TokenUsage
+from wsaicode.storage.data_models.conversation_metadata import ConversationTrigger
 
 
 @pytest.fixture

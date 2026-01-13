@@ -7,41 +7,41 @@ from integrations.utils import (
 
 def test_has_exact_mention():
     # Test basic exact match
-    assert has_exact_mention('Hello @openhands!', '@openhands') is True
-    assert has_exact_mention('@openhands at start', '@openhands') is True
-    assert has_exact_mention('End with @openhands', '@openhands') is True
-    assert has_exact_mention('@openhands', '@openhands') is True
+    assert has_exact_mention('Hello @wsaicode!', '@wsaicode') is True
+    assert has_exact_mention('@wsaicode at start', '@wsaicode') is True
+    assert has_exact_mention('End with @wsaicode', '@wsaicode') is True
+    assert has_exact_mention('@wsaicode', '@wsaicode') is True
 
     # Test no match
-    assert has_exact_mention('No mention here', '@openhands') is False
-    assert has_exact_mention('', '@openhands') is False
+    assert has_exact_mention('No mention here', '@wsaicode') is False
+    assert has_exact_mention('', '@wsaicode') is False
 
     # Test partial matches (should be False)
-    assert has_exact_mention('Hello @openhands-agent!', '@openhands') is False
-    assert has_exact_mention('Email: user@openhands.com', '@openhands') is False
-    assert has_exact_mention('Text@openhands', '@openhands') is False
-    assert has_exact_mention('@openhandsmore', '@openhands') is False
+    assert has_exact_mention('Hello @wsaicode-agent!', '@wsaicode') is False
+    assert has_exact_mention('Email: user@wsaicode.com', '@wsaicode') is False
+    assert has_exact_mention('Text@wsaicode', '@wsaicode') is False
+    assert has_exact_mention('@wsaicodemore', '@wsaicode') is False
 
     # Test with special characters in mention
     assert has_exact_mention('Hi @open.hands!', '@open.hands') is True
-    assert has_exact_mention('Using @open-hands', '@open-hands') is True
+    assert has_exact_mention('Using @wsai-code', '@wsai-code') is True
     assert has_exact_mention('With @open_hands_ai', '@open_hands_ai') is True
 
     # Test case insensitivity (function now handles case conversion internally)
-    assert has_exact_mention('Hi @OpenHands', '@OpenHands') is True
-    assert has_exact_mention('Hi @OpenHands', '@openhands') is True
-    assert has_exact_mention('Hi @openhands', '@OpenHands') is True
-    assert has_exact_mention('Hi @OPENHANDS', '@openhands') is True
+    assert has_exact_mention('Hi @WSAI CODE', '@WSAI CODE') is True
+    assert has_exact_mention('Hi @WSAI CODE', '@wsaicode') is True
+    assert has_exact_mention('Hi @wsaicode', '@WSAI CODE') is True
+    assert has_exact_mention('Hi @WSAI_CODE', '@wsaicode') is True
 
     # Test multiple mentions
-    assert has_exact_mention('@openhands and @openhands again', '@openhands') is True
-    assert has_exact_mention('@openhands-agent and @openhands', '@openhands') is True
+    assert has_exact_mention('@wsaicode and @wsaicode again', '@wsaicode') is True
+    assert has_exact_mention('@wsaicode-agent and @wsaicode', '@wsaicode') is True
 
     # Test with surrounding punctuation
-    assert has_exact_mention('Hey, @openhands!', '@openhands') is True
-    assert has_exact_mention('(@openhands)', '@openhands') is True
-    assert has_exact_mention('@openhands: hello', '@openhands') is True
-    assert has_exact_mention('@openhands? yes', '@openhands') is True
+    assert has_exact_mention('Hey, @wsaicode!', '@wsaicode') is True
+    assert has_exact_mention('(@wsaicode)', '@wsaicode') is True
+    assert has_exact_mention('@wsaicode: hello', '@wsaicode') is True
+    assert has_exact_mention('@wsaicode? yes', '@wsaicode') is True
 
 
 def test_markdown_to_jira_markup():
@@ -74,8 +74,8 @@ def test_infer_repo_from_message():
         # Single GitHub URLs
         ('Clone https://github.com/demo123/demo1.git', ['demo123/demo1']),
         (
-            'Check out https://github.com/OpenHands/OpenHands.git for details',
-            ['OpenHands/OpenHands'],
+            'Check out https://github.com/wsaicode/wsaicode.git for details',
+            ['WSAI CODE/WSAI CODE'],
         ),
         ('Visit https://github.com/microsoft/vscode', ['microsoft/vscode']),
         # Single GitLab URLs
@@ -92,7 +92,7 @@ def test_infer_repo_from_message():
             ['atlassian/atlassian-connect-express'],
         ),
         # Single direct owner/repo mentions
-        ('Please deploy the OpenHands/OpenHands repo', ['OpenHands/OpenHands']),
+        ('Please deploy the WSAI CODE/WSAI CODE repo', ['WSAI CODE/WSAI CODE']),
         ('I need help with the microsoft/vscode repository', ['microsoft/vscode']),
         ('Check facebook/react for examples', ['facebook/react']),
         ('The torvalds/linux kernel', ['torvalds/linux']),

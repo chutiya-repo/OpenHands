@@ -16,17 +16,17 @@ from integrations.types import PRStatus, ResolverViewInterface
 from integrations.utils import HOST
 from pydantic import SecretStr
 from server.auth.constants import GITHUB_APP_CLIENT_ID, GITHUB_APP_PRIVATE_KEY
-from storage.openhands_pr import OpenhandsPR
-from storage.openhands_pr_store import OpenhandsPRStore
+from storage.wsaicode_pr import OpenhandsPR
+from storage.wsaicode_pr_store import OpenhandsPRStore
 
-from openhands.core.config import load_openhands_config
-from openhands.core.logger import openhands_logger as logger
-from openhands.integrations.github.github_service import GithubServiceImpl
-from openhands.integrations.service_types import ProviderType
-from openhands.storage import get_file_store
-from openhands.storage.locations import get_conversation_dir
+from wsaicode.core.config import load_wsaicode_config
+from wsaicode.core.logger import wsaicode_logger as logger
+from wsaicode.integrations.github.github_service import GithubServiceImpl
+from wsaicode.integrations.service_types import ProviderType
+from wsaicode.storage import get_file_store
+from wsaicode.storage.locations import get_conversation_dir
 
-config = load_openhands_config()
+config = load_wsaicode_config()
 file_store = get_file_store(config.file_store, config.file_store_path)
 
 
@@ -122,15 +122,15 @@ class GitHubDataCollector:
         )
         return token_data.token
 
-    def _check_openhands_author(self, name, login) -> bool:
+    def _check_wsaicode_author(self, name, login) -> bool:
         return (
-            name == 'openhands'
-            or login == 'openhands'
-            or login == 'openhands-agent'
-            or login == 'openhands-ai'
-            or login == 'openhands-staging'
-            or login == 'openhands-exp'
-            or (login and 'openhands' in login.lower())
+            name == 'wsaicode'
+            or login == 'wsaicode'
+            or login == 'wsaicode-agent'
+            or login == 'wsaicode-ai'
+            or login == 'wsaicode-staging'
+            or login == 'wsaicode-exp'
+            or (login and 'wsaicode' in login.lower())
         )
 
     def _get_issue_comments(
@@ -176,7 +176,7 @@ class GitHubDataCollector:
         trigger_type: TriggerType,
     ) -> None:
         """
-        Save issue data when it's labeled with openhands
+        Save issue data when it's labeled with wsaicode
 
             1. Save under {conversation_dir}/{conversation_id}/github_data/issue_{issue_number}.json
             2. Save issue snapshot (title, body, comments)
@@ -326,15 +326,15 @@ class GitHubDataCollector:
                 }
                 review_comments.append(review_comment_data)
 
-    def _count_openhands_activity(
+    def _count_wsaicode_activity(
         self, commits: list, review_comments: list, pr_comments: list
     ) -> tuple[int, int, int]:
-        """Count OpenHands commits, review comments, and general PR comments"""
-        openhands_commit_count = 0
-        openhands_review_comment_count = 0
-        openhands_general_comment_count = 0
+        """Count WSAI CODE commits, review comments, and general PR comments"""
+        wsaicode_commit_count = 0
+        wsaicode_review_comment_count = 0
+        wsaicode_general_comment_count = 0
 
-        # Count commits by OpenHands (check both name and login)
+        # Count commits by WSAI CODE (check both name and login)
         for commit in commits:
             author = commit.get('author', {})
             author_name = author.get('name', '').lower()
@@ -344,10 +344,10 @@ class GitHubDataCollector:
                 else ''
             )
 
-            if self._check_openhands_author(author_name, author_login):
-                openhands_commit_count += 1
+            if self._check_wsaicode_author(author_name, author_login):
+                wsaicode_commit_count += 1
 
-        # Count review comments by OpenHands
+        # Count review comments by WSAI CODE
         for review_comment in review_comments:
             author_login = (
                 review_comment.get('author', '').lower()
@@ -355,22 +355,22 @@ class GitHubDataCollector:
                 else ''
             )
             author_name = ''  # Initialize to avoid reference before assignment
-            if self._check_openhands_author(author_name, author_login):
-                openhands_review_comment_count += 1
+            if self._check_wsaicode_author(author_name, author_login):
+                wsaicode_review_comment_count += 1
 
-        # Count general PR comments by OpenHands
+        # Count general PR comments by WSAI CODE
         for pr_comment in pr_comments:
             author_login = (
                 pr_comment.get('author', '').lower() if pr_comment.get('author') else ''
             )
             author_name = ''  # Initialize to avoid reference before assignment
-            if self._check_openhands_author(author_name, author_login):
-                openhands_general_comment_count += 1
+            if self._check_wsaicode_author(author_name, author_login):
+                wsaicode_general_comment_count += 1
 
         return (
-            openhands_commit_count,
-            openhands_review_comment_count,
-            openhands_general_comment_count,
+            wsaicode_commit_count,
+            wsaicode_review_comment_count,
+            wsaicode_general_comment_count,
         )
 
     def _build_final_data_structure(
@@ -380,9 +380,9 @@ class GitHubDataCollector:
         commits: list,
         pr_comments: list,
         review_comments: list,
-        openhands_commit_count: int,
-        openhands_review_comment_count: int,
-        openhands_general_comment_count: int = 0,
+        wsaicode_commit_count: int,
+        wsaicode_review_comment_count: int,
+        wsaicode_general_comment_count: int = 0,
     ) -> dict:
         """Build the final data structure for JSON storage"""
 
@@ -410,15 +410,15 @@ class GitHubDataCollector:
                 'state': pr_data.get('state'),
                 'merge_commit_sha': merge_commit_sha,
             },
-            'openhands_stats': {
-                'num_commits': openhands_commit_count,
-                'num_review_comments': openhands_review_comment_count,
-                'num_general_comments': openhands_general_comment_count,
-                'helped_author': openhands_commit_count > 0,
+            'wsaicode_stats': {
+                'num_commits': wsaicode_commit_count,
+                'num_review_comments': wsaicode_review_comment_count,
+                'num_general_comments': wsaicode_general_comment_count,
+                'helped_author': wsaicode_commit_count > 0,
             },
         }
 
-    async def save_full_pr(self, openhands_pr: OpenhandsPR) -> None:
+    async def save_full_pr(self, wsaicode_pr: OpenhandsPR) -> None:
         """
         Save PR information including metadata and commit details using GraphQL
 
@@ -427,22 +427,22 @@ class GitHubDataCollector:
         - PR metadata (number, title, body, author, comments)
         - Commit information (sha, authors, message, stats)
         - Merge status
-        - Num openhands commits
-        - Num openhands review comments
+        - Num wsaicode commits
+        - Num wsaicode review comments
         """
-        pr_number = openhands_pr.pr_number
-        installation_id = openhands_pr.installation_id
-        repo_id = openhands_pr.repo_id
+        pr_number = wsaicode_pr.pr_number
+        installation_id = wsaicode_pr.installation_id
+        repo_id = wsaicode_pr.repo_id
 
         # Get installation token and create Github client
-        # This will fail if the user decides to revoke OpenHands' access to their repo
+        # This will fail if the user decides to revoke WSAI CODE' access to their repo
         # In this case, we will simply return when the exception occurs
         # This will not lead to infinite loops when processing PRs as we log number of attempts and cap max attempts independently from this
         try:
             installation_token = self._get_installation_access_token(installation_id)
         except Exception as e:
             logger.warning(
-                f'Failed to generate token for {openhands_pr.repo_name}: {e}'
+                f'Failed to generate token for {wsaicode_pr.repo_name}: {e}'
             )
             return
 
@@ -538,15 +538,15 @@ class GitHubDataCollector:
         if not pr_data or not repo_data:
             return
 
-        # Count OpenHands activity using modular method
+        # Count WSAI CODE activity using modular method
         (
-            openhands_commit_count,
-            openhands_review_comment_count,
-            openhands_general_comment_count,
-        ) = self._count_openhands_activity(commits, review_comments, pr_comments)
+            wsaicode_commit_count,
+            wsaicode_review_comment_count,
+            wsaicode_general_comment_count,
+        ) = self._count_wsaicode_activity(commits, review_comments, pr_comments)
 
         logger.info(
-            f'[Github]: PR #{pr_number} - OpenHands commits: {openhands_commit_count}, review comments: {openhands_review_comment_count}, general comments: {openhands_general_comment_count}'
+            f'[Github]: PR #{pr_number} - WSAI CODE commits: {wsaicode_commit_count}, review comments: {wsaicode_review_comment_count}, general comments: {wsaicode_general_comment_count}'
         )
         logger.info(
             f'[Github]: PR #{pr_number} - Total collected: {len(commits)} commits, {len(pr_comments)} PR comments, {len(review_comments)} review comments'
@@ -559,29 +559,29 @@ class GitHubDataCollector:
             commits,
             pr_comments,
             review_comments,
-            openhands_commit_count,
-            openhands_review_comment_count,
-            openhands_general_comment_count,
+            wsaicode_commit_count,
+            wsaicode_review_comment_count,
+            wsaicode_general_comment_count,
         )
 
-        # Update the OpenhandsPR object with OpenHands statistics
+        # Update the OpenhandsPR object with WSAI CODE statistics
         store = OpenhandsPRStore.get_instance()
-        openhands_helped_author = openhands_commit_count > 0
+        wsaicode_helped_author = wsaicode_commit_count > 0
 
-        # Update the PR with OpenHands statistics
-        update_success = store.update_pr_openhands_stats(
+        # Update the PR with WSAI CODE statistics
+        update_success = store.update_pr_wsaicode_stats(
             repo_id=repo_id,
             pr_number=pr_number,
-            original_updated_at=openhands_pr.updated_at,
-            openhands_helped_author=openhands_helped_author,
-            num_openhands_commits=openhands_commit_count,
-            num_openhands_review_comments=openhands_review_comment_count,
-            num_openhands_general_comments=openhands_general_comment_count,
+            original_updated_at=wsaicode_pr.updated_at,
+            wsaicode_helped_author=wsaicode_helped_author,
+            num_wsaicode_commits=wsaicode_commit_count,
+            num_wsaicode_review_comments=wsaicode_review_comment_count,
+            num_wsaicode_general_comments=wsaicode_general_comment_count,
         )
 
         if not update_success:
             logger.warning(
-                f'[Github]: Failed to update OpenHands stats for PR #{pr_number} in repo {repo_id} - PR may have been modified concurrently'
+                f'[Github]: Failed to update WSAI CODE stats for PR #{pr_number} in repo {repo_id} - PR may have been modified concurrently'
             )
 
         # Save to file
@@ -593,7 +593,7 @@ class GitHubDataCollector:
         )
         self._save_data(file_name, data)
         logger.info(
-            f'[Github]: Saved full PR #{pr_number} for repo {repo_id} with OpenHands stats: commits={openhands_commit_count}, reviews={openhands_review_comment_count}, general_comments={openhands_general_comment_count}, helped={openhands_helped_author}'
+            f'[Github]: Saved full PR #{pr_number} for repo {repo_id} with WSAI CODE stats: commits={wsaicode_commit_count}, reviews={wsaicode_review_comment_count}, general_comments={wsaicode_general_comment_count}, helped={wsaicode_helped_author}'
         )
 
     def _check_for_conversation_url(self, body):
@@ -665,9 +665,9 @@ class GitHubDataCollector:
             created_at=created_at,
             closed_at=closed_at,
             # These properties will be enriched later
-            openhands_helped_author=None,
-            num_openhands_commits=None,
-            num_openhands_review_comments=None,
+            wsaicode_helped_author=None,
+            num_wsaicode_commits=None,
+            num_wsaicode_review_comments=None,
             num_general_comments=num_general_comments,
         )
 

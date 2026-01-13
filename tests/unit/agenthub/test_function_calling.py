@@ -6,16 +6,16 @@ from unittest.mock import patch
 import pytest
 from litellm import ModelResponse
 
-from openhands.agenthub.codeact_agent.function_calling import response_to_actions
-from openhands.core.exceptions import FunctionCallValidationError
-from openhands.events.action import (
+from wsaicode.agenthub.codeact_agent.function_calling import response_to_actions
+from wsaicode.core.exceptions import FunctionCallValidationError
+from wsaicode.events.action import (
     BrowseInteractiveAction,
     CmdRunAction,
     FileEditAction,
     FileReadAction,
     IPythonRunCellAction,
 )
-from openhands.events.event import FileEditSource, FileReadSource
+from wsaicode.events.event import FileEditSource, FileReadSource
 
 
 def create_mock_response(function_name: str, arguments: dict) -> ModelResponse:

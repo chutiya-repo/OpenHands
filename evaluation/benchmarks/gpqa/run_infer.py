@@ -31,27 +31,27 @@ from evaluation.utils.shared import (
     compatibility_for_eval_history_pairs,
     get_default_sandbox_config_for_eval,
     get_metrics,
-    get_openhands_config_for_eval,
+    get_wsaicode_config_for_eval,
     make_metadata,
     prepare_dataset,
     reset_logger_for_multiprocessing,
     run_evaluation,
 )
-from openhands.controller.state.state import State
-from openhands.core.config import (
-    OpenHandsConfig,
+from wsaicode.controller.state.state import State
+from wsaicode.core.config import (
+    WSAICodeConfig,
     get_evaluation_parser,
     get_llm_config_arg,
 )
-from openhands.core.logger import openhands_logger as logger
-from openhands.core.main import create_runtime, run_controller
-from openhands.events.action import (
+from wsaicode.core.logger import wsaicode_logger as logger
+from wsaicode.core.main import create_runtime, run_controller
+from wsaicode.events.action import (
     Action,
     AgentFinishAction,
     MessageAction,
 )
-from openhands.events.observation import Observation
-from openhands.utils.async_utils import call_async_from_sync
+from wsaicode.events.observation import Observation
+from wsaicode.utils.async_utils import call_async_from_sync
 
 ACTION_FORMAT = """
 <<FINAL_ANSWER||
@@ -62,10 +62,10 @@ ACTION_FORMAT = """
 
 def get_config(
     metadata: EvalMetadata,
-) -> OpenHandsConfig:
+) -> WSAICodeConfig:
     sandbox_config = get_default_sandbox_config_for_eval()
     sandbox_config.base_container_image = 'python:3.12-bookworm'
-    config = get_openhands_config_for_eval(
+    config = get_wsaicode_config_for_eval(
         metadata=metadata,
         runtime='docker',
         sandbox_config=sandbox_config,
@@ -330,7 +330,7 @@ if __name__ == '__main__':
         raise ValueError(f'Could not find LLM config: --llm_config {args.llm_config}')
 
     # NOTE: It is preferable to load datasets from huggingface datasets and perform post-processing
-    # so we don't need to manage file uploading to OpenHands's repo
+    # so we don't need to manage file uploading to WSAI CODE's repo
     dataset = load_dataset('Idavidrein/gpqa', args.data_split)
     gpqa_dataset = dataset['train']
     # preprocess the dataset

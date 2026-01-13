@@ -1,0 +1,23 @@
+{
+    "name": "wsaicode-hello-world",
+    "displayName": "WSAI CODE Hello World",
+    "description": "A simple hello world extension for WSAI CODE",
+    "version": "0.0.1",
+    "publisher": "wsaicode",
+    "engines": {
+        "vscode": "^1.98.2"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:wsaicode-hello-world.helloWorld"
+    ],
+    "main": "./extension.js",
+    "contributes": {
+        "commands": [{
+            "command": "wsaicode-hello-world.helloWorld",
+            "title": "Hello World from WSAI CODE"
+        }]
+    }
+}

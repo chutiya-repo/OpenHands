@@ -6,9 +6,9 @@ import pytest
 from conftest import TEST_IN_CI, _close_test_runtime, _load_runtime
 from openhands_aci.utils.diff import get_diff
 
-from openhands.core.logger import openhands_logger as logger
-from openhands.events.action import FileEditAction, FileReadAction
-from openhands.events.observation import FileEditObservation
+from wsaicode.core.logger import wsaicode_logger as logger
+from wsaicode.events.action import FileEditAction, FileReadAction
+from wsaicode.events.observation import FileEditObservation
 
 ORGINAL = """from flask import Flask
 app = Flask(__name__)
@@ -27,8 +27,8 @@ if __name__ == '__main__':
     TEST_IN_CI != 'True',
     reason='This test requires LLM to run.',
 )
-def test_edit_from_scratch(temp_dir, runtime_cls, run_as_openhands):
-    runtime, config = _load_runtime(temp_dir, runtime_cls, run_as_openhands)
+def test_edit_from_scratch(temp_dir, runtime_cls, run_as_wsaicode):
+    runtime, config = _load_runtime(temp_dir, runtime_cls, run_as_wsaicode)
     try:
         action = FileEditAction(
             content=ORGINAL,
@@ -67,8 +67,8 @@ def index():
     TEST_IN_CI != 'True',
     reason='This test requires LLM to run.',
 )
-def test_edit(temp_dir, runtime_cls, run_as_openhands):
-    runtime, config = _load_runtime(temp_dir, runtime_cls, run_as_openhands)
+def test_edit(temp_dir, runtime_cls, run_as_wsaicode):
+    runtime, config = _load_runtime(temp_dir, runtime_cls, run_as_wsaicode)
     try:
         action = FileEditAction(
             content=ORGINAL,
@@ -126,8 +126,8 @@ This is line 101 + 10
     TEST_IN_CI != 'True',
     reason='This test requires LLM to run.',
 )
-def test_edit_long_file(temp_dir, runtime_cls, run_as_openhands):
-    runtime, config = _load_runtime(temp_dir, runtime_cls, run_as_openhands)
+def test_edit_long_file(temp_dir, runtime_cls, run_as_wsaicode):
+    runtime, config = _load_runtime(temp_dir, runtime_cls, run_as_wsaicode)
     try:
         action = FileEditAction(
             content=ORIGINAL_LONG,
